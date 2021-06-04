@@ -1,3 +1,6 @@
+import 'normalize.css';
+import '../css/index.css';
+
 const headerTemplate = `
 <a href="/" class="text-black">
   <h1 class="text-center font-bold">🚇 지하철 노선도</h1>
@@ -17,4 +20,4 @@ const headerTemplate = `
   </a>
 </nav>`;
 
-document.querySelector("header").innerHTML = headerTemplate;
+document.querySelector('header').innerHTML = headerTemplate;
