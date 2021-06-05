@@ -27,6 +27,10 @@ const postcssLoader = {
 const isProduction = process.env.NODE_ENV === 'PRODUCTION';
 
 module.exports = {
+  // 절대 경로 설정를 설정합니다.
+  resolve: {
+    modules: [path.resolve(__dirname, 'src'), 'node_modules']
+  },
   // 모듈들의 진입점 babel-polyfill은 애플리케이션에서 딱 한번만 실행되어야하기 때문에 entry에 추가해줍니다.
   entry: ['@babel/polyfill', './src/js/index.js'],
   // 모듈들을 번들링 한 번들 파일에 대한 설정

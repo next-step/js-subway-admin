@@ -1,5 +1,5 @@
 import 'normalize.css';
-import '../css/index.css';
+import 'css/index.css';
 
 const headerTemplate = `
 <a href="/" class="text-black">
