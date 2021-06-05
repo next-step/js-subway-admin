@@ -1,7 +1,7 @@
 {
   "name": "js-subway-admin",
   "version": "1.0.0",
-  "description": "<p align=\"middle\" >\r   <img width=\"200px;\" src=\"./src/images/subway_emoji.png\"/>\r </p>\r <h2 align=\"middle\">level1 - 지하철 노선도 관리 SPA</h2>\r <p align=\"middle\">Browser History API를 이용해 구현하는 지하철 노선도 관리 SPA</p>\r <p align=\"middle\">\r   <img src=\"https://img.shields.io/badge/version-1.0.0-blue?style=flat-square\" alt=\"template version\"/>\r   <img src=\"https://img.shields.io/badge/language-html-red.svg?style=flat-square\"/>\r   <img src=\"https://img.shields.io/badge/language-css-blue.svg?style=flat-square\"/>\r   <img src=\"https://img.shields.io/badge/language-js-yellow.svg?style=flat-square\"/>\r   <img src=\"https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square\"/>\r </p>",
+  "description": "지하철 노선도 관리",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode=production",
