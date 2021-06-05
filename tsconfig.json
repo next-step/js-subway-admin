@@ -4,6 +4,8 @@
         "module": "amd",
         "sourceMap": true,
         "strict": true,
+        "strictNullChecks": false,
+        "noImplicitAny": false,
         "baseUrl": "./",
         "paths": {
             "@/*":["src/js/*"]
