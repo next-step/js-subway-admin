@@ -17,4 +17,5 @@ const headerTemplate = `
   </a>
 </nav>`;
 
-document.querySelector("header").innerHTML = headerTemplate;
+const header = document.querySelector("header") as HTMLElement;
+header.innerHTML = headerTemplate;

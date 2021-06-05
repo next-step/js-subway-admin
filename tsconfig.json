@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target":"ESNext",
+        "module": "amd",
+        "sourceMap": true,
+        "strict": true,
+        "baseUrl": "./",
+        "paths": {
+            "@/*":["src/js/*"]
+        },
+        "types": ["cypress", "node"],
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames":true
+    }
+}
