@@ -4,7 +4,8 @@
   "description": "<p align=\"middle\" >\r   <img width=\"200px;\" src=\"./src/images/subway_emoji.png\"/>\r </p>\r <h2 align=\"middle\">level1 - 지하철 노선도 관리 SPA</h2>\r <p align=\"middle\">Browser History API를 이용해 구현하는 지하철 노선도 관리 SPA</p>\r <p align=\"middle\">\r   <img src=\"https://img.shields.io/badge/version-1.0.0-blue?style=flat-square\" alt=\"template version\"/>\r   <img src=\"https://img.shields.io/badge/language-html-red.svg?style=flat-square\"/>\r   <img src=\"https://img.shields.io/badge/language-css-blue.svg?style=flat-square\"/>\r   <img src=\"https://img.shields.io/badge/language-js-yellow.svg?style=flat-square\"/>\r   <img src=\"https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square\"/>\r </p>",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode=development",
+    "build": "webpack --mode=production",
+    "dev": "webpack serve --open --mode=development",
     "test": "npx cypress open",
     "pre-commit": "lint-staged"
   },
@@ -19,6 +20,9 @@
   },
   "homepage": "https://github.com/moonheekim0118/js-subway-admin#readme",
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "@babel/preset-typescript": "^7.13.0",
     "babel": "^6.23.0",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.6",
@@ -44,5 +48,6 @@
     "cypress/**/*.{js,ts}": [
       "prettier --write"
     ]
-  }
+  },
+  "browserslist": "> 0.25%, not dead"
 }
