@@ -11,9 +11,13 @@
   "globals": {
     "_": false
   },
-  "plugins": ["import", "html"],
-  "extends": "airbnb-base",
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["import", "html", "@typescript-eslint"],
+  "extends": ["airbnb-base", "plugin:@typescript-eslint/recommended"],
   "rules": {
+    "@typescript-eslint/no-empty-interface": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-var-requires": 0,
     // "off" or 0 - turn the rule off
     // "warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
     // "error" or 2 - turn the rule on as an error (exit code is 1 when triggered)
@@ -43,6 +47,7 @@
       }
     ],
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/extensions": "off",
     "max-len": [
       "error",
       {
@@ -52,5 +57,16 @@
         "ignoreTemplateLiterals": true
       }
     ] // prettier의 printWidth 옵션 대신 사용
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx", ".js"]
+    },
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }
