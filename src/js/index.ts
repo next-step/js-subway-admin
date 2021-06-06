@@ -1,1 +1,1 @@
-console.log('hi');
+import './pages/routes';
