@@ -23,7 +23,15 @@ export abstract class Component<State = {}, Props = {}> {
   protected abstract template(): string;
   protected setEvent() {}
 
-  protected addEvent (eventType: string, selector: string, callback: Function) {
+  protected addEvent (eventType: string, ...args: [ string, Function ] | [ Function ]) {
+    if (args.length === 1) {
+      const callback: Function = args[0] as Function;
+      return this.$target.addEventListener(eventType, e => callback(e));
+    }
+
+    const selector: string = args[0] as string;
+    const callback: Function = args[1] as Function;
+
     this.$target.addEventListener(eventType, (e) => {
       const target = e.target as HTMLElement;
       const currentTarget = e.currentTarget as HTMLElement;

@@ -1,6 +1,7 @@
 import {Component} from "~@core";
 import {Header} from "~components/layouts/Header";
 import subwayEmoji from './assets/images/subway_emoji.png';
+import {router} from "~router";
 
 interface AppState {
   auth: boolean;
@@ -13,7 +14,7 @@ export class App extends Component<AppState> {
       <main class="mt-10 d-flex justify-center">
         <div class="d-flex flex-col">
           <div class="d-flex justify-center">
-            <img src="${subwayEmoji}" width="200" />
+            <img src="${subwayEmoji}" alt="로그인이 필요합니다." width="200" />
           </div>
           <p class="mt-0 text-center">
             지하철 노선도 앱을 사용하기 위해서는 로그인이 필요합니다.
@@ -49,8 +50,9 @@ export class App extends Component<AppState> {
     if (componentName === 'Header') {
       return new Header(el);
     }
-    if (componentName === 'Router') {
+  }
 
-    }
+  protected mounted() {
+    console.log(router.params);
   }
 }
