@@ -1,6 +1,17 @@
 import {Component} from "~@core";
+import {colorOptions} from "~constants";
 
 export class LineModal extends Component {
+
+  get lineColors(): string {
+    return colorOptions
+      .map((color: string, index: number) => `
+          <button type="button" class="color-option bg-${color}"></button>
+          ${(index + 1) % 7 === 0 ? "<br/>" : ""}
+      `)
+      .join("");
+  }
+
   protected template(): string {
     return `
       <div class="modal">
@@ -71,9 +82,7 @@ export class LineModal extends Component {
             </div>
             <div class="input-control">
               <div>
-                <label for="subway-line-color" class="input-label" hidden
-                  >색상</label
-                >
+                <label for="subway-line-color" class="input-label" hidden>색상</label>
                 <input
                   type="text"
                   id="subway-line-color"
@@ -85,7 +94,9 @@ export class LineModal extends Component {
                 />
               </div>
             </div>
-            <div class="subway-line-color-selector px-2"></div>
+            <div class="subway-line-color-selector px-2">
+              ${this.lineColors}
+            </div>
             <div class="d-flex justify-end mt-3">
               <button
                 type="submit"

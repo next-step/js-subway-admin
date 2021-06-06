@@ -1,17 +1,7 @@
-import {colorOptions} from "~constants";
 import {Component} from "~@core";
 import {LineModal} from "~components/modal/LineModal";
 
 export class Lines extends Component {
-
-  get lineColors(): string {
-    return colorOptions
-      .map((color: string, index: number) => `
-          <button type="button" class="color-option bg-${color}"></button>
-          ${(index + 1) % 7 === 0 ? "<br/>" : ""}
-      `)
-      .join("");
-  }
 
   protected template(): string {
     return `
@@ -27,7 +17,7 @@ export class Lines extends Component {
         </div>
         <ul class="mt-3 pl-0">
           <li class="d-flex items-center py-2 relative">
-            <span class="subway-line-color-dot bg-blue-400">${this.lineColors}</span>
+            <span class="subway-line-color-dot bg-blue-400"></span>
             <span class="w-100 pl-6 subway-line-list-item-name"
               >1호선</span
             >

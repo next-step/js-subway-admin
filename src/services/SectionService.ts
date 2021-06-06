@@ -1,5 +1,5 @@
 import {sectionRepository, SectionRepository} from "~repositories";
-import {Section, SectionRequest, SectionResponse} from "~@domain";
+import {Section, SectionRequest} from "~@domain";
 import {ExistedSectionError, NotFoundSectionError} from "~exceptions";
 import {getNextIdx} from "~utils";
 
