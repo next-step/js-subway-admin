@@ -1,9 +1,9 @@
 import {Component} from "~@core/Component";
 
 export interface RouterProps {
-  baseUrl: string;
+  baseUrl?: string;
   route: Record<string, Function>;
-  hash: boolean;
+  hash?: boolean;
 }
 
 export class Router {
@@ -28,14 +28,19 @@ export class Router {
         'g'
       ).test(this.path);
     });
+
+    if (!this.selectedRoute) return;
+    this.route[this.selectedRoute]();
   }
 
   public get path() {
-    let path = this.hash
+    const path = (this.hash
                   ? location.hash.replace('#!', '')
-                  : location.pathname;
+                  : location.pathname) || '/';
 
-    return path.replace(new RegExp(`${this.baseUrl}\/?`), '/');
+    const reg = new RegExp(`^${this.baseUrl}\/?`);
+
+    return path.replace(reg, '/');
   }
 
   public get params(): Record<string, string> {
@@ -53,13 +58,13 @@ export class Router {
 
   public push(path: string) {
     const { hash, baseUrl } = this;
-    const fullUrl = `${baseUrl.replace(/^\/?/, '/')}/${path.replace(/^\/?/, '')}`;
+    const fullUrl = `${baseUrl.replace(/^\/?/, '/')}${path.replace(location.origin, '').replace(/^\/?/, '')}`;
     if (hash) {
       location.hash = `!${fullUrl}`;
     } else {
       history.pushState(null, document.title, fullUrl);
     }
-    this.updateRoute();
+    // this.updateRoute();
   }
 
 
