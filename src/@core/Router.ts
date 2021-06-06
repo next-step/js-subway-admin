@@ -1,22 +1,22 @@
-import {Component} from "~@core/Component";
+import {observable} from "~@core/Observer";
 
 export interface RouterProps {
   baseUrl?: string;
-  route: Record<string, Function>;
+  routes: Record<string, string>;
   hash?: boolean;
 }
 
 export class Router {
 
   public readonly baseUrl: string;
-  public readonly route: Record<string, Function>;
+  public readonly routes: Record<string, string>;
   private readonly hash: boolean;
-  private selectedRoute?: string;
+  private readonly selectedRoute: Record<string, string> = observable({ value: '/' });
   private readonly beforeUpdate: Set<Function> = new Set();
 
-  constructor({ baseUrl = '/', route = {}, hash = true }: RouterProps) {
+  constructor({ baseUrl = '/', routes = {}, hash = true }: RouterProps) {
     this.baseUrl = baseUrl;
-    this.route = route;
+    this.routes = routes;
     this.hash = hash;
   }
 
@@ -26,17 +26,22 @@ export class Router {
   }
 
   private updateRoute() {
+    const { routes, selectedRoute, path } = this;
     this.beforeUpdate.forEach(fn => fn());
 
-    this.selectedRoute = Object.keys(this.route).find(v => {
+    const selectedRouteValue = Object.keys(routes).find(v => {
       return new RegExp(
         `^${v.replace(/:\w+/gi, '\\w+').replace(/\//, "\\/")}$`,
         'g'
-      ).test(this.path);
+      ).test(path);
     });
 
-    if (!this.selectedRoute) return;
-    this.route[this.selectedRoute]();
+    if (!selectedRouteValue) return;
+    selectedRoute.value = selectedRouteValue;
+  }
+
+  public get route() {
+    return this.routes[this.selectedRoute.value] || 'NotFound';
   }
 
   public get path() {
@@ -53,9 +58,9 @@ export class Router {
     const { selectedRoute, path } = this;
     if (!selectedRoute) return {};
 
-    const keys = [ ...selectedRoute!.matchAll(/:(\w+)/g) ].map(v => v[1]);
+    const keys = [ ...selectedRoute.value!.matchAll(/:(\w+)/g) ].map(v => v[1]);
     const valuePaths = path.split('/');
-    const routePaths = selectedRoute!.split('/');
+    const routePaths = selectedRoute.value!.split('/');
 
     return keys.reduce((obj: Record<string, string>, key) => {
       const index = routePaths.findIndex(v => key === `/:${v}`);

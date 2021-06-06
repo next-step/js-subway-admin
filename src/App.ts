@@ -1,8 +1,8 @@
 import {Component} from "~@core";
 import {Header} from "~components/layouts/Header";
 import subwayEmoji from './assets/images/subway_emoji.png';
-import {router} from "~router";
 import {authStore, LOAD_AUTHENTICATION} from "~store";
+import {RouterView} from "~router";
 
 interface AppState {
   auth: boolean;
@@ -34,7 +34,7 @@ export class App extends Component<AppState> {
       <div class="d-flex justify-center mt-5 w-100">
         <div class="w-100">
           <header class="my-4" data-component="Header"></header>
-          <main class="mt-10 d-flex justify-center" data-component="Router"></main>
+          <div data-component="RouterView"></div>
         </div>
       </div>
     `;
@@ -44,15 +44,8 @@ export class App extends Component<AppState> {
     if (componentName === 'Header') {
       return new Header(el);
     }
-  }
-
-  protected mounted() {
-
-    router.beforeRouterUpdate(() => {
-      if (['/login', '/signup'].includes(router.path) || authStore.$state.authentication) return;
-      alert('지하철 노선도 앱을 사용하기 위해서는 로그인이 필요합니다.');
-      router.push('/login');
-    });
-    router.setup();
+    if (componentName === 'RouterView') {
+      return new RouterView(el);
+    }
   }
 }

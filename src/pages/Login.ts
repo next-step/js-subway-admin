@@ -1,5 +1,8 @@
 import {Component} from "~@core";
-import {RouterLink} from "~components/Router/RouterLink";
+import {AuthRequest} from "~@domain";
+import {parseFormData} from "~utils";
+import {authStore, SIGN_IN} from "~store";
+import {router, RouterLink} from "~router";
 
 export class Login extends Component {
   protected template(): string {
@@ -34,8 +37,7 @@ export class Login extends Component {
           </div>
           <div class="input-control w-100">
             <button
-              type="button"
-              name="submit"
+              type="submit"
               class="input-submit w-100 bg-cyan-300"
             >
               확인
@@ -54,5 +56,20 @@ export class Login extends Component {
     if (componentName === 'RouterLink') {
       return new RouterLink(el);
     }
+  }
+
+  protected setEvent() {
+    this.addEvent('submit', 'form', (event: Event) => {
+      event.preventDefault();
+
+      const request = parseFormData<AuthRequest>(event.target as HTMLFormElement);
+      try {
+        authStore.dispatch(SIGN_IN, request);
+        alert('로그인이 완료되었습니다.');
+        router.push('/stations');
+      } catch (e) {
+        alert(e.message);
+      }
+    });
   }
 }

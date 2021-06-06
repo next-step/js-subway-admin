@@ -43,6 +43,10 @@ export class UserService {
 
     return this.getAuth()!;
   }
+
+  public signOut() {
+    this.authRepository.clear();
+  }
 }
 
 export const userService = new UserService(userRepository, authRepository);

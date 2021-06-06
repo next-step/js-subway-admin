@@ -1,5 +1,6 @@
 import {Component} from "~@core";
-import {RouterLink} from "~components/router/RouterLink";
+import {authStore, SIGN_OUT} from "~store";
+import {router, RouterLink} from "~router";
 
 export class Header extends Component {
   protected template(): string {
@@ -17,9 +18,15 @@ export class Header extends Component {
         <a href="/sections" class="my-1" data-component="RouterLink">
           <span class="btn bg-white shadow mx-1">🔁 구간 관리</span>
         </a>
-        <a href="/login" class="my-1" data-component="RouterLink">
-          <span class="btn bg-white shadow mx-1">👤 로그인</span>
-        </a>
+        ${authStore.$state.authentication === null ? `
+          <a href="/login" class="my-1" data-component="RouterLink">
+            <span class="btn bg-white shadow mx-1">👤 로그인</span>
+          </a>
+        ` : `
+          <a href="#" class="my-1 logout">
+            <span class="btn bg-white shadow mx-1">🔗 로그아웃</span>
+          </a>
+        `}
       </nav>
     `;
   }
@@ -28,5 +35,14 @@ export class Header extends Component {
     if (componentName === 'RouterLink') {
       return new RouterLink(el);
     }
+  }
+
+  protected setEvent() {
+    this.addEvent('click', '.logout', (event: MouseEvent) => {
+      event.preventDefault();
+      alert('로그아웃 되었습니다.');
+      router.push('/login');
+      authStore.dispatch(SIGN_OUT);
+    })
   }
 }

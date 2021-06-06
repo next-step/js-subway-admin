@@ -11,6 +11,10 @@ export class RouterLink extends Component {
     return this.$target.innerHTML;
   }
 
+  protected updated() {
+    this.checkSelect();
+  }
+
   protected setEvent() {
     const $target = this.$target as HTMLAnchorElement;
     $target.addEventListener('click', (event: MouseEvent) => {
