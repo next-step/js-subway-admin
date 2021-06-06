@@ -36,11 +36,7 @@ export class App extends Component<AppState> {
       <div class="d-flex justify-center mt-5 w-100">
         <div class="w-100">
           <header class="my-4" data-component="Header"></header>
-          ${
-            auth
-              ? `<main class="mt-10 d-flex justify-center" data-component="Router"></main>`
-              : this.NoAuth
-          }
+          <main class="mt-10 d-flex justify-center" data-component="Router"></main>
         </div>
       </div>
     `;
@@ -53,6 +49,11 @@ export class App extends Component<AppState> {
   }
 
   protected mounted() {
-    console.log(router.params);
+    router.beforeRouterUpdate(() => {
+      if (router.path.includes('login') || this.$state.auth) return;
+      alert('지하철 노선도 앱을 사용하기 위해서는 로그인이 필요합니다.');
+      router.push('/login');
+    });
+    router.setup();
   }
 }

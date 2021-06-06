@@ -12,16 +12,22 @@ export class Router {
   public readonly route: Record<string, Function>;
   private readonly hash: boolean;
   private selectedRoute?: string;
+  private readonly beforeUpdate: Set<Function> = new Set();
 
   constructor({ baseUrl = '/', route = {}, hash = true }: RouterProps) {
     this.baseUrl = baseUrl;
     this.route = route;
     this.hash = hash;
+  }
+
+  public setup() {
     this.updateRoute();
     window.addEventListener('popstate', () => this.updateRoute());
   }
 
   private updateRoute() {
+    this.beforeUpdate.forEach(fn => fn());
+
     this.selectedRoute = Object.keys(this.route).find(v => {
       return new RegExp(
         `^${v.replace(/:\w+/gi, '\\w+').replace(/\//, "\\/")}$`,
@@ -45,6 +51,8 @@ export class Router {
 
   public get params(): Record<string, string> {
     const { selectedRoute, path } = this;
+    if (!selectedRoute) return {};
+
     const keys = [ ...selectedRoute!.matchAll(/:(\w+)/g) ].map(v => v[1]);
     const valuePaths = path.split('/');
     const routePaths = selectedRoute!.split('/');
@@ -64,8 +72,10 @@ export class Router {
     } else {
       history.pushState(null, document.title, fullUrl);
     }
-    // this.updateRoute();
   }
 
+  public beforeRouterUpdate(fn: Function) {
+    this.beforeUpdate.add(fn);
+  }
 
 }
