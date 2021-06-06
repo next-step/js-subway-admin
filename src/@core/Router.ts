@@ -26,18 +26,20 @@ export class Router {
   }
 
   private updateRoute() {
-    const { routes, selectedRoute, path } = this;
-    this.beforeUpdate.forEach(fn => fn());
+    requestAnimationFrame(() => {
+      const { routes, selectedRoute, path } = this;
+      this.beforeUpdate.forEach(fn => fn());
 
-    const selectedRouteValue = Object.keys(routes).find(v => {
-      return new RegExp(
-        `^${v.replace(/:\w+/gi, '\\w+').replace(/\//, "\\/")}$`,
-        'g'
-      ).test(path);
-    });
+      const selectedRouteValue = Object.keys(routes).find(v => {
+        return new RegExp(
+          `^${v.replace(/:\w+/gi, '\\w+').replace(/\//, "\\/")}$`,
+          'g'
+        ).test(path);
+      });
 
-    if (!selectedRouteValue) return;
-    selectedRoute.value = selectedRouteValue;
+      if (!selectedRouteValue) return;
+      selectedRoute.value = selectedRouteValue;
+    })
   }
 
   public get route() {
