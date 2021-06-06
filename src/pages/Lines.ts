@@ -1,5 +1,14 @@
 import { colorOptions } from "~constants";
+import {Component} from "~@core";
 
+export class Lines extends Component {
+  protected template(): string {
+    return 'Lines';
+  }
+}
+
+
+/*
 const subwayLineColorOptionTemplate = (color: string, index: number) => {
   const hasNewLine = (index + 1) % 7 === 0;
   return `<button type="button" class="color-option bg-${color}"></button> ${
@@ -14,3 +23,4 @@ const $subwayLineColorSelector = document.querySelector(
 $subwayLineColorSelector!.innerHTML = colorOptions
   .map(subwayLineColorOptionTemplate)
   .join("");
+*/
