@@ -10,7 +10,10 @@ export abstract class Component<State = {}, Props = {}> {
     protected readonly $target: HTMLElement,
     protected readonly $props: Props = {} as Props,
   ) {
-    this.setup();
+    this.lifeCycle();
+  }
+  private async lifeCycle() {
+    await this.setup();
     this.$state = observable<State>(this.$state!);
     observe(() => this.render());
     this.setEvent();

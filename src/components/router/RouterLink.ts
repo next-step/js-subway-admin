@@ -3,16 +3,38 @@ import {router} from "~router";
 
 export class RouterLink extends Component {
 
+  protected setup() {
+    this.checkSelect();
+  }
+
   protected template(): string {
     return this.$target.innerHTML;
   }
 
   protected setEvent() {
+    const $target = this.$target as HTMLAnchorElement;
     this.addEvent('click', (event: MouseEvent) => {
       event.preventDefault();
-      const target = event.currentTarget as HTMLAnchorElement;
-      router.push(target.href);
+      router.push($target.href);
     });
+
+    window.addEventListener('popstate', () => this.checkSelect());
+  }
+
+  private checkSelect() {
+    const $target = this.$target as HTMLAnchorElement;
+    const path = $target.href.replace(location.origin, '');
+
+    const isSelected = new RegExp(
+      `^${path.replace(/:\w+/gi, '\\w+').replace(/\//, "\\/")}$`,
+      'g'
+    ).test(router.path);
+
+    if (isSelected) {
+      $target.classList.add('is-active-link');
+    } else {
+      $target.classList.remove('is-active-link');
+    }
   }
 
 }

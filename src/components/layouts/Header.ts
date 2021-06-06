@@ -1,5 +1,5 @@
 import {Component} from "~@core";
-import {RouterLink} from "~components/Router/RouterLink";
+import {RouterLink} from "~components/router/RouterLink";
 
 export class Header extends Component {
   protected template(): string {
@@ -12,13 +12,13 @@ export class Header extends Component {
           <button class="btn bg-white shadow mx-1">🚉 역 관리</button>
         </a>
         <a href="/lines" class="my-1" data-component="RouterLink">
-          <button class="btn bg-white shadow mx-1">🛤️ 노선 관리</button>
+          <span class="btn bg-white shadow mx-1">🛤️ 노선 관리</span>
         </a>
         <a href="/sections" class="my-1" data-component="RouterLink">
-          <button class="btn bg-white shadow mx-1">🔁 구간 관리</button>
+          <span class="btn bg-white shadow mx-1">🔁 구간 관리</span>
         </a>
         <a href="/login" class="my-1" data-component="RouterLink">
-          <button class="btn bg-white shadow mx-1">👤 로그인</button>
+          <span class="btn bg-white shadow mx-1">👤 로그인</span>
         </a>
       </nav>
     `;

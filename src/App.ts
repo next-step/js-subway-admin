@@ -2,6 +2,7 @@ import {Component} from "~@core";
 import {Header} from "~components/layouts/Header";
 import subwayEmoji from './assets/images/subway_emoji.png';
 import {router} from "~router";
+import {authStore, LOAD_AUTHENTICATION} from "~store";
 
 interface AppState {
   auth: boolean;
@@ -25,9 +26,7 @@ export class App extends Component<AppState> {
   }
 
   protected setup() {
-    this.$state = {
-      auth: false,
-    }
+    authStore.dispatch(LOAD_AUTHENTICATION);
   }
 
   protected template(): string {
@@ -48,8 +47,9 @@ export class App extends Component<AppState> {
   }
 
   protected mounted() {
+
     router.beforeRouterUpdate(() => {
-      if (['/login', '/signup'].includes(router.path) || this.$state.auth) return;
+      if (['/login', '/signup'].includes(router.path) || authStore.$state.authentication) return;
       alert('지하철 노선도 앱을 사용하기 위해서는 로그인이 필요합니다.');
       router.push('/login');
     });
