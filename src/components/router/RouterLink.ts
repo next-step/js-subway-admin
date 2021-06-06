@@ -13,7 +13,7 @@ export class RouterLink extends Component {
 
   protected setEvent() {
     const $target = this.$target as HTMLAnchorElement;
-    this.addEvent('click', (event: MouseEvent) => {
+    $target.addEventListener('click', (event: MouseEvent) => {
       event.preventDefault();
       router.push($target.href);
     });

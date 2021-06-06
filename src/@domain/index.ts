@@ -1,11 +1,14 @@
 export interface User {
-  idx: number;
+  idx?: number;
   email: string;
   name: string;
   password: string;
 }
 
-export interface UserRequest extends User {
+export interface UserRequest {
+  email: string;
+  name: string;
+  password: string;
   repeatPassword: string;
 }
 

@@ -36,9 +36,12 @@ export class UserService {
       throw new InvalidCredentialError();
     }
     const { password: p, ...auth } = user;
-    this.authRepository.set(auth);
+    this.authRepository.set({
+      ...auth,
+      idx: Date.now(),
+    });
 
-    return auth;
+    return this.getAuth()!;
   }
 }
 

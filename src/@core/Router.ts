@@ -68,7 +68,7 @@ export class Router {
     const { hash, baseUrl } = this;
     const fullUrl = `${baseUrl.replace(/^\/?/, '/')}${path.replace(location.origin, '').replace(/^\/?/, '')}`;
     if (hash) {
-      location.hash = `!${fullUrl}`;
+      location.href = `/#!${fullUrl}`;
     } else {
       history.pushState(null, document.title, fullUrl);
     }

@@ -1,4 +1,8 @@
 import {Component} from "~@core";
+import {userService} from "~services";
+import {AuthRequest, UserRequest} from "~@domain";
+import {parseFormData} from "~utils";
+import {router} from "~router";
 
 export class SignUp extends Component {
   protected template(): string {
@@ -49,7 +53,7 @@ export class SignUp extends Component {
             <input
               type="password"
               id="password-confirm"
-              name="password-confirm"
+              name="repeatPassword"
               class="input-field"
               placeholder="비밀번호 확인"
             />
@@ -69,11 +73,22 @@ export class SignUp extends Component {
   }
 
   protected setEvent() {
-    this.addEvent('event', 'form', (event: Event) => {
+    this.addEvent('submit', 'form', (event: Event) => {
       event.preventDefault();
-      const target = event.target as HTMLFormElement;
+      const frm = event.target as HTMLFormElement;
+      const request = parseFormData<UserRequest>(frm);
 
+      if (request.password !== request.repeatPassword) {
+        return alert('비밀번호 확인이 일치하지 않습니다.');
+      }
 
+      try {
+        userService.signUp(request);
+        alert('회원가입이 완료되었습니다.');
+        router.push('/login');
+      } catch (e) {
+        alert(e.message);
+      }
     })
   }
 }
