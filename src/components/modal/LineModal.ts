@@ -1,54 +1,8 @@
-<!DOCTYPE html>
-<html lang="kr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>🚇 노선 관리</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/src/assets/css/index.css" />
-    <link rel="stylesheet" href="/src/assets/css/pages/lines.css" />
-  </head>
-  <body>
-    <div id="app">
-      <div class="d-flex justify-center mt-5 w-100">
-        <div class="w-100">
-          <header class="my-4"></header>
-          <main class="mt-10 d-flex justify-center">
-            <div class="wrapper bg-white p-10">
-              <div class="heading d-flex">
-                <h2 class="mt-1 w-100">🛤️ 노선 관리</h2>
-                <button
-                  type="button"
-                  class="create-line-btn modal-trigger-btn bg-cyan-300 ml-2"
-                >
-                  노선 추가
-                </button>
-              </div>
-              <ul class="mt-3 pl-0">
-                <li class="d-flex items-center py-2 relative">
-                  <span class="subway-line-color-dot bg-blue-400"></span>
-                  <span class="w-100 pl-6 subway-line-list-item-name"
-                    >1호선</span
-                  >
-                  <button
-                    type="button"
-                    class="bg-gray-50 text-gray-500 text-sm mr-1"
-                  >
-                    수정
-                  </button>
-                  <button
-                    type="button"
-                    class="bg-gray-50 text-gray-500 text-sm"
-                  >
-                    삭제
-                  </button>
-                </li>
-                <hr class="my-0" />
-              </ul>
-            </div>
-          </main>
-        </div>
-      </div>
+import {Component} from "~@core";
 
+export class LineModal extends Component {
+  protected template(): string {
+    return `
       <div class="modal">
         <div class="modal-inner p-8">
           <button class="modal-close">
@@ -144,9 +98,6 @@
           </form>
         </div>
       </div>
-    </div>
-    <script type="module" src="/src/index.ts"></script>
-    <script type="module" src="/src/ui/modal/index.ts"></script>
-    <script type="module" src="/src/pages/Lines.ts"></script>
-  </body>
-</html>
+    `;
+  }
+}

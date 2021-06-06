@@ -50,7 +50,7 @@ export class App extends Component<AppState> {
 
   protected mounted() {
     router.beforeRouterUpdate(() => {
-      if (router.path.includes('login') || this.$state.auth) return;
+      if (['/login', '/signup'].includes(router.path) || this.$state.auth) return;
       alert('지하철 노선도 앱을 사용하기 위해서는 로그인이 필요합니다.');
       router.push('/login');
     });

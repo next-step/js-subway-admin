@@ -1,5 +1,5 @@
 import {Component, Router} from "~@core";
-import { Stations, Lines, Sections, Login } from "~pages";
+import {Stations, Lines, Sections, Login, SignUp} from "~pages";
 import {selectOne} from "~utils";
 
 export const createRouter = (createComponent: ($el: HTMLElement) => Component) => {
@@ -16,5 +16,6 @@ export const router = new Router({
     '/lines': () => createRouter($router => new Lines($router)),
     '/sections': () => createRouter($router => new Sections($router)),
     '/login': () => createRouter($router => new Login($router)),
+    '/signup': () => createRouter($router => new SignUp($router)),
   }
 });
