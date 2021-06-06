@@ -1,7 +1,7 @@
-form .input-submit {
-  width: 100%;
+main .wrapper.auth {
+  width: 300px;
 }
 
-main .wrapper {
-  width: 300px;
+.auth form .input-submit {
+  width: 100%;
 }

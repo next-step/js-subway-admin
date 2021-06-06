@@ -1,5 +1,6 @@
 import {Component} from "~@core";
 import {LineModal} from "~components/modal/LineModal";
+import '../assets/css/pages/lines.css';
 
 export class Lines extends Component {
 

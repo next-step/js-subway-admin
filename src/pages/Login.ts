@@ -4,10 +4,12 @@ import {parseFormData} from "~utils";
 import {authStore, SIGN_IN} from "~store";
 import {router, RouterLink} from "~router";
 
+import '../assets/css/pages/auth.css';
+
 export class Login extends Component {
   protected template(): string {
     return `
-      <div class="wrapper p-10 bg-white">
+      <div class="wrapper p-10 bg-white auth">
         <div class="heading">
           <h2>👋🏼 로그인</h2>
         </div>

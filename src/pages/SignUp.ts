@@ -7,7 +7,7 @@ import {router} from "~router";
 export class SignUp extends Component {
   protected template(): string {
     return `
-      <div class="wrapper p-10 bg-white">
+      <div class="wrapper p-10 bg-white auth">
         <div class="heading">
           <h2 class="text">📝 회원가입</h2>
         </div>
