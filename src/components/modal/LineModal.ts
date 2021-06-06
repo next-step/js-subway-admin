@@ -1,7 +1,18 @@
 import {Component} from "~@core";
 import {colorOptions} from "~constants";
+import {selectOne} from "~utils";
 
-export class LineModal extends Component {
+interface LineModalState {
+  isOpen: boolean;
+}
+
+export class LineModal extends Component<LineModalState> {
+
+  protected setup() {
+    this.$state = {
+      isOpen: false,
+    }
+  }
 
   get lineColors(): string {
     return colorOptions
@@ -13,8 +24,10 @@ export class LineModal extends Component {
   }
 
   protected template(): string {
+    const { isOpen } = this.$state;
+
     return `
-      <div class="modal">
+      <div class="modal ${isOpen ? 'open' : ''}">
         <div class="modal-inner p-8">
           <button class="modal-close">
             <svg viewbox="0 0 40 40">
@@ -26,9 +39,7 @@ export class LineModal extends Component {
           </header>
           <form>
             <div class="input-control">
-              <label for="subway-line-name" class="input-label" hidden
-                >노선 이름</label
-              >
+              <label for="subway-line-name" class="input-label" hidden>노선 이름</label>
               <input
                 type="text"
                 id="subway-line-name"
@@ -46,9 +57,7 @@ export class LineModal extends Component {
                 <option>방배</option>
                 <option>서초</option>
               </select>
-              <label for="down-station" class="input-label" hidden
-                >하행역</label
-              >
+              <label for="down-station" class="input-label" hidden>하행역</label>
               <select id="down-station">
                 <option value="" selected disabled hidden>하행역</option>
                 <option>사당</option>
@@ -57,9 +66,7 @@ export class LineModal extends Component {
               </select>
             </div>
             <div class="input-control">
-              <label for="distance" class="input-label" hidden
-                >상행 하행역 거리</label
-              >
+              <label for="distance" class="input-label" hidden>상행 하행역 거리</label>
               <input
                 type="number"
                 id="distance"
@@ -68,9 +75,7 @@ export class LineModal extends Component {
                 placeholder="상행 하행역 거리"
                 required
               />
-              <label for="duration" class="input-label" hidden
-                >상행 하행역 시간</label
-              >
+              <label for="duration" class="input-label" hidden>상행 하행역 시간</label>
               <input
                 type="number"
                 id="duration"
@@ -110,5 +115,17 @@ export class LineModal extends Component {
         </div>
       </div>
     `;
+  }
+
+  public open() {
+    this.$state.isOpen = true;
+  }
+
+  public close() {
+    this.$state.isOpen = false;
+  }
+
+  protected setEvent() {
+    this.addEvent('click', '.modal-close', () => this.close());
   }
 }
