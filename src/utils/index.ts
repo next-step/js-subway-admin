@@ -12,3 +12,11 @@ export function parseFormData <T>(form: HTMLFormElement): T {
     return obj;
   }, {}) as unknown as T;
 }
+
+export function getNextIdx () {
+  let idx = 0;
+  return (() => {
+    idx += 1;
+    return idx;
+  })();
+}

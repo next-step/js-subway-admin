@@ -1,6 +1,7 @@
 import {authRepository, AuthRepository, userRepository, UserRepository} from "~repositories";
 import {Auth, AuthRequest, User, UserRequest} from "~@domain";
 import {ExistedUserError, InvalidCredentialError} from "~exceptions";
+import {getNextIdx} from "~utils";
 
 export class UserService {
   constructor(
@@ -38,7 +39,7 @@ export class UserService {
     const { password: p, ...auth } = user;
     this.authRepository.set({
       ...auth,
-      idx: Date.now(),
+      idx: getNextIdx(),
     });
 
     return this.getAuth()!;
