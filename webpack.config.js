@@ -2,10 +2,7 @@ const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: {
-    main: "./src/js/entries/common.ts",
-    lines: "./src/js/entries/lines.ts",
-    auth: "./src/js/entries/auth.ts",
-    section: "./src/js/entries/section.ts",
+    main: "./src/js/index.ts",
   },
   devtool: "inline-source-map",
   output: {
