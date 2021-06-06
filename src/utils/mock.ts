@@ -1,4 +1,4 @@
-export const colorOptions = [
+export const colorOptions: string[] = [
   "gray-300",
   "gray-400",
   "gray-500",

@@ -1,5 +1,5 @@
 <p align="middle" >
-  <img width="200px;" src="./src/images/subway_emoji.png"/>
+  <img width="200px;" src="src/assets/images/subway_emoji.png"/>
 </p>
 <h2 align="middle">level1 - 지하철 노선도 관리 SPA</h2>
 <p align="middle">Browser History API를 이용해 구현하는 지하철 노선도 관리 SPA</p>
@@ -14,7 +14,7 @@
 # 🔥 Projects!
 
 <p align="middle">
-  <img src="./src/images/readme/subway_app_preview.png">
+  <img src="src/assets/images/readme/subway_app_preview.png">
 </p>
 
 ## 🎯 step1
