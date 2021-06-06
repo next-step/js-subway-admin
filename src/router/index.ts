@@ -2,7 +2,7 @@ import {Component, Router} from "~@core";
 import {Stations, Lines, Sections, Login, SignUp} from "~pages";
 import {selectOne} from "~utils";
 
-export const createRouter = (createComponent: ($el: HTMLElement) => Component) => {
+const createRouter = (createComponent: ($el: HTMLElement) => Component) => {
   const $router = selectOne('[data-component="Router"]');
   if ($router) {
     createComponent($router);

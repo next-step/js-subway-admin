@@ -31,7 +31,6 @@ export class App extends Component<AppState> {
   }
 
   protected template(): string {
-    const { auth } = this.$state;
     return `
       <div class="d-flex justify-center mt-5 w-100">
         <div class="w-100">

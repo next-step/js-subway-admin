@@ -1,5 +1,4 @@
 import {Component} from "~@core";
-import {RouterLink} from "~components/Router/RouterLink";
 
 export class SignUp extends Component {
   protected template(): string {
@@ -57,7 +56,7 @@ export class SignUp extends Component {
           </div>
           <div class="input-control">
             <button
-              type="button"
+              type="submit"
               name="submit"
               class="input-submit w-100 bg-cyan-300"
             >
@@ -67,5 +66,14 @@ export class SignUp extends Component {
         </form>
       </div>
     `;
+  }
+
+  protected setEvent() {
+    this.addEvent('event', 'form', (event: Event) => {
+      event.preventDefault();
+      const target = event.target as HTMLFormElement;
+
+
+    })
   }
 }
