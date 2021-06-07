@@ -26,6 +26,9 @@ export class Header extends Component {
           <a href="#" class="my-1 logout">
             <span class="btn bg-white shadow mx-1">🔗 로그아웃</span>
           </a>
+          <a href="/mypage" class="my-1" data-component="RouterLink">
+            <span class="btn bg-white shadow mx-1">🙋‍♂️마이페이지</span>
+          </a>
         `}
       </nav>
     `;

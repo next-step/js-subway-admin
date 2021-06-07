@@ -1,5 +1,5 @@
 export interface User {
-  idx?: number;
+  idx: number;
   email: string;
   name: string;
   password: string;
@@ -10,6 +10,12 @@ export interface UserRequest {
   name: string;
   password: string;
   repeatPassword: string;
+}
+
+export interface UpdateUserRequest {
+  idx: number;
+  email: string;
+  name: string;
 }
 
 export interface Auth {

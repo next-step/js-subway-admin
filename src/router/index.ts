@@ -8,6 +8,7 @@ export const router = new Router({
     '/sections': 'SectionsPage',
     '/login': 'LoginPage',
     '/signup': 'SignUpPage',
+    '/mypage': 'MyPage',
   }
 });
 

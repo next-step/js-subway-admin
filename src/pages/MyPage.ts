@@ -1,17 +1,24 @@
 import {Component} from "~@core";
 import {userService} from "~services";
-import { UserRequest} from "~@domain";
+import {UpdateUserRequest, UserRequest} from "~@domain";
 import {parseFormData} from "~utils";
 import {router} from "~router";
+import {authStore, UPDATE_USER} from "~store";
 
-export class SignUpPage extends Component {
+export class MyPage extends Component {
   protected template(): string {
+
+    const { authentication } = authStore.$state;
+
+    if (authentication === null) return ``;
+
     return `
       <div class="wrapper p-10 bg-white auth">
         <div class="heading">
-          <h2 class="text">📝 회원가입</h2>
+          <h2 class="text">📝 마이페이지</h2>
         </div>
         <form name="login" class="form">
+        
           <div class="input-control">
             <label for="email" class="input-label" hidden>이메일</label>
             <input
@@ -20,9 +27,11 @@ export class SignUpPage extends Component {
               name="email"
               class="input-field"
               placeholder="이메일"
+              value="${authentication.email}"
               required
             />
           </div>
+          
           <div class="input-control">
             <label for="name" class="input-label" hidden>이름</label>
             <input
@@ -31,39 +40,13 @@ export class SignUpPage extends Component {
               name="name"
               class="input-field"
               placeholder="이름"
+              value="${authentication.name}"
               required
             />
           </div>
+          
           <div class="input-control">
-            <label for="password" class="input-label" hidden
-              >비밀번호</label
-            >
-            <input
-              type="password"
-              id="password"
-              name="password"
-              class="input-field"
-              placeholder="비밀번호"
-            />
-          </div>
-          <div class="input-control">
-            <label for="password-confirm" class="input-label" hidden
-              >비밀번호 확인</label
-            >
-            <input
-              type="password"
-              id="password-confirm"
-              name="repeatPassword"
-              class="input-field"
-              placeholder="비밀번호 확인"
-            />
-          </div>
-          <div class="input-control">
-            <button
-              type="submit"
-              name="submit"
-              class="input-submit w-100 bg-cyan-300"
-            >
+            <button type="submit" name="submit" class="input-submit w-100 bg-cyan-300">
               확인
             </button>
           </div>
@@ -76,17 +59,13 @@ export class SignUpPage extends Component {
     this.addEvent('submit', 'form', (event: Event) => {
       event.preventDefault();
       const frm = event.target as HTMLFormElement;
-      const request = parseFormData<UserRequest>(frm);
-
-      if (request.password !== request.repeatPassword) {
-        return alert('비밀번호 확인이 일치하지 않습니다.');
-      }
+      const request = parseFormData<UpdateUserRequest>(frm);
 
       try {
-        userService.signUp(request);
-        alert('회원가입이 완료되었습니다.');
-        router.push('/login');
+        authStore.dispatch(UPDATE_USER, { ...request, idx: authStore.$state.authentication!.idx });
+        alert('회원정보가 수정되었습니다.');
       } catch (e) {
+        console.error(e);
         alert(e.message);
       }
     })

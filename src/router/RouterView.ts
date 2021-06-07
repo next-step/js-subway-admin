@@ -26,7 +26,7 @@ export class RouterView extends Component {
     router.setup();
   }
 
-  protected initChildComponent(el: HTMLElement, componentName: 'StationsPage' | 'SectionsPage' | 'LinesPage' | 'LoginPage' | 'SignUpPage') {
+  protected initChildComponent(el: HTMLElement, componentName: 'StationsPage' | 'SectionsPage' | 'LinesPage' | 'LoginPage' | 'SignUpPage' | 'MyPage') {
     return new pages[componentName](el);
   }
 }

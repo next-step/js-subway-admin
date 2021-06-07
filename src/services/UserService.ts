@@ -1,5 +1,5 @@
 import {authRepository, AuthRepository, userRepository, UserRepository} from "~repositories";
-import {Auth, AuthRequest, User, UserRequest} from "~@domain";
+import {Auth, AuthRequest, UpdateUserRequest, User, UserRequest} from "~@domain";
 import {ExistedUserError, InvalidCredentialError} from "~exceptions";
 import {getNextIdx} from "~utils";
 
@@ -26,8 +26,30 @@ export class UserService {
     }
     this.userRepository.set([
       ...users,
-      user
+      {
+        ...user,
+        idx: getNextIdx(),
+      }
     ]);
+  }
+
+  public updateUser(request: UpdateUserRequest): void {
+    const users: User[] = this.getUsers();
+    const user: User = users.find(v => v.idx === request.idx)!;
+    const existed = users.find(v => v.idx !== request.idx && v.email === request.email);
+    if (existed) {
+      throw new ExistedUserError();
+    }
+
+    users[users.indexOf(user)] = { ...user, name: request.name, email: request.email };
+
+    this.userRepository.set(users);
+    this.authRepository.set({
+      idx: user.idx,
+      name: request.name,
+      email: request.email,
+    });
+
   }
 
   public signIn({ email, password }: AuthRequest): Auth {
@@ -37,10 +59,7 @@ export class UserService {
       throw new InvalidCredentialError();
     }
     const { password: p, ...auth } = user;
-    this.authRepository.set({
-      ...auth,
-      idx: getNextIdx(),
-    });
+    this.authRepository.set(auth);
 
     return this.getAuth()!;
   }
