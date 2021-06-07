@@ -1,8 +1,8 @@
 import Component from "@/core/component";
-import view from "@/pages/Login/view";
 import { LoginForm } from "@/components";
 import { PAGE_TITLE } from "@/constants";
 import { IPageInfo } from "@/types";
+import { authStore } from "@/store";
 
 class Login extends Component {
   $loginForm: Component = {} as Component;
@@ -17,12 +17,13 @@ class Login extends Component {
   }
 
   protected beforeChangeURL(): boolean {
-    // 이미 로그인되었는지 확인
+    const { isLoggedIn } = authStore.getState();
+    if (isLoggedIn) return false;
     return true;
   }
 
   public render(): IPageInfo {
-    console.log(this.$container);
+    if (!this.beforeChangeURL()) return;
     return {
       title: PAGE_TITLE.LOGIN,
       contents: this.$container.outerHTML,

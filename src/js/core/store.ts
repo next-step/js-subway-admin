@@ -1,10 +1,14 @@
 import Component from "@/core/component";
 class Store<IState> {
-  observers: Component[] = [];
-  state: IState;
+  private observers: Component[] = [];
+  protected state: IState;
   constructor() {
     this.observers = [];
     this.initState();
+  }
+
+  public getState(): IState {
+    return this.state;
   }
   protected initState(): void {}
 
