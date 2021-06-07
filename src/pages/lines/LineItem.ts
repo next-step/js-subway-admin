@@ -2,19 +2,22 @@ import {Component} from "~@core";
 
 interface LineItemProps {
   name: string;
+  color: string;
+  editLine: () => void;
 }
 
 export class LineItem extends Component<{}, LineItemProps> {
 
   protected template(): string {
+    const { name, color } = this.$props;
     return `
       <div class="d-flex items-center py-2 relative">
-        <span class="subway-line-color-dot bg-blue-400"></span>
+        <span class="subway-line-color-dot bg-${color}"></span>
         <span class="w-100 pl-6 subway-line-list-item-name">${this.$props.name}</span>
-        <button type="button" class="bg-gray-50 text-gray-500 text-sm mr-1">
+        <button type="button" class="bg-gray-50 text-gray-500 text-sm mr-1 edit">
           수정
         </button>
-        <button type="button" class="bg-gray-50 text-gray-500 text-sm">
+        <button type="button" class="bg-gray-50 text-gray-500 text-sm remove">
           삭제
         </button>
       </div>
@@ -22,5 +25,10 @@ export class LineItem extends Component<{}, LineItemProps> {
     `;
   }
 
+  protected setEvent() {
+    this.addEvent('click', '.edit', (event: MouseEvent) => {
+      this.$props.editLine();
+    });
+  }
 
 }

@@ -30,16 +30,7 @@ export const lineStore = new Store<LineStoreState>({
     },
 
     [ADD_LINE]({ dispatch }, lineRequest: LineRequest) {
-      const line = lineService.addLine(lineRequest);
-
-      sectionService.addSection({
-        upStation: lineRequest.upStation,
-        downStation: lineRequest.downStation,
-        distance: lineRequest.distance,
-        duration: lineRequest.duration,
-        line: line.idx,
-      });
-
+      lineService.addLine(lineRequest);
       dispatch(GET_LINES);
     },
 
