@@ -12,7 +12,7 @@ interface SectionStoreState {
   sections: Section[];
 }
 
-export const stationStore = new Store<SectionStoreState>({
+export const sectionStore = new Store<SectionStoreState>({
   state: {
     sections: sectionService.getSections(),
   },

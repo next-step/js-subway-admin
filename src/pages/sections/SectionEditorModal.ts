@@ -1,70 +1,94 @@
 import {Component} from "~@core";
+import {Line, SectionRequest, Station} from "~@domain";
+import {parseFormData} from "~utils";
 
-interface SectionModalState {
+interface SectionEditorModalState {
   visible: boolean;
+  selectedLineIdx: number;
 }
 
-export class SectionEditorModal extends Component<SectionModalState> {
+interface SectionEditorModalProps {
+  addSection: (sectionRequest: SectionRequest) => void;
+  lines: Line[];
+  stations: Station[];
+}
+
+export class SectionEditorModal extends Component<SectionEditorModalState, SectionEditorModalProps> {
 
   protected setup() {
     this.$state = {
       visible: false,
+      selectedLineIdx: -1,
     }
   }
 
+  private get selectedLine(): Line | null {
+    const { selectedLineIdx } = this.$state;
+    const { lines } = this.$props;
+    return lines.find(v => v.idx === selectedLineIdx) || null;
+  }
+
   protected template(): string {
+    const {selectedLine} = this;
+    const {visible, selectedLineIdx} = this.$state;
+    const {lines, stations} = this.$props;
+
     return `
-      <div class="modal">
+      <div class="modal ${visible ? 'open' : ''}">
         <div class="modal-inner p-8">
+        
           <button class="modal-close">
             <svg viewbox="0 0 40 40">
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>
           </button>
+          
           <header>
             <h2 class="text-center">🔁 구간 추가</h2>
           </header>
-          <form>
+          
+          <form class="sectionAppender">
+          
             <div class="input-control">
-              <label for="subway-line-for-section" class="input-label" hidden
-                >노선</label
-              >
-              <select id="subway-line-for-section">
-                <option>1호선</option>
-                <option>2호선</option>
-                <option>3호선</option>
-                <option>4호선</option>
+              <label for="subway-line-for-section" class="input-label" hidden>노선</label>
+              <select id="subway-line-for-section" name="line" class="sectionAppenderLineSelector" required>
+                <option value="" ${selectedLine === null ? 'selected' : ''} disabled hidden>노선 선택</option>
+                ${lines.map(({ idx, name }) => `
+                  <option value="${idx}" ${selectedLineIdx === idx ? 'selected' : ''}>${name}</option>
+                `).join('')}
               </select>
             </div>
+            
             <div class="d-flex items-center input-control">
+            
               <label for="up-station" class="input-label" hidden>상행역</label>
-              <select id="up-station">
+              <select id="up-station" name="upStation" required>
                 <option value="" selected disabled hidden>상행역</option>
-                <option>사당</option>
-                <option>방배</option>
-                <option>서초</option>
+                ${stations.map(({ idx, name }) => `
+                  <option value="${idx}">${name}</option>
+                `).join('')}
               </select>
+              
               <div class="d-inline-block mx-3 text-2xl">➡️</div>
-              <label for="down-station" class="input-label" hidden
-                >하행역</label
-              >
-              <select id="down-station">
+              
+              <label for="down-station" class="input-label" hidden>하행역</label>
+              <select id="down-station" name="downStation" required>
                 <option value="" selected disabled hidden>하행역</option>
-                <option>사당</option>
-                <option>방배</option>
-                <option>서초</option>
+                ${stations.map(({ idx, name }) => `
+                  <option value="${idx}">${name}</option>
+                `).join('')}
               </select>
+              
             </div>
+            
             <div class="d-flex justify-end mt-3">
-              <button
-                type="submit"
-                name="submit"
-                class="input-submit bg-cyan-300"
-              >
+              <button type="submit" name="submit" class="input-submit bg-cyan-300">
                 확인
               </button>
             </div>
+            
           </form>
+          
         </div>
       </div>
     `;
@@ -80,5 +104,21 @@ export class SectionEditorModal extends Component<SectionModalState> {
 
   protected setEvent() {
     this.addEvent('click', '.modal-close', () => this.close());
+
+    this.addEvent('change', '.sectionAppenderLineSelector', (event: InputEvent) => {
+      const target = event.target as HTMLSelectElement;
+      this.$state.selectedLineIdx = Number(target.value);
+    });
+
+    this.addEvent('submit', '.sectionAppender', (event: Event) => {
+      const frm = event.target as HTMLFormElement;
+      const sectionRequest = Object.entries(parseFormData(frm))
+                                   .reduce((obj: any, [k, v]) => {
+                                     obj[k] = Number(v);
+                                     return obj;
+                                   }, {}) as SectionRequest;
+
+      this.$props.addSection(sectionRequest);
+    });
   }
 }

@@ -35,24 +35,12 @@ export interface Section {
   upStation: number;
   downStation: number;
   line: number;
-  distance: number;
-  duration: number;
-}
-export interface SectionResponse {
-  idx: number;
-  upStation: Station;
-  downStation: Station;
-  line: Line;
-  distance: number;
-  duration: number;
 }
 
 export interface SectionRequest {
   upStation: number;
   downStation: number;
   line: number;
-  distance: number;
-  duration: number;
 }
 
 export interface Line {
@@ -63,15 +51,6 @@ export interface Line {
   downStation: number;
   distance: number;
   duration: number;
-}
-
-export interface LineResponse {
-  idx: number;
-  name: string;
-  color: string;
-  totalDistance: number;
-  totalDuration: number;
-  stations: Station[];
 }
 
 export interface LineRequest {
