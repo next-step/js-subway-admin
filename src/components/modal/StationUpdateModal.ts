@@ -6,7 +6,11 @@ interface StationUpdateModalState {
   formData: Station | null;
 }
 
-export class StationUpdateModal extends Component<StationUpdateModalState> {
+interface StationUpdateModalProps {
+  update: (station: Station) => void;
+}
+
+export class StationUpdateModal extends Component<StationUpdateModalState, StationUpdateModalProps> {
 
   protected setup() {
     this.$state = {
@@ -29,7 +33,7 @@ export class StationUpdateModal extends Component<StationUpdateModalState> {
           <header>
             <h2 class="text-center">🖋 역 이름 수정</h2>
           </header>
-          <form>
+          <form class="updateForm">
             <div class="input-control">
               <label for="stationName" class="input-label" hidden>역 이름</label>
               <input
@@ -54,7 +58,6 @@ export class StationUpdateModal extends Component<StationUpdateModalState> {
   }
 
   public open(station: Station) {
-    console.log(station);
     this.$state.visible = true;
     this.$state.formData = station;
   }
@@ -65,5 +68,14 @@ export class StationUpdateModal extends Component<StationUpdateModalState> {
 
   protected setEvent() {
     this.addEvent('click', '.modal-close', () => this.close());
+
+    this.addEvent('submit', '.updateForm', (event: Event) => {
+      event.preventDefault();
+      const frm = event.target as HTMLFormElement;
+      this.$props.update({
+        ...this.$state.formData!,
+        name: frm.stationName.value,
+      });
+    })
   }
 }

@@ -27,7 +27,7 @@ export class Stations extends Component<StationState> {
         <div class="heading">
           <h2 class="mt-1">🚉 역 관리</h2>
         </div>
-        <form>
+        <form class="addForm">
           <div class="d-flex w-100">
             <label for="station-name" class="input-label" hidden>
               역 이름
@@ -74,30 +74,65 @@ export class Stations extends Component<StationState> {
 
   protected initChildComponent(el: HTMLElement, componentName: string) {
     if (componentName === 'StationUpdateModal') {
-      return new StationUpdateModal(el);
+      return new StationUpdateModal(el, {
+        update: this.updateStation.bind(this)
+      });
     }
   }
 
-  private addStation(stationName: string) {
-    if (stationName.length < MIN_STATION_LENGTH) {
-      return alert(`역의 이름은 ${MIN_STATION_LENGTH}글자 이상으로 입력해주세요.`);
-    }
+  private get $modal(): StationUpdateModal {
+    return this.$components.StationUpdateModal as StationUpdateModal;
+  }
 
-    if (stationName.length >= MAX_STATION_LENGTH) {
-      return alert(`역의 이름은 ${MAX_STATION_LENGTH}글자 이하로 입력해주세요.`);
+  private loadStations() {
+    this.$state.stations = stationService.getStations();
+  }
+
+  private addStation(stationName: string) {
+    try {
+      this.validateStationName(stationName);
+    } catch (message) {
+      return alert(message);
     }
 
     try {
       stationService.addStation(stationName);
-      this.$state.stations = stationService.getStations();
+      this.loadStations();
       alert('역이 추가되었습니다.');
     } catch (e) {
       alert(e.message);
     }
   }
 
+  private updateStation(station: Station) {
+    try {
+      this.validateStationName(station.name);
+    } catch (message) {
+      return alert(message);
+    }
+
+    try {
+      stationService.updateStation(station);
+      this.loadStations();
+      alert('역이 수정되었습니다.');
+      this.$modal.close();
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
+  private validateStationName(stationName: string) {
+    if (stationName.length < MIN_STATION_LENGTH) {
+      throw `역의 이름은 ${MIN_STATION_LENGTH}글자 이상으로 입력해주세요.`;
+    }
+
+    if (stationName.length >= MAX_STATION_LENGTH) {
+      throw `역의 이름은 ${MAX_STATION_LENGTH}글자 이하로 입력해주세요.`;
+    }
+  }
+
   protected setEvent() {
-    this.addEvent('submit', 'form', (event: Event) => {
+    this.addEvent('submit', '.addForm', (event: Event) => {
       event.preventDefault();
       const frm = event.target as HTMLFormElement;
       this.addStation(frm.stationName.value);
@@ -105,9 +140,8 @@ export class Stations extends Component<StationState> {
 
     this.addEvent('click', '.update', (event: MouseEvent) => {
       event.preventDefault();
-      const $component = this.$components.StationUpdateModal as StationUpdateModal;
       const idx = selectParentIdx(event.target as HTMLElement);
-      $component.open(this.$state.stations.find(v => v.idx === idx)!);
+      this.$modal.open(this.$state.stations.find(v => v.idx === idx)!);
     });
   }
 }

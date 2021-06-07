@@ -23,8 +23,9 @@ export function parseFormData <T>(form: HTMLFormElement): T {
 }
 
 export function getNextIdx () {
-  let idx = 0;
+  let idx = Date.now();
   return (() => {
+
     idx += 1;
     return idx;
   })();

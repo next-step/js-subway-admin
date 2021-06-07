@@ -39,6 +39,9 @@ export class StationService {
   public updateStation(station: Station) {
     const stations = this.getStations();
     const index = this.getStationIndex(station.idx, stations);
+    if (stations.find(v => v.idx !== station.idx &&  v.name === station.name)) {
+      throw new ExistedStationError();
+    }
     stations[index] = station;
 
     this.stationRepository.set(stations);
