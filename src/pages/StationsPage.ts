@@ -1,25 +1,15 @@
 import {Component} from "~@core";
 import {Station} from "~@domain";
-import {stationService} from "~services";
 import {StationAppender, StationItem, StationUpdateModal} from "./stations";
-
-interface StationsPageState {
-  stations: Station[];
-}
+import {ADD_STATION, REMOVE_STATION, stationStore, UPDATE_STATION} from "~store";
 
 const MIN_STATION_LENGTH = 2;
 const MAX_STATION_LENGTH = 20;
 
-export class StationsPage extends Component<StationsPageState> {
-
-  protected setup() {
-    this.$state = {
-      stations: stationService.getStations(),
-    }
-  }
+export class StationsPage extends Component {
 
   protected template(): string {
-    const { stations } = this.$state;
+    const { stations } = stationStore.$state;
 
     return `
       <div class="wrapper bg-white p-10">
@@ -55,7 +45,7 @@ export class StationsPage extends Component<StationsPageState> {
     }
 
     if (componentName === 'StationItem') {
-      const station = this.$state.stations[Number(el.dataset.key)];
+      const station = stationStore.$state.stations[Number(el.dataset.key)];
       return new StationItem(el, {
         name: station.name,
         editStation: () => this.$modal.open(station),
@@ -68,10 +58,6 @@ export class StationsPage extends Component<StationsPageState> {
     return this.$components.StationUpdateModal as StationUpdateModal;
   }
 
-  private loadStations() {
-    this.$state.stations = stationService.getStations();
-  }
-
   private addStation(stationName: string) {
     try {
       this.validateStationName(stationName);
@@ -80,8 +66,7 @@ export class StationsPage extends Component<StationsPageState> {
     }
 
     try {
-      stationService.addStation(stationName);
-      this.loadStations();
+      stationStore.dispatch(ADD_STATION, stationName);
       alert('역이 추가되었습니다.');
     } catch (e) {
       alert(e.message);
@@ -96,8 +81,7 @@ export class StationsPage extends Component<StationsPageState> {
     }
 
     try {
-      stationService.updateStation(station);
-      this.loadStations();
+      stationStore.dispatch(UPDATE_STATION, station);
       alert('역이 수정되었습니다.');
       this.$modal.close();
     } catch (e) {
@@ -108,9 +92,8 @@ export class StationsPage extends Component<StationsPageState> {
   private removeStation(station: Station) {
 
     try {
-      stationService.removeStation(station);
-      this.loadStations();
-      alert('역이 삭제되었습니다..');
+      stationStore.dispatch(REMOVE_STATION, station);
+      alert('역이 삭제되었습니다.');
     } catch (e) {
       alert(e.message);
     }
