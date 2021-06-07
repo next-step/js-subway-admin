@@ -1,4 +1,4 @@
-const getLoginTemplate = (): string => `
+const loginTemplate = `
 <div class="wrapper p-10 bg-white">
   <div class="heading">
     <h2>👋🏼 로그인</h2>
@@ -44,4 +44,4 @@ const getLoginTemplate = (): string => `
 </div>
 `;
 
-export default getLoginTemplate;
+export default loginTemplate;
