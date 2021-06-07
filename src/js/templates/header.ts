@@ -1,4 +1,4 @@
-const getHeaderTemplate = (): string => `
+const headerTemplate = `
 <a href="/" class="text-black">
   <h1 class="text-center font-bold">🚇 지하철 노선도</h1>
 </a>
@@ -17,4 +17,4 @@ const getHeaderTemplate = (): string => `
   </a>
 </nav>`;
 
-export default getHeaderTemplate;
+export default headerTemplate;
