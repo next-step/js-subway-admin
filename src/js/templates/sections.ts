@@ -20,6 +20,11 @@ export const sectionListItemTemplate = (
 </li>
 <hr class="my-0" />`;
 
+const createOptionTemplate = createListTemplate(optionTemplate);
+const createSectionListItemTemplate = createListTemplate(
+  sectionListItemTemplate
+);
+
 export const sectionsTemplate = (
   sectionList = []
 ): string => `<div class="wrapper bg-white p-10 sections-container">
@@ -35,11 +40,11 @@ export const sectionsTemplate = (
 <form class="d-flex items-center pl-1">
   <label for="subway-line" class="input-label" hidden>노선</label>
   <select id="subway-line" class="bg-blue-400">
-    ${createListTemplate(subwayLines, optionTemplate)}
+    ${createOptionTemplate(subwayLines)}
   </select>
 </form>
 <ul class="mt-3 pl-0">
-  ${createListTemplate(sectionList, sectionListItemTemplate)}
+  ${createSectionListItemTemplate(sectionList)}
 </ul>
 </div>`;
 
@@ -59,14 +64,14 @@ export const sectionsModal = `<div class="modal">
         >노선</label
       >
       <select id="subway-line-for-section">
-      ${createListTemplate(subwayLines, optionTemplate)}
+      ${createOptionTemplate(subwayLines)}
       </select>
     </div>
     <div class="d-flex items-center input-control">
       <label for="up-station" class="input-label" hidden>상행역</label>
       <select id="up-station">
         <option value="" selected disabled hidden>상행역</option>
-        ${createListTemplate(upLineStations, optionTemplate)}
+        ${createOptionTemplate(upLineStations)}
       </select>
       <div class="d-inline-block mx-3 text-2xl">➡️</div>
       <label for="down-station" class="input-label" hidden
@@ -74,7 +79,7 @@ export const sectionsModal = `<div class="modal">
       >
       <select id="down-station">
         <option value="" selected disabled hidden>하행역</option>
-        ${createListTemplate(downLineStations, optionTemplate)}
+        ${createOptionTemplate(downLineStations)}
       </select>
     </div>
     <div class="d-flex justify-end mt-3">

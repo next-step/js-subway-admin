@@ -1,3 +1,5 @@
+import { createListTemplate } from './common';
+
 export const stationListItemTemplate = (
   station: string
 ): string => `<li class="station-list-item d-flex items-center py-2">
@@ -46,6 +48,6 @@ export const stationsTemplate = (
         </div>
       </form>
       <ul class="mt-3 pl-0">
-        ${stationList.map(station => stationListItemTemplate(station)).join('')}
+        ${createListTemplate(stationListItemTemplate)(stationList)}
       </ul>
     </div>`;

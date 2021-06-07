@@ -23,6 +23,9 @@ export const lineListItemTemplate = (
 </li>
 <hr class="my-0" />`;
 
+const createOptionTemplate = createListTemplate(optionTemplate);
+const createLineListItemTemplate = createListTemplate(lineListItemTemplate);
+
 export const lineTemplate = (
   lineList = []
 ): string => `<div class="wrapper bg-white p-10 lines-container">
@@ -36,7 +39,7 @@ export const lineTemplate = (
   </button>
 </div>
 <ul class="mt-3 pl-0">
-  ${createListTemplate(lineList, lineListItemTemplate)}
+  ${createLineListItemTemplate(lineList)}
 </ul>
 </div>`;
 
@@ -68,14 +71,14 @@ export const lineModalTemplate = `<div class="modal">
       <label for="up-station" class="input-label" hidden>상행역</label>
       <select id="up-station" class="mr-2">
         <option value="" selected disabled hidden>상행역</option>
-        ${createListTemplate(upLineStations, optionTemplate)}
+        ${createOptionTemplate(upLineStations)}
       </select>
       <label for="down-station" class="input-label" hidden
         >하행역</label
       >
       <select id="down-station">
         <option value="" selected disabled hidden>하행역</option>
-        ${createListTemplate(downLineStations, optionTemplate)}
+        ${createOptionTemplate(downLineStations)}
       </select>
     </div>
     <div class="input-control">
