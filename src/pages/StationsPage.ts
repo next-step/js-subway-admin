@@ -3,8 +3,8 @@ import {Station} from "~@domain";
 import {StationAppender, StationItem, StationUpdateModal} from "./stations";
 import {ADD_STATION, REMOVE_STATION, stationStore, UPDATE_STATION} from "~store";
 
-const MIN_STATION_LENGTH = 2;
-const MAX_STATION_LENGTH = 20;
+const STATION_NAME_MIN_LENGTH = 2;
+const STATION_NAME_MAX_LENGTH = 20;
 
 export class StationsPage extends Component {
 
@@ -101,12 +101,12 @@ export class StationsPage extends Component {
   }
 
   private validateStationName(stationName: string) {
-    if (stationName.length < MIN_STATION_LENGTH) {
-      throw `역의 이름은 ${MIN_STATION_LENGTH}글자 이상으로 입력해주세요.`;
+    if (stationName.length < STATION_NAME_MIN_LENGTH) {
+      throw `역의 이름은 ${STATION_NAME_MIN_LENGTH}글자 이상으로 입력해주세요.`;
     }
 
-    if (stationName.length >= MAX_STATION_LENGTH) {
-      throw `역의 이름은 ${MAX_STATION_LENGTH}글자 이하로 입력해주세요.`;
+    if (stationName.length >= STATION_NAME_MAX_LENGTH) {
+      throw `역의 이름은 ${STATION_NAME_MAX_LENGTH}글자 이하로 입력해주세요.`;
     }
   }
 }

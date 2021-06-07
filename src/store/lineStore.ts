@@ -36,7 +36,7 @@ export const lineStore = new Store<LineStoreState>({
         upStation: lineRequest.upStation,
         downStation: lineRequest.downStation,
         distance: lineRequest.distance,
-        intervalTime: lineRequest.intervalTime,
+        duration: lineRequest.duration,
         line: line.idx,
       });
 

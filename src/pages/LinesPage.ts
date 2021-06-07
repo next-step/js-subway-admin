@@ -1,24 +1,19 @@
 import {Component} from "~@core";
 import {LineModal} from "~pages/lines/LineModal";
 import '../assets/css/pages/lines.css';
-import {Line} from "~@domain";
-import {lineService} from "~services";
 import {LineItem} from "~pages/lines/LineItem";
+import {ADD_LINE, lineStore, stationStore} from "~store";
+import {LineRequest} from "~@domain";
 
-interface LineState {
-  lines: Line[];
-}
+const LINE_NAME_MIN_LENGTH = 2;
+const LINE_NAME_MAX_LENGTH = 10;
 
-export class LinesPage extends Component<LineState> {
-
-  protected setup() {
-    this.$state = {
-      lines: lineService.getLines(),
-    }
-  }
+export class LinesPage extends Component {
 
   protected template(): string {
-    const { lines } = this.$state;
+
+    const { lines } = lineStore.$state;
+
     return `
       <div class="wrapper bg-white p-10">
         <div class="heading d-flex">
@@ -43,19 +38,47 @@ export class LinesPage extends Component<LineState> {
 
   protected initChildComponent(el: HTMLElement, componentName: string) {
     if (componentName === 'LineItem') {
-      const line = this.$state.lines[Number(el.dataset.key)];
+      const line = lineStore.$state.lines[Number(el.dataset.key)];
       return new LineItem(el, {
         name: line.name
       });
     }
 
     if (componentName === 'LineModal') {
-      return new LineModal(el);
+      return new LineModal(el, {
+        stations: stationStore.$state.stations,
+        addLine: this.addLine.bind(this),
+      });
     }
   }
 
   private get $modal() {
     return this.$components.LineModal as LineModal;
+  }
+
+  private addLine(lineRequest: LineRequest) {
+    try {
+      this.validateLineName(lineRequest.name);
+    } catch (message) {
+      return alert(message);
+    }
+
+    try {
+      lineStore.dispatch(ADD_LINE, lineRequest);
+      alert('노선이 추가되었습니다.');
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
+  private validateLineName(stationName: string) {
+    if (stationName.length < LINE_NAME_MIN_LENGTH) {
+      throw `노선의 이름은 ${LINE_NAME_MIN_LENGTH}글자 이상으로 입력해주세요.`;
+    }
+
+    if (stationName.length >= LINE_NAME_MAX_LENGTH) {
+      throw `노선의 이름은 ${LINE_NAME_MAX_LENGTH}글자 이하로 입력해주세요.`;
+    }
   }
 
   protected setEvent() {

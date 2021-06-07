@@ -36,7 +36,7 @@ export interface Section {
   downStation: number;
   line: number;
   distance: number;
-  intervalTime: number;
+  duration: number;
 }
 export interface SectionResponse {
   idx: number;
@@ -44,7 +44,7 @@ export interface SectionResponse {
   downStation: Station;
   line: Line;
   distance: number;
-  intervalTime: number;
+  duration: number;
 }
 
 export interface SectionRequest {
@@ -52,7 +52,7 @@ export interface SectionRequest {
   downStation: number;
   line: number;
   distance: number;
-  intervalTime: number;
+  duration: number;
 }
 
 export interface Line {
@@ -76,5 +76,5 @@ export interface LineRequest {
   upStation: number;
   downStation: number;
   distance: number;
-  intervalTime: number;
+  duration: number;
 }

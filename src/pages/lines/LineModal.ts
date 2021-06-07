@@ -1,12 +1,18 @@
 import {Component} from "~@core";
 import {colorOptions} from "~constants";
-import {selectOne} from "~utils";
+import {LineRequest, Station} from "~@domain";
+import {parseFormData, selectOne} from "~utils";
 
 interface LineModalState {
   visible: boolean;
 }
 
-export class LineModal extends Component<LineModalState> {
+interface LineModalProps {
+  stations: Station[];
+  addLine: (lineRequest: LineRequest) => void;
+}
+
+export class LineModal extends Component<LineModalState, LineModalProps> {
 
   protected setup() {
     this.$state = {
@@ -17,7 +23,7 @@ export class LineModal extends Component<LineModalState> {
   get lineColors(): string {
     return colorOptions
       .map((color: string, index: number) => `
-          <button type="button" class="color-option bg-${color}"></button>
+          <button type="button" class="color-option bg-${color}" data-color="${color}"></button>
           ${(index + 1) % 7 === 0 ? "<br/>" : ""}
       `)
       .join("");
@@ -25,6 +31,7 @@ export class LineModal extends Component<LineModalState> {
 
   protected template(): string {
     const { visible } = this.$state;
+    const { stations } = this.$props;
 
     return `
       <div class="modal ${visible ? 'open' : ''}">
@@ -37,13 +44,13 @@ export class LineModal extends Component<LineModalState> {
           <header>
             <h2 class="text-center">🛤️ 노선 추가</h2>
           </header>
-          <form>
+          <form class="lineAppender">
             <div class="input-control">
               <label for="subway-line-name" class="input-label" hidden>노선 이름</label>
               <input
                 type="text"
                 id="subway-line-name"
-                name="subway-line-name"
+                name="name"
                 class="input-field"
                 placeholder="노선 이름"
                 required
@@ -51,18 +58,18 @@ export class LineModal extends Component<LineModalState> {
             </div>
             <div class="d-flex items-center input-control">
               <label for="up-station" class="input-label" hidden>상행역</label>
-              <select id="up-station" class="mr-2">
+              <select id="up-station" name="upStation" class="mr-2" required>
                 <option value="" selected disabled hidden>상행역</option>
-                <option>사당</option>
-                <option>방배</option>
-                <option>서초</option>
+                ${stations.map(({ name, idx }) => `
+                  <option value="${idx}">${name}</option>
+                `)}
               </select>
               <label for="down-station" class="input-label" hidden>하행역</label>
-              <select id="down-station">
+              <select id="down-station" name="downStation" required>
                 <option value="" selected disabled hidden>하행역</option>
-                <option>사당</option>
-                <option>방배</option>
-                <option>서초</option>
+                ${stations.map(({ name, idx }) => `
+                  <option value="${idx}">${name}</option>
+                `)}
               </select>
             </div>
             <div class="input-control">
@@ -79,7 +86,7 @@ export class LineModal extends Component<LineModalState> {
               <input
                 type="number"
                 id="duration"
-                name="arrival"
+                name="duration"
                 class="input-field"
                 placeholder="상행 하행역 시간"
                 required
@@ -91,7 +98,7 @@ export class LineModal extends Component<LineModalState> {
                 <input
                   type="text"
                   id="subway-line-color"
-                  name="subway-line-color"
+                  name="color"
                   class="input-field"
                   placeholder="색상을 아래에서 선택해주세요."
                   disabled
@@ -103,11 +110,7 @@ export class LineModal extends Component<LineModalState> {
               ${this.lineColors}
             </div>
             <div class="d-flex justify-end mt-3">
-              <button
-                type="submit"
-                name="submit"
-                class="input-submit bg-cyan-300"
-              >
+              <button type="submit" name="submit" class="input-submit bg-cyan-300">
                 확인
               </button>
             </div>
@@ -127,5 +130,31 @@ export class LineModal extends Component<LineModalState> {
 
   protected setEvent() {
     this.addEvent('click', '.modal-close', () => this.close());
+
+    this.addEvent('click', '.color-option', ({ target }: MouseEvent) => {
+      const frm = selectOne('form', this.$target) as HTMLFormElement;
+      frm.color.value = (target as HTMLElement).dataset.color;
+    });
+
+    this.addEvent('submit', '.lineAppender', (event: Event) => {
+      event.preventDefault();
+      const frm = event.target as HTMLFormElement;
+
+      if (frm.color.value.trim().length === 0) {
+        return alert('색상을 선택해주세요');
+      }
+
+      frm.color.disabled = false;
+      const formData: Record<keyof LineRequest, string> = parseFormData(frm);
+      this.$props.addLine({
+        name: formData.name,
+        upStation: Number(formData.upStation),
+        downStation: Number(formData.downStation),
+        distance: Number(formData.distance),
+        duration: Number(formData.duration),
+        color: formData.color,
+      })
+      frm.color.disabled = true;
+    });
   }
 }
