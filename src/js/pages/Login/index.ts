@@ -1,28 +1,29 @@
 import Component from "@/core/component";
 import view from "@/pages/Login/view";
-import PAGE_TITLE from "@/constants/pageTitle";
+import { PAGE_TITLE } from "@/constants";
+import { IPageInfo } from "@/types";
 
 class Login extends Component {
-  protected beforeComponentMount() {
-    // 로그인 여부 확인해서 로그인되어있으면 리다이렉트
+  protected beforeComponentMount(): void {
+    // 로그인 되어있다면 뒤로가기 혹은 인덱스페이지로 푸시
   }
 
-  protected initDom() {
+  protected initDom(): void {
     this.$container = document.createElement("div");
     this.$container.className = "wrapper p-10 bg-white";
   }
 
-  protected componentMount() {
+  protected componentMount(): void {
     this.$container.innerHTML = view;
   }
 
-  protected bindEvents() {}
+  protected bindEvents(): void {}
 
-  public render() {
+  public render(): IPageInfo {
     this.mount();
     return {
       title: PAGE_TITLE.LOGIN,
-      contents: { main: this.$container.outerHTML },
+      contents: this.$container.outerHTML,
     };
   }
 }

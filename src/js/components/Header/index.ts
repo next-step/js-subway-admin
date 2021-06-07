@@ -7,7 +7,7 @@ class Header extends Component {
     this.$container = $("#header");
   }
 
-  protected componentMount() {
+  protected componentMount(): void {
     this.$container.innerHTML = view(false);
   }
 }

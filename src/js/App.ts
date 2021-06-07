@@ -1,16 +1,17 @@
 import Component from "@/core/component";
 import Header from "@/components/Header";
 import router from "@/router";
-import { PATH, MESSAGE } from "@/constants";
+import { PATH } from "@/constants";
 
 class App extends Component {
-  protected initChildren() {
-    new Header();
+  $header: Component = {} as Component;
+
+  protected initChildren(): void {
+    this.$header = new Header();
   }
 
   protected beforeComponentMount() {
-    alert(MESSAGE.LOGIN_REQUIRED);
-    router.push(PATH.LOGIN);
+    router.push(PATH.STATIONS);
   }
 }
 

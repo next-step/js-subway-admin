@@ -1,5 +1,5 @@
 import { PATH } from "@/constants";
-import { Login } from "@/pages";
+import { Login, Stations } from "@/pages";
 import Component from "@/core/component";
 import Router from "@/core/router";
 
@@ -12,7 +12,7 @@ const router = new Router<IPages>({
   [PATH.LINE]: new Login(),
   [PATH.SECTIONS]: new Login(),
   [PATH.SIGNUP]: new Login(),
-  [PATH.STATIONS]: new Login(),
+  [PATH.STATIONS]: new Stations(),
 });
 
 export default router;

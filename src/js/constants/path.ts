@@ -3,7 +3,7 @@ enum PATH {
   LOGIN = "/login",
   SECTIONS = "/sections",
   SIGNUP = "/signup",
-  STATIONS = "/stations",
+  STATIONS = "/",
 }
 
 export default PATH;

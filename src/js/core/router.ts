@@ -12,14 +12,15 @@ class Router<Ipage> {
   }
 
   public push(href: string): void {
-    if (this.pathname() === href) return;
-    const { title = "", contents } = this.pages[href]?.render();
-    history.pushState({ contents }, title, href);
+    const pageInfo = this.pages[href]?.render();
+    if (!pageInfo) return;
+    const { title = "", contents } = pageInfo;
+    history.pushState({ contents, href }, title, href);
     this.render();
   }
 
   public pathname(): string {
-    return history.state?.href;
+    return history.state.href;
   }
 
   private bindEvents(): void {

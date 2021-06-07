@@ -10,19 +10,23 @@ class Component {
     this.mount();
   }
 
-  protected beforeComponentMount() {}
-  protected bindEvents() {}
-  protected initDom() {}
-  protected initChildren() {}
-  protected componentMount() {}
+  protected beforeComponentMount(): void {}
+  protected bindEvents(): void {}
+  protected initDom(): void {}
+  protected initChildren(): void {}
+  protected componentMount(): void {}
 
-  public update() {
+  public update(): void {
     this.componentMount();
   }
 
-  protected mount() {
+  protected mount(): void {
     this.beforeComponentMount();
     this.componentMount();
+  }
+
+  protected beforeChangeURL(): boolean {
+    return true;
   }
 
   public render(): IPageInfo | void {}
