@@ -10,8 +10,8 @@ const styleLoader = {
   loader: 'style-loader',
   options: {
     // 여러개의 css, 또는 sass 파일을 불러올때 html파일에 여러개의 style태그가 생기는것이 아닌 하나의 style태그로 번들링해주는 옵션입니다.
-    injectType: 'singletonStyleTag'
-  }
+    injectType: 'singletonStyleTag',
+  },
 };
 
 // 비교적 최신 스타일 코드에 대한 크로스 브라우징을 위해 설정합니다.
@@ -19,9 +19,9 @@ const postcssLoader = {
   loader: 'postcss-loader',
   options: {
     postcssOptions: {
-      plugins: [['postcss-preset-env']]
-    }
-  }
+      plugins: [['postcss-preset-env']],
+    },
+  },
 };
 
 const isProduction = process.env.NODE_ENV === 'PRODUCTION';
@@ -29,7 +29,7 @@ const isProduction = process.env.NODE_ENV === 'PRODUCTION';
 module.exports = {
   // 절대 경로 설정를 설정합니다.
   resolve: {
-    modules: [path.resolve(__dirname, 'src'), 'node_modules']
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
   // 모듈들의 진입점 babel-polyfill은 애플리케이션에서 딱 한번만 실행되어야하기 때문에 entry에 추가해줍니다.
   entry: ['@babel/polyfill', './src/js/index.js'],
@@ -39,7 +39,7 @@ module.exports = {
     // [name]에 들어오는값은 entry파일의 이름 또는 webpack config파일에서 name프로퍼티값으로 지정한 값이 들어오게 됩니다.
     filename: '[name].[chunkhash].js',
     // 번들 파일을 만들 경로 __dirname은 이 변수를 쓴 파일의 절대경로를 반환해준다. 그리고 path.resolve함수를 통해 인자들 사이에 / 를 넣어 합쳐줍니다.
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
   // 사용 할 모듈들을 정의
   module: {
@@ -58,20 +58,16 @@ module.exports = {
                 loader: 'css-loader',
                 options: {
                   // css를 module처럼 사용하기 위해 클래스 선택자를 해시값으로 만들어주고 그것을 js파일에서 import해서 사용할 수 있다.
-                  modules: true
-                }
+                  modules: true,
+                },
               },
-              postcssLoader
-            ]
+              postcssLoader,
+            ],
           },
           {
-            use: [
-              !isProduction ? styleLoader : MiniCssExtractPlugin.loader,
-              'css-loader',
-              postcssLoader
-            ]
-          }
-        ]
+            use: [!isProduction ? styleLoader : MiniCssExtractPlugin.loader, 'css-loader', postcssLoader],
+          },
+        ],
       },
       {
         test: /.js$/,
@@ -79,11 +75,26 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      }
-    ]
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name() {
+                return isProduction ? '[contenthash].[ext]' : '[path].[name].[ext]';
+              },
+              publicPath: 'assets/',
+              outputPath: 'assets/',
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     // template으로 지정한 파일로 build시 필요한 script나 link태그의 경로를 삽입하여 index.html파일을 생성해줍니다. 만약 번들파일이 hash값으로 나온다면 이것의 이름에 대해 신경 쓸 필요가 없습니다.
@@ -92,14 +103,14 @@ module.exports = {
       minify: isProduction && {
         collapseWhitespace: true,
         useShortDoctype: true,
-        removeScriptTypeAttributes: true
-      }
+        removeScriptTypeAttributes: true,
+      },
     }),
     // 캐싱의 문제때문에 생길 수 있는 변수를 방지하거나, hash값으로 번들파일이 나올때 불 필요한 이전 파일은 삭제시켜줍니다.
     new CleanWebpackPlugin(),
     // webpack이 build시에 전역에서 참조할 수 있는 상수값을 생성해줍니다. 모든 모듈들이 이 값을 참조 할 수 있고 지금은 개발모드인지 배포모드인지 모든 webpack설정파일에서 참조하기 위해 사용했습니다.
     new webpack.DefinePlugin({
-      IS_PRODUCTION: isProduction
-    })
-  ]
+      IS_PRODUCTION: isProduction,
+    }),
+  ],
 };
