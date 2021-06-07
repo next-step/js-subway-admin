@@ -1,0 +1,25 @@
+import { state } from '../utils/state';
+import { getData } from '../utils/storage';
+import { createOptionsTemplate } from '../utils/template';
+
+const stationsSelectTemplate = `<div class="d-flex items-center input-control">
+  <label for="up-station" class="input-label" hidden>상행역</label>
+  <select id="up-station" class="mr-2">
+    <option value="" selected disabled hidden>상행역</option>
+    ${createOptionsTemplate(getData('upLineStations'))}
+  </select>
+  ${
+    state.currentPage === 'sections'
+      ? '<div class="d-inline-block mx-3 text-2xl">➡️</div>'
+      : ''
+  }
+  <label for="down-station" class="input-label" hidden
+    >하행역</label
+  >
+  <select id="down-station">
+    <option value="" selected disabled hidden>하행역</option>
+    ${createOptionsTemplate(getData('downLineStations'))}
+  </select>
+  </div>`;
+
+export default stationsSelectTemplate;

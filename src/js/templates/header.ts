@@ -1,4 +1,4 @@
-export const headerTemplate = `
+const headerTemplate = `
 <a href="/" class="text-black">
   <h1 class="text-center font-bold poiner-events-none">🚇 지하철 노선도</h1>
 </a>
@@ -17,10 +17,4 @@ export const headerTemplate = `
   </a>
 </nav>`;
 
-export const optionTemplate = (item: string): string =>
-  `<option>${item}</option>`;
-
-export const createListTemplate =
-  (template: (item: string) => string) =>
-  (list: string[]): string =>
-    list.map((item: string) => template(item)).join('');
+export default headerTemplate;
