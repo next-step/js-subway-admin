@@ -6,6 +6,7 @@
         "strict": true,
         "strictNullChecks": false,
         "noImplicitAny": false,
+        "moduleResolution": "node",
         "baseUrl": "./",
         "paths": {
             "@/*":["src/js/*"]

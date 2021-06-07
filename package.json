@@ -49,5 +49,8 @@
       "prettier --write"
     ]
   },
-  "browserslist": "> 0.25%, not dead"
+  "browserslist": "> 0.25%, not dead",
+  "dependencies": {
+    "@babel/runtime": "^7.14.0"
+  }
 }
