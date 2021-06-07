@@ -30,7 +30,9 @@ class Router<Ipage> {
   }
 
   private render(): void {
-    $("#main").innerHTML = history.state.contents;
+    const { contents, href } = history.state;
+    $("#main").innerHTML = contents;
+    this.pages[href].bindEvents();
   }
 }
 

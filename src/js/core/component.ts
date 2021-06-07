@@ -1,15 +1,15 @@
 import { IPageInfo } from "@/types";
 
 class Component {
-  protected $root: HTMLElement = document.createElement("div");
   protected $container: HTMLElement = document.createElement("div");
+  protected children: Component[] = [];
 
-  constructor() {
+  constructor(readonly $root?: HTMLElement) {
     this.mount();
   }
 
   protected beforeComponentMount(): void {}
-  protected bindEvents(): void {}
+  public bindEvents(): void {}
   protected initDom(): void {}
   protected initChildren(): void {}
   protected componentMount(): void {}
@@ -21,7 +21,6 @@ class Component {
   protected mount(): void {
     this.initDom();
     this.initChildren();
-    this.bindEvents();
     this.beforeComponentMount();
     this.componentMount();
   }
