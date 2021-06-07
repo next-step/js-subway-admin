@@ -3,7 +3,7 @@
         "target":"ESNext",
         "module": "amd",
         "sourceMap": true,
-        "strict": true,
+        "strict": false ,
         "strictNullChecks": false,
         "noImplicitAny": false,
         "moduleResolution": "node",
