@@ -1,11 +1,12 @@
-import {lineRepository, LineRepository} from "~repositories";
+import {lineRepository, LineRepository, sectionRepository, SectionRepository} from "~repositories";
 import {Line, LineRequest} from "~@domain";
 import {ExistedLineError, NotFoundLineError} from "~exceptions";
 import {getNextIdx} from "~utils";
 
 export class LineService {
   constructor(
-    private readonly lineRepository: LineRepository
+    private readonly lineRepository: LineRepository,
+    private readonly sectionRepository: SectionRepository,
   ) {}
 
   public getLines(): Line[] {
@@ -20,20 +21,24 @@ export class LineService {
     return index;
   }
 
-  public addLine(request: LineRequest): void {
+  public addLine(request: LineRequest): Line {
     const lines = this.getLines();
-    const has = !!lines.find(v => v.name === request);
+    const has = !!lines.find(v => v.name === request.name);
     if (has) {
       throw new ExistedLineError();
     }
 
-    this.lineRepository.set([
-      ...lines,
-      {
-        idx: getNextIdx(),
-        name: request,
-      }
-    ]);
+    const line: Line = {
+      idx: getNextIdx(),
+      name: request.name,
+      upStation: request.upStation,
+      downStation: request.downStation,
+      color: request.color,
+    };
+
+    this.lineRepository.set([ ...lines, line ]);
+
+    return line;
   }
 
   public updateLine(line: Line) {
@@ -52,4 +57,4 @@ export class LineService {
   }
 }
 
-export const lineService = new LineService(lineRepository);
+export const lineService = new LineService(lineRepository, sectionRepository);

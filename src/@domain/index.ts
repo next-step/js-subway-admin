@@ -32,32 +32,49 @@ export type StationRequest = string;
 
 export interface Section {
   idx: number;
-  from: number;
-  to: number;
+  upStation: number;
+  downStation: number;
   line: number;
+  distance: number;
+  intervalTime: number;
 }
 export interface SectionResponse {
   idx: number;
-  from: Station;
-  to: Station;
+  upStation: Station;
+  downStation: Station;
   line: Line;
+  distance: number;
+  intervalTime: number;
 }
 
 export interface SectionRequest {
-  from: Station;
-  to: Station;
-  line: Line;
+  upStation: number;
+  downStation: number;
+  line: number;
+  distance: number;
+  intervalTime: number;
 }
 
 export interface Line {
   idx: number;
   name: string;
+  color: string;
+  upStation: number;
+  downStation: number;
 }
 
 export interface LineResponse {
   idx: number;
   name: string;
+  color: string;
   stations: Station[];
 }
 
-export type LineRequest = string;
+export interface LineRequest {
+  name: string;
+  color: string;
+  upStation: number;
+  downStation: number;
+  distance: number;
+  intervalTime: number;
+}

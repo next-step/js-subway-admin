@@ -29,17 +29,17 @@ export const stationStore = new Store<StationStoreState>({
       commit(SET_STATIONS, stationService.getStations());
     },
 
-    [ADD_STATION]({ commit, dispatch }, stationName: string) {
+    [ADD_STATION]({ dispatch }, stationName: string) {
       stationService.addStation(stationName);
       dispatch(GET_STATIONS);
     },
 
-    [UPDATE_STATION]({ commit, dispatch }, station: Station) {
+    [UPDATE_STATION]({ dispatch }, station: Station) {
       stationService.updateStation(station);
       dispatch(GET_STATIONS);
     },
 
-    [REMOVE_STATION]({ commit, dispatch }, station: Station) {
+    [REMOVE_STATION]({ dispatch }, station: Station) {
       stationService.removeStation(station);
       dispatch(GET_STATIONS);
     },

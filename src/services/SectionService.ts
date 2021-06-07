@@ -20,9 +20,9 @@ export class SectionService {
     return index;
   }
 
-  public addSection({ from, to, line }: SectionRequest): void {
+  public addSection(request: SectionRequest): void {
     const sections = this.getSections();
-    const has = !!sections.find(v => v.from === from.idx && v.to === to.idx);
+    const has = !!sections.find(v => v.upStation === request.upStation && v.downStation === request.downStation);
     if (has) {
       throw new ExistedSectionError();
     }
@@ -30,10 +30,8 @@ export class SectionService {
     this.sectionRepository.set([
       ...sections,
       {
+        ...request,
         idx: getNextIdx(),
-        from: from.idx,
-        to: to.idx,
-        line: line.idx,
       }
     ]);
   }
