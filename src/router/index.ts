@@ -2,12 +2,12 @@ import {Router} from "~@core";
 
 export const router = new Router({
   routes: {
-    '/': 'Stations',
-    '/stations': 'Stations',
-    '/lines': 'Lines',
-    '/sections': 'Sections',
-    '/login': 'Login',
-    '/signup': 'SignUp',
+    '/': 'StationsPage',
+    '/stations': 'StationsPage',
+    '/lines': 'LinesPage',
+    '/sections': 'SectionsPage',
+    '/login': 'LoginPage',
+    '/signup': 'SignUpPage',
   }
 });
 

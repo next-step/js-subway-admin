@@ -3,6 +3,7 @@ import {router} from "~router";
 import {authStore} from "~store";
 import * as pages from "~pages";
 
+
 export class RouterView extends Component {
   protected template(): string {
     const { route } = router;
@@ -25,7 +26,7 @@ export class RouterView extends Component {
     router.setup();
   }
 
-  protected initChildComponent(el: HTMLElement, componentName: 'Stations' | 'Sections' | 'Lines' | 'Login' | 'SignUp') {
+  protected initChildComponent(el: HTMLElement, componentName: 'StationsPage' | 'SectionsPage' | 'LinesPage' | 'LoginPage' | 'SignUpPage') {
     return new pages[componentName](el);
   }
 }

@@ -2,7 +2,7 @@ import {Component} from "~@core";
 import {SectionModal} from "~components/modal/SectionModal";
 import '../assets/css/pages/sections.css';
 
-export class Sections extends Component {
+export class SectionsPage extends Component {
   protected template(): string {
     return `
       <div class="wrapper bg-white p-10">

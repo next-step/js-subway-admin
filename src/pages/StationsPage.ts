@@ -1,0 +1,129 @@
+import {Component} from "~@core";
+import {Station} from "~@domain";
+import {stationService} from "~services";
+import {StationAppender, StationItem, StationUpdateModal} from "./stations";
+
+interface StationsPageState {
+  stations: Station[];
+}
+
+const MIN_STATION_LENGTH = 2;
+const MAX_STATION_LENGTH = 20;
+
+export class StationsPage extends Component<StationsPageState> {
+
+  protected setup() {
+    this.$state = {
+      stations: stationService.getStations(),
+    }
+  }
+
+  protected template(): string {
+    const { stations } = this.$state;
+
+    return `
+      <div class="wrapper bg-white p-10">
+        <div class="heading">
+          <h2 class="mt-1">🚉 역 관리</h2>
+        </div>
+        <div data-component="StationAppender"></div>
+        ${stations.length > 0 ? `
+          <ul class="mt-3 pl-0" data-component="StationItems">
+            ${stations.map(({ idx, name }: Station, key) => `
+              <li style="list-style: none" data-idx="${idx}" data-key="${key}" data-component="StationItem"></li>
+            `).join('')}
+          </ul>
+        ` : `
+          <div style="padding: 20px 0; text-align: center;">등록된 역이 없습니다. 역을 추가해주세요.</div> 
+        `}
+      </div>
+      <div data-component="StationUpdateModal"></div>
+    `;
+  }
+
+  protected initChildComponent(el: HTMLElement, componentName: string) {
+    if (componentName === 'StationAppender') {
+      return new StationAppender(el, {
+        addStation: this.addStation.bind(this),
+      });
+    }
+
+    if (componentName === 'StationUpdateModal') {
+      return new StationUpdateModal(el, {
+        update: this.updateStation.bind(this),
+      });
+    }
+
+    if (componentName === 'StationItem') {
+      const station = this.$state.stations[Number(el.dataset.key)];
+      return new StationItem(el, {
+        name: station.name,
+        editStation: () => this.$modal.open(station),
+        removeStation: () => this.removeStation(station),
+      });
+    }
+  }
+
+  private get $modal(): StationUpdateModal {
+    return this.$components.StationUpdateModal as StationUpdateModal;
+  }
+
+  private loadStations() {
+    this.$state.stations = stationService.getStations();
+  }
+
+  private addStation(stationName: string) {
+    try {
+      this.validateStationName(stationName);
+    } catch (message) {
+      return alert(message);
+    }
+
+    try {
+      stationService.addStation(stationName);
+      this.loadStations();
+      alert('역이 추가되었습니다.');
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
+  private updateStation(station: Station) {
+    try {
+      this.validateStationName(station.name);
+    } catch (message) {
+      return alert(message);
+    }
+
+    try {
+      stationService.updateStation(station);
+      this.loadStations();
+      alert('역이 수정되었습니다.');
+      this.$modal.close();
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
+  private removeStation(station: Station) {
+
+    try {
+      stationService.removeStation(station);
+      this.loadStations();
+      alert('역이 삭제되었습니다..');
+    } catch (e) {
+      alert(e.message);
+    }
+
+  }
+
+  private validateStationName(stationName: string) {
+    if (stationName.length < MIN_STATION_LENGTH) {
+      throw `역의 이름은 ${MIN_STATION_LENGTH}글자 이상으로 입력해주세요.`;
+    }
+
+    if (stationName.length >= MAX_STATION_LENGTH) {
+      throw `역의 이름은 ${MAX_STATION_LENGTH}글자 이하로 입력해주세요.`;
+    }
+  }
+}

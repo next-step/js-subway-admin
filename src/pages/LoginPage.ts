@@ -6,7 +6,7 @@ import {router, RouterLink} from "~router";
 
 import '../assets/css/pages/auth.css';
 
-export class Login extends Component {
+export class LoginPage extends Component {
   protected template(): string {
     return `
       <div class="wrapper p-10 bg-white auth">

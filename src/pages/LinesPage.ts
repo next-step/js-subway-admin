@@ -8,7 +8,7 @@ interface LineState {
   lines: Line[];
 }
 
-export class Lines extends Component<LineState> {
+export class LinesPage extends Component<LineState> {
 
   protected setup() {
     this.$state = {

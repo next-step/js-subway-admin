@@ -4,7 +4,7 @@ import {AuthRequest, UserRequest} from "~@domain";
 import {parseFormData} from "~utils";
 import {router} from "~router";
 
-export class SignUp extends Component {
+export class SignUpPage extends Component {
   protected template(): string {
     return `
       <div class="wrapper p-10 bg-white auth">
