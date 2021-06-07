@@ -12,12 +12,17 @@ class Login extends Component {
     this.$container.className = "wrapper p-10 bg-white";
   }
 
+  protected componentMount() {
+    this.$container.innerHTML = view;
+  }
+
   protected bindEvents() {}
 
   public render() {
+    this.mount();
     return {
       title: PAGE_TITLE.LOGIN,
-      contents: { main: view },
+      contents: { main: this.$container.outerHTML },
     };
   }
 }

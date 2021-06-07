@@ -5,7 +5,7 @@ import { IPageInfo } from "@/types";
 import Component from "@/core/component";
 
 type IPages = {
-  [x in PATH]: Component;
+  [pathname in PATH]: Component;
 };
 
 class Router {
