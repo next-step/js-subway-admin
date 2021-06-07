@@ -1,5 +1,5 @@
 import { getLinesListsTemplate } from './shared';
-import { createMultipleLinesTemplates } from '../utils/createMultipleTemplates';
+import { createMultipleLinesTemplates } from './createTemplate';
 
 const linesTemplate = `
 <div class="wrapper bg-white p-10">

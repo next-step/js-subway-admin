@@ -1,5 +1,8 @@
 import { getStationsListsTemplate } from './shared';
-import { createMultipleStationsTemplates } from '../utils/createMultipleTemplates';
+import {
+  createMultipleStationsTemplates,
+  createInputTemplate
+} from './createTemplate';
 
 const stationsTemplate = `
 <div class="wrapper bg-white p-10">
@@ -8,17 +11,7 @@ const stationsTemplate = `
   </div>
   <form>
     <div class="d-flex w-100">
-      <label for="station-name" class="input-label" hidden>
-        역 이름
-      </label>
-      <input
-        type="text"
-        id="station-name"
-        name="stationName"
-        class="input-field"
-        placeholder="역 이름"
-        required
-      />
+      ${createInputTemplate('station-name', 'text', '역 이름', 'required')}
       <button
         type="button"
         name="submit"

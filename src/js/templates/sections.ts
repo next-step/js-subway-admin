@@ -2,7 +2,7 @@ import { getStationsListsTemplate, getOptionsTemplate } from './shared';
 import {
   createMultipleLinesTemplates,
   createMultipleStationsTemplates
-} from '../utils/createMultipleTemplates';
+} from './createTemplate';
 
 const sectionsTemplate = `
 <div class="wrapper bg-white p-10">

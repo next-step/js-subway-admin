@@ -1,3 +1,5 @@
+import { createInputTemplate } from './createTemplate';
+
 const loginTemplate = `
 <div class="wrapper p-10 bg-white">
   <div class="heading">
@@ -5,27 +7,10 @@ const loginTemplate = `
   </div>
   <form name="login" class="form">
     <div class="input-control">
-      <label for="email" class="input-label" hidden>이메일</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        class="input-field"
-        placeholder="이메일"
-        required
-      />
+      ${createInputTemplate('email', 'email', '이메일', 'required')}
     </div>
     <div class="input-control">
-      <label for="password" class="input-label" hidden
-        >비밀번호</label
-      >
-      <input
-        type="password"
-        id="password"
-        name="password"
-        class="input-field"
-        placeholder="비밀번호"
-      />
+    ${createInputTemplate('password', 'password', '비밀번호')}
     </div>
     <div class="input-control w-100">
       <button
