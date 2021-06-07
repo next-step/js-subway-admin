@@ -1,7 +1,7 @@
 import {Component} from "~@core";
 import {Station} from "~@domain";
 import {StationAppender, StationItem, StationUpdateModal} from "./stations";
-import {ADD_STATION, REMOVE_STATION, stationStore, UPDATE_STATION} from "~store";
+import {ADD_STATION, lineStore, REMOVE_STATION, stationStore, UPDATE_STATION} from "~store";
 
 const STATION_NAME_MIN_LENGTH = 2;
 const STATION_NAME_MAX_LENGTH = 20;
@@ -90,6 +90,15 @@ export class StationsPage extends Component {
   }
 
   private removeStation(station: Station) {
+
+    const isReferencing = !!lineStore.$state.lines.find(({ upStation, downStation }) => (
+      upStation === station.idx ||
+      downStation === station.idx
+    ));
+
+    if (isReferencing) {
+      return alert('노선에서 참조중인 역입니다. 삭제가 불가능합니다.');
+    }
 
     try {
       stationStore.dispatch(REMOVE_STATION, station);
