@@ -1,14 +1,5 @@
 import { getData } from '../utils/storage';
-import { createListTemplate } from '../utils/template';
-import itemButtonsTemplate from './itemButtons';
-
-const getStationsItemTemplate = (
-  station: string
-): string => `<li class="station-list-item d-flex items-center py-2">
-<span class="w-100 pl-2">${station}</span>
-${itemButtonsTemplate}
-</li>
-<hr class="my-0" />`;
+import { createStationsItemTemplate } from '../utils/template';
 
 const stationsTemplate = `<div class="wrapper bg-white p-10 stations-container">
       <div class="heading">
@@ -36,8 +27,8 @@ const stationsTemplate = `<div class="wrapper bg-white p-10 stations-container">
           </button>
         </div>
       </form>
-      <ul class="mt-3 pl-0">
-        ${createListTemplate(getStationsItemTemplate)(getData('stations'))}
+      <ul class="mt-3 pl-0 stations-list">
+        ${createStationsItemTemplate(getData('stations'))}
       </ul>
     </div>`;
 
