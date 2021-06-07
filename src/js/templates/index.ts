@@ -4,3 +4,5 @@ export { default as linesTemplate } from './lines';
 export { default as sectionsTemplate } from './sections';
 export { default as loginTemplate } from './login';
 export { default as homeTemplate } from './home';
+export { default as linesModalTemplate } from './linesModal';
+export { default as sectionsModalTemplate } from './sectionsModal';
