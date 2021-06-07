@@ -1,7 +1,7 @@
 import '../assets/css/pages/lines.css';
 import {Component} from "~@core";
 import {Line, LineRequest} from "~@domain";
-import {ADD_LINE, lineStore, stationStore, UPDATE_LINE} from "~store";
+import {ADD_LINE, lineStore, REMOVE_LINE, stationStore, UPDATE_LINE} from "~store";
 import {LineItem, LineEditModal} from "./lines";
 
 const LINE_NAME_MIN_LENGTH = 2;
@@ -42,6 +42,7 @@ export class LinesPage extends Component {
         name: line.name,
         color: line.color,
         editLine: () => this.$modal.open(line),
+        removeLine: () => this.removeLine(line),
       });
     }
 
@@ -83,6 +84,15 @@ export class LinesPage extends Component {
     try {
       lineStore.dispatch(UPDATE_LINE, line);
       alert('노선이 수정되었습니다.');
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
+  private removeLine(line: Line) {
+    try {
+      lineStore.dispatch(REMOVE_LINE, line);
+      alert('노선이 삭제되었습니다.');
     } catch (e) {
       alert(e.message);
     }

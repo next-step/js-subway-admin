@@ -4,6 +4,7 @@ interface LineItemProps {
   name: string;
   color: string;
   editLine: () => void;
+  removeLine: () => void;
 }
 
 export class LineItem extends Component<{}, LineItemProps> {
@@ -26,8 +27,14 @@ export class LineItem extends Component<{}, LineItemProps> {
   }
 
   protected setEvent() {
-    this.addEvent('click', '.edit', (event: MouseEvent) => {
+    this.addEvent('click', '.edit', () => {
       this.$props.editLine();
+    });
+
+    this.addEvent('click', '.remove', () => {
+      if (confirm('정말로 삭제하시겠습니까?')) {
+        this.$props.removeLine();
+      }
     });
   }
 
