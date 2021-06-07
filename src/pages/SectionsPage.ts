@@ -1,6 +1,6 @@
-import {Component} from "~@core";
-import {SectionModal} from "~components/modal/SectionModal";
 import '../assets/css/pages/sections.css';
+import {Component} from "~@core";
+import {SectionEditorModal} from "./sections";
 
 export class SectionsPage extends Component {
   protected template(): string {
@@ -8,10 +8,7 @@ export class SectionsPage extends Component {
       <div class="wrapper bg-white p-10">
         <div class="heading d-flex">
           <h2 class="mt-1 w-100">🔁 구간 관리</h2>
-          <button
-            type="button"
-            class="create-section-btn modal-trigger-btn bg-cyan-300 ml-2"
-          >
+          <button type="button" class="create-section-btn modal-trigger-btn bg-cyan-300 ml-2">
             구간 추가
           </button>
         </div>
@@ -43,13 +40,17 @@ export class SectionsPage extends Component {
           <hr class="my-0" />
         </ul>
       </div>
-      <div data-component="SectionModal"></div>
+      <div data-component="SectionEditorModal"></div>
     `;
   }
 
+  private get $modal(): SectionEditorModal {
+    return this.$components.SectionEditorModal as SectionEditorModal;
+  }
+
   protected initChildComponent(el: HTMLElement, componentName: string) {
-    if (componentName === 'SectionModal') {
-      return new SectionModal(el);
+    if (componentName === 'SectionEditorModal') {
+      return new SectionEditorModal(el);
     }
   }
 }

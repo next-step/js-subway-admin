@@ -4,7 +4,7 @@ interface SectionModalState {
   visible: boolean;
 }
 
-export class SectionModal extends Component<SectionModalState> {
+export class SectionEditorModal extends Component<SectionModalState> {
 
   protected setup() {
     this.$state = {
