@@ -6,6 +6,15 @@ export function selectAll <T extends HTMLElement>(selector: string, parent: HTML
   return [ ...parent.querySelectorAll(selector) ] as T[];
 }
 
+export function selectParent <T extends HTMLElement>(selector: string, child: HTMLElement): T {
+  return child.closest(selector) as T;
+}
+
+export function selectParentIdx(el: HTMLElement): number {
+  const $parent = selectParent('[data-idx]', el) as HTMLElement;
+  return Number($parent.dataset.idx);
+}
+
 export function parseFormData <T>(form: HTMLFormElement): T {
   return  [...new FormData(form)].reduce((obj: Record<string, string>, [k, v]) => {
     obj[k] = v as string;

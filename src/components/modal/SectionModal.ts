@@ -1,6 +1,17 @@
 import {Component} from "~@core";
 
-export class SectionModal extends Component {
+interface SectionModalState {
+  visible: boolean;
+}
+
+export class SectionModal extends Component<SectionModalState> {
+
+  protected setup() {
+    this.$state = {
+      visible: false,
+    }
+  }
+
   protected template(): string {
     return `
       <div class="modal">
@@ -57,5 +68,17 @@ export class SectionModal extends Component {
         </div>
       </div>
     `;
+  }
+
+  public open() {
+    this.$state.visible = true;
+  }
+
+  public close() {
+    this.$state.visible = false;
+  }
+
+  protected setEvent() {
+    this.addEvent('click', '.modal-close', () => this.close());
   }
 }

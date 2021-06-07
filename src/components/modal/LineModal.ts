@@ -3,14 +3,14 @@ import {colorOptions} from "~constants";
 import {selectOne} from "~utils";
 
 interface LineModalState {
-  isOpen: boolean;
+  visible: boolean;
 }
 
 export class LineModal extends Component<LineModalState> {
 
   protected setup() {
     this.$state = {
-      isOpen: false,
+      visible: false,
     }
   }
 
@@ -24,10 +24,10 @@ export class LineModal extends Component<LineModalState> {
   }
 
   protected template(): string {
-    const { isOpen } = this.$state;
+    const { visible } = this.$state;
 
     return `
-      <div class="modal ${isOpen ? 'open' : ''}">
+      <div class="modal ${visible ? 'open' : ''}">
         <div class="modal-inner p-8">
           <button class="modal-close">
             <svg viewbox="0 0 40 40">
@@ -118,11 +118,11 @@ export class LineModal extends Component<LineModalState> {
   }
 
   public open() {
-    this.$state.isOpen = true;
+    this.$state.visible = true;
   }
 
   public close() {
-    this.$state.isOpen = false;
+    this.$state.visible = false;
   }
 
   protected setEvent() {

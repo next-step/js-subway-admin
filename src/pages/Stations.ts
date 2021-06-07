@@ -1,6 +1,8 @@
 import {Component} from "~@core";
 import {Station} from "~@domain";
 import {stationService} from "~services";
+import {StationUpdateModal} from "~components/modal/StationUpdateModal";
+import {selectParentIdx} from "~utils";
 
 interface StationState {
   stations: Station[];
@@ -50,10 +52,10 @@ export class Stations extends Component<StationState> {
                 <li style="list-style: none" data-idx="${idx}">
                   <div class="station-list-item d-flex items-center py-2">
                     <span class="w-100 pl-2">${name}</span>
-                    <button type="button" class="bg-gray-50 text-gray-500 text-sm mr-1">
+                    <button type="button" class="bg-gray-50 text-gray-500 text-sm mr-1 update">
                       수정
                     </button>
-                    <button type="button" class="bg-gray-50 text-gray-500">
+                    <button type="button" class="bg-gray-50 text-gray-500 delete">
                       삭제
                     </button>          
                   </div>
@@ -66,7 +68,14 @@ export class Stations extends Component<StationState> {
           `
         }
       </div>
+      <div data-component="StationUpdateModal"></div>
     `;
+  }
+
+  protected initChildComponent(el: HTMLElement, componentName: string) {
+    if (componentName === 'StationUpdateModal') {
+      return new StationUpdateModal(el);
+    }
   }
 
   private addStation(stationName: string) {
@@ -92,6 +101,13 @@ export class Stations extends Component<StationState> {
       event.preventDefault();
       const frm = event.target as HTMLFormElement;
       this.addStation(frm.stationName.value);
+    });
+
+    this.addEvent('click', '.update', (event: MouseEvent) => {
+      event.preventDefault();
+      const $component = this.$components.StationUpdateModal as StationUpdateModal;
+      const idx = selectParentIdx(event.target as HTMLElement);
+      $component.open(this.$state.stations.find(v => v.idx === idx)!);
     });
   }
 }
