@@ -1,26 +1,28 @@
 import Component from "@/core/component";
 import view from "@/pages/Login/view";
+import { LoginForm } from "@/components";
 import { PAGE_TITLE } from "@/constants";
 import { IPageInfo } from "@/types";
 
 class Login extends Component {
-  protected beforeComponentMount(): void {
-    // 로그인 되어있다면 뒤로가기 혹은 인덱스페이지로 푸시
-  }
+  $loginForm: Component = {} as Component;
 
   protected initDom(): void {
     this.$container = document.createElement("div");
     this.$container.className = "wrapper p-10 bg-white";
   }
 
-  protected componentMount(): void {
-    this.$container.innerHTML = view;
+  protected initChildren() {
+    this.$loginForm = new LoginForm(this.$container);
   }
 
-  protected bindEvents(): void {}
+  protected beforeChangeURL(): boolean {
+    // 이미 로그인되었는지 확인
+    return true;
+  }
 
   public render(): IPageInfo {
-    this.mount();
+    console.log(this.$container);
     return {
       title: PAGE_TITLE.LOGIN,
       contents: this.$container.outerHTML,

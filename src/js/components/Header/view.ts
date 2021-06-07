@@ -15,7 +15,7 @@ const view = (isLoggedIn: boolean): string => {
   ${
     isLoggedIn
       ? `로그아웃`
-      : `  <a href="/login" class="my-1">
+      : `  <a href="#login" class="my-1">
   <button class="btn bg-white shadow mx-1">👤 로그인</button>
 </a>`
   }
