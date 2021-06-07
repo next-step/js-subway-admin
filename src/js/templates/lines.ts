@@ -1,6 +1,8 @@
 import { downLineStations, upLineStations } from '../utils/mock';
 import { optionTemplate, createListTemplate } from './common';
 
+const createOptionTemplate = createListTemplate(optionTemplate);
+
 export const lineListItemTemplate = (
   line: string
 ): string => `<li class="d-flex items-center py-2 relative">
@@ -23,9 +25,6 @@ export const lineListItemTemplate = (
 </li>
 <hr class="my-0" />`;
 
-const createOptionTemplate = createListTemplate(optionTemplate);
-const createLineListItemTemplate = createListTemplate(lineListItemTemplate);
-
 export const lineTemplate = (
   lineList = []
 ): string => `<div class="wrapper bg-white p-10 lines-container">
@@ -39,7 +38,7 @@ export const lineTemplate = (
   </button>
 </div>
 <ul class="mt-3 pl-0">
-  ${createLineListItemTemplate(lineList)}
+  ${createListTemplate(lineListItemTemplate)(lineList)}
 </ul>
 </div>`;
 

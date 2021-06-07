@@ -1,6 +1,8 @@
 import { downLineStations, subwayLines, upLineStations } from '../utils/mock';
 import { optionTemplate, createListTemplate } from './common';
 
+const createOptionTemplate = createListTemplate(optionTemplate);
+
 export const sectionListItemTemplate = (
   section: string
 ): string => `<li class="d-flex items-center py-2 relative">
@@ -19,11 +21,6 @@ export const sectionListItemTemplate = (
 </button>
 </li>
 <hr class="my-0" />`;
-
-const createOptionTemplate = createListTemplate(optionTemplate);
-const createSectionListItemTemplate = createListTemplate(
-  sectionListItemTemplate
-);
 
 export const sectionsTemplate = (
   sectionList = []
@@ -44,7 +41,7 @@ export const sectionsTemplate = (
   </select>
 </form>
 <ul class="mt-3 pl-0">
-  ${createSectionListItemTemplate(sectionList)}
+  ${createListTemplate(sectionListItemTemplate)(sectionList)}
 </ul>
 </div>`;
 
