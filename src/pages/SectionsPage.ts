@@ -2,7 +2,7 @@ import '../assets/css/pages/sections.css';
 import {Component} from "~@core";
 import {SectionEditorModal} from "./sections";
 import {SectionItem} from "~pages/sections/SectionItem";
-import {ADD_SECTION, lineStore, sectionStore, stationStore} from "~store";
+import {ADD_SECTION, lineStore, REMOVE_SECTION, sectionStore, stationStore} from "~store";
 import {Line, Section, SectionRequest, Station} from "~@domain";
 
 interface SectionsPageState {
@@ -103,7 +103,7 @@ export class SectionsPage extends Component<SectionsPageState> {
       const station = this.sectionStations[Number(el.dataset.key)];
       return new SectionItem(el, {
         name: station.name,
-        removeSection: this.removeSection(station.idx),
+        removeSection: () => this.removeSection(station.idx),
       });
     }
   }
@@ -119,7 +119,12 @@ export class SectionsPage extends Component<SectionsPageState> {
   }
 
   private removeSection(stationIdx: number) {
-
+    try {
+      sectionStore.dispatch(REMOVE_SECTION, stationIdx);
+      alert('구간이 삭제되었습니다.');
+    } catch (e) {
+      alert(e.message);
+    }
   }
 
   protected setEvent() {

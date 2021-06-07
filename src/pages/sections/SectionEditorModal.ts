@@ -59,27 +59,34 @@ export class SectionEditorModal extends Component<SectionEditorModalState, Secti
               </select>
             </div>
             
-            <div class="d-flex items-center input-control">
-            
-              <label for="up-station" class="input-label" hidden>상행역</label>
-              <select id="up-station" name="upStation" required>
-                <option value="" selected disabled hidden>상행역</option>
-                ${stations.map(({ idx, name }) => `
-                  <option value="${idx}">${name}</option>
-                `).join('')}
-              </select>
+            ${selectedLine === null ? `
+              <div style="text-align: center; margin: 10px 0;">
+                노선을 선택해주세요
+              </div>
+            ` : `
               
-              <div class="d-inline-block mx-3 text-2xl">➡️</div>
+              <div class="d-flex items-center input-control">
               
-              <label for="down-station" class="input-label" hidden>하행역</label>
-              <select id="down-station" name="downStation" required>
-                <option value="" selected disabled hidden>하행역</option>
-                ${stations.map(({ idx, name }) => `
-                  <option value="${idx}">${name}</option>
-                `).join('')}
-              </select>
-              
-            </div>
+                <label for="up-station" class="input-label" hidden>상행역</label>
+                <select id="up-station" name="upStation" required>
+                  <option value="" selected disabled hidden>상행역</option>
+                  ${stations.map(({ idx, name }) => `
+                    <option value="${idx}">${name}</option>
+                  `).join('')}
+                </select>
+                
+                <div class="d-inline-block mx-3 text-2xl">➡️</div>
+                
+                <label for="down-station" class="input-label" hidden>하행역</label>
+                <select id="down-station" name="downStation" required>
+                  <option value="" selected disabled hidden>하행역</option>
+                  ${stations.map(({ idx, name }) => `
+                    <option value="${idx}">${name}</option>
+                  `).join('')}
+                </select>
+                
+              </div>
+            `}
             
             <div class="d-flex justify-end mt-3">
               <button type="submit" name="submit" class="input-submit bg-cyan-300">

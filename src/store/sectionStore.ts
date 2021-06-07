@@ -34,13 +34,8 @@ export const sectionStore = new Store<SectionStoreState>({
       dispatch(GET_SECTIONS);
     },
 
-    [UPDATE_SECTION]({ dispatch }, station: Section) {
-      sectionService.updateSection(station);
-      dispatch(GET_SECTIONS);
-    },
-
-    [REMOVE_SECTION]({ dispatch }, station: Section) {
-      sectionService.removeSection(station);
+    [REMOVE_SECTION]({ dispatch }, stationIdx: number) {
+      sectionService.removeSection(stationIdx);
       dispatch(GET_SECTIONS);
     },
 

@@ -44,10 +44,24 @@ export class SectionService {
     this.sectionRepository.set(sections);
   }
 
-  public removeSection(section: Section) {
+  public removeSection(stationIdx: number) {
     const sections = this.getSections();
-    const index = this.getSectionIndex(section.idx, sections);
-    sections.splice(index, 1);
+    const upStationSection = sections.find(v => v.downStation === stationIdx); // A -> B
+    if (upStationSection) sections.splice(sections.indexOf(upStationSection), 1);
+
+    const downStationSection = sections.find(v => v.upStation === stationIdx); // B -> C
+    if (downStationSection) sections.splice(sections.indexOf(downStationSection), 1);
+
+    // A -> C
+    if (upStationSection && downStationSection) {
+      sections.push({
+        idx: getNextIdx(),
+        line: upStationSection.line,
+        upStation: upStationSection.upStation,
+        downStation: downStationSection.downStation,
+      })
+    }
+
     this.sectionRepository.set(sections);
   }
 }
