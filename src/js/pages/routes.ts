@@ -3,7 +3,11 @@ import { StringKeyObject } from '../types/index';
 import { PagesPath } from '../utils/constants';
 import { render, renderPages } from '../utils/render';
 import $ from '../utils/dom';
+import bindEvents from '../utils/bindEvents';
+import pagesEvents from './pagesEvents';
+import { _some } from '../utils/_';
 
+const $app = $('#app');
 const $main = $('main');
 const $header = $('header');
 
@@ -20,8 +24,28 @@ const pushHistoryState = (path: string): void => {
   document.title = titles[path];
 };
 
+const validatePathname = (path: string): boolean => {
+  if (
+    !_some(
+      Object.values(PagesPath),
+      value => value !== '/page-not-found' && value === path
+    )
+  ) {
+    window.history.replaceState(
+      { path: '/page-not-found' },
+      '',
+      '/page-not-found'
+    );
+    renderPages(PagesPath.PAGENOTFOUND, $app);
+    return false;
+  }
+  return true;
+};
+
 const initPage = (): void => {
   const { pathname } = window.location;
+
+  if (!validatePathname(pathname)) return;
   render(headerTemplate, $header);
   renderPages(pathname, $main);
 };
@@ -35,15 +59,21 @@ const onClickNavigate = (e: MouseEvent) => {
   const path = target.getAttribute('href');
 
   if (!path) return;
+  if (!validatePathname(path)) return;
 
   pushHistoryState(path);
+  renderPages(path, $main);
+  bindEvents(path, pagesEvents);
+};
+
+const onGoBack = (e: PopStateEvent): void => {
+  const { path } = e.state;
+
   renderPages(path, $main);
 };
 
 $header.addEventListener('click', onClickNavigate);
 
-window.addEventListener('popstate', e => {
-  renderPages(e.state.path, $main);
-});
+window.addEventListener('popstate', onGoBack);
 
 initPage();

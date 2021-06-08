@@ -3,5 +3,6 @@ export enum PagesPath {
   STATIONS = '/pages/stations',
   LINES = '/pages/lines',
   SECTIONS = '/pages/sections',
-  LOGIN = '/pages/login'
+  LOGIN = '/pages/login',
+  PAGENOTFOUND = '/page-not-found'
 }
