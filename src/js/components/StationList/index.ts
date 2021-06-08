@@ -37,11 +37,6 @@ class StationList extends Component {
       actions[type]();
     });
   }
-
-  public render(): void {
-    this.$root.appendChild(this.$container);
-    this.componentMount();
-  }
 }
 
 export default StationList;

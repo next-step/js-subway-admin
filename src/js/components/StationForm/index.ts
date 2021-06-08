@@ -24,11 +24,6 @@ class StationForm extends Component {
       name.value = "";
     });
   }
-
-  public render(): void {
-    this.$root.appendChild(this.$container);
-    this.componentMount();
-  }
 }
 
 export default StationForm;

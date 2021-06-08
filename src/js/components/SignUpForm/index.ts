@@ -31,11 +31,6 @@ class SignUpForm extends Component {
       );
     });
   }
-
-  public render(): void {
-    this.$root.appendChild(this.$container);
-    this.componentMount();
-  }
 }
 
 export default SignUpForm;

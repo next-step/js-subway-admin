@@ -33,11 +33,10 @@ class Component<IProps = unknown> {
 
   public pageInfo(): IPageInfo | void {}
 
-  public render(target?: HTMLElement): void {
-    target.innerHTML = "";
+  public render(target: HTMLElement): void {
     target.appendChild(this.$container);
     this.componentMount();
-    this.children.forEach((child) => child.render());
+    this.children.forEach((child) => child.render(this.$container));
   }
 }
 

@@ -25,12 +25,10 @@ class LoginForm extends Component {
       authService.login(email.value, password.value);
     });
 
-    $("#link", this.$container).addEventListener("click", handleLink);
-  }
-
-  public render(): void {
-    this.$root.appendChild(this.$container);
-    this.componentMount();
+    this.$container.addEventListener("click", (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (target.id === "link") handleLink(e);
+    });
   }
 }
 
