@@ -30,3 +30,11 @@ export function getNextIdx () {
     return idx;
   })();
 }
+
+export function debounce(fn: Function) {
+  let call: number = 0;
+  return (...args: any[]) => {
+    cancelAnimationFrame(call);
+    call = requestAnimationFrame(() => fn(...args));
+  }
+}

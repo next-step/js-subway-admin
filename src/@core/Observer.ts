@@ -1,7 +1,9 @@
+import {debounce} from "~utils";
+
 let currentObserver: Function | null = null;
 
 export function observe (fn: Function) {
-  currentObserver = fn;
+  currentObserver = debounce(fn);
   fn();
   currentObserver = null;
 }
@@ -21,8 +23,10 @@ export function observable<T> (obj: T): T {
       },
 
       set (newValue) {
-        _value = newValue;
-        observers.forEach(fn => fn?.());
+        if (JSON.stringify(_value) !== JSON.stringify(newValue)) {
+          _value = newValue;
+          observers.forEach(fn => fn?.());
+        }
       },
     })
   });
