@@ -7,6 +7,7 @@ const MESSAGES = {
   SIGNUP_SUCCESS: "회원가입 성공! 로그인 해주세요!",
   NOT_CORRECT_STATION: "올바르지 않은 역 이름입니다. 2글자 이상 입력해주세요.",
   EXIST_STATION: "이미 존재하는 역 입니다.",
+  CONFIRM_REMOVE_STATION: "정말로 역을 삭제하시겠습니까?",
 };
 
 export default MESSAGES;

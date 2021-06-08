@@ -10,12 +10,14 @@ const station = (id: string, name: string) => {
       <button
         type="button"
         class="bg-gray-50 text-gray-500 text-sm mr-1"
+        id="update"
       >
         수정
       </button>
       <button
         type="button"
         class="bg-gray-50 text-gray-500 text-sm"
+        id="remove"
       >
         삭제
       </button>

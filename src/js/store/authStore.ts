@@ -6,7 +6,7 @@ interface IState {
 
 class AuthStore extends Store<IState> {
   protected initState(): void {
-    this.state = { isLoggedIn: false };
+    this.state = { isLoggedIn: true };
   }
 }
 

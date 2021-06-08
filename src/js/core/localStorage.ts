@@ -26,6 +26,13 @@ class LocalStorage<T extends IDataBase> {
     this.set(newData);
     return newData;
   }
+
+  public remove(id: string): T[] {
+    const datas = this.getAll();
+    const newData = datas.filter((data) => data.id !== id);
+    this.set(newData);
+    return newData;
+  }
 }
 
 export default LocalStorage;
