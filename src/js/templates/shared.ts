@@ -3,7 +3,7 @@ export const getStationsListsTemplate = (station: string): string => `
   <span class="w-100 pl-2">${station}</span>
   <button
     type="button"
-    class="bg-gray-50 text-gray-500 text-sm mr-1"
+    class="bg-gray-50 text-gray-500 text-sm mr-1 modal-trigger-btn"
   >
     수정
   </button>
