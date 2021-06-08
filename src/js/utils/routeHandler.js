@@ -5,7 +5,7 @@ import { Home, Lines, Login, Sections, NotFound, Stations } from 'js/pages';
 const { HOME, LINES, LOGIN, SECTIONS, STATIONS } = routes;
 const $root = document.querySelector('#root');
 
-const routeHandler = () => {
+const routeHandler = async () => {
   const $app = document.createElement('div');
   $app.className = 'd-flex justify-center mt-5 w-100';
 
@@ -20,7 +20,7 @@ const routeHandler = () => {
     { path: LINES, component: Lines },
     { path: LOGIN, component: Login },
     { path: SECTIONS, component: Sections },
-    { path: STATIONS, component: Stations },
+    { path: STATIONS, component: await Stations },
   ];
 
   const pathMatchRoute = routesMatchComponents.find(({ path }) => path === window.location.pathname);

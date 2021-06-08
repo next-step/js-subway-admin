@@ -1,6 +1,7 @@
-const StationListItem = ({ stationName }) => {
+const StationListItem = ({ id, stationName }) => {
   const $stationListItem = document.createElement('li');
   $stationListItem.className = 'station-list-item d-flex items-center py-2';
+  $stationListItem.id = id;
 
   const $stationName = document.createElement('span');
   $stationName.className = 'w-100 pl-2';
@@ -21,13 +22,14 @@ const StationListItem = ({ stationName }) => {
   return $stationListItem;
 };
 
-const StationList = () => {
+const StationList = ({ stations = [] }) => {
   const $stationList = document.createElement('ul');
   $stationList.className = 'mt-3 pl-0';
 
   // 추후 상태를 받아 반복 실행시켜 줄 예정, li사이에 hr을 border-bottom으로 교체해야함
-  $stationList.appendChild(StationListItem({ stationName: '사당' }));
-  $stationList.appendChild(StationListItem({ stationName: '방배' }));
+  stations.forEach(({ id, stationName }) => {
+    $stationList.appendChild(StationListItem({ id, stationName }));
+  });
 
   return $stationList;
 };
