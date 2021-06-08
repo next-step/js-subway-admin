@@ -1,4 +1,4 @@
-import stationStore from "@/store/stationStore";
+import { stationStore } from "@/store";
 import { MESSAGE } from "@/constants";
 import { stationDB } from "@/data";
 import { stationNameValidator } from "@/utils/validator";
@@ -25,7 +25,15 @@ const stationService = {
     stationStore.updateState({ stations: newData });
   },
 
-  update: (id: string, newName: string): void => {},
+  update: (id: string, newName: string): void => {
+    const station = stationDB.getAll();
+    const newData = station.map((info) => {
+      if (info.id === id) return { ...info, name: newName };
+      return info;
+    });
+    stationDB.set(newData);
+    stationStore.updateState({ stations: newData });
+  },
 };
 
 export default stationService;

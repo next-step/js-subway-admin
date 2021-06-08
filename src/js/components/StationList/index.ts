@@ -1,6 +1,7 @@
 import Component from "@/core/component";
 import view from "./view";
-import { stationService } from "@/service";
+import { StationUpdate } from "@/components";
+import { stationService, uiService } from "@/service";
 import { stationStore } from "@/store";
 import { $, createElement, closest } from "@/utils/dom";
 
@@ -21,11 +22,15 @@ class StationList extends Component {
       const target = e.target as HTMLElement;
       const type = target.id;
       if (type !== "update" && type !== "remove") return;
-      const stationId = closest(target, "li").dataset.id;
+      const { id, name } = closest(target, "li").dataset;
       const actions = {
-        update: () => {},
+        update: () => {
+          const stationUpdate = new StationUpdate(null, { id, value: name });
+          uiService.openModal(stationUpdate, "역 이름 수정하기");
+          return;
+        },
         remove: () => {
-          stationService.remove(stationId);
+          stationService.remove(id);
           return;
         },
       };

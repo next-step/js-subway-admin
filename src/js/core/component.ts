@@ -1,11 +1,11 @@
 import { IPageInfo } from "@/types";
 import { $ } from "@/utils/dom";
 
-class Component {
+class Component<IProps = unknown> {
   protected $container: HTMLElement = document.createElement("div");
   protected children: Component[] = [];
 
-  constructor(readonly $root?: HTMLElement) {
+  constructor(readonly $root?: HTMLElement, readonly props?: IProps) {
     this.mount();
   }
 
@@ -32,10 +32,9 @@ class Component {
 
   public pageInfo(): IPageInfo | void {}
 
-  public render(): void {
-    const main = $("main");
-    main.innerHTML = "";
-    main.appendChild(this.$container);
+  public render(target?: HTMLElement): void {
+    target.innerHTML = "";
+    target.appendChild(this.$container);
     this.bindEvents();
     this.componentMount();
     this.children.forEach((child) => child.render());

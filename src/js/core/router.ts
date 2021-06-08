@@ -31,7 +31,7 @@ class Router<Ipage> {
 
   private render(): void {
     const { href } = history.state;
-    this.pages[href]?.render();
+    this.pages[href]?.render($("#main"));
   }
 }
 

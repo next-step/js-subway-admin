@@ -5,7 +5,7 @@ interface IStations {
 
 const station = (id: string, name: string) => {
   return `
-      <li class="station-list-item d-flex items-center py-2" data-id=${id}>
+      <li class="station-list-item d-flex items-center py-2" data-id=${id} data-name=${name}>
       <span class="w-100 pl-2">${name}</span>
       <button
         type="button"
