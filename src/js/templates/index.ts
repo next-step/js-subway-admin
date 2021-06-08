@@ -7,3 +7,4 @@ export { default as homeTemplate } from './home';
 export { default as linesModalTemplate } from './linesModal';
 export { default as sectionsModalTemplate } from './sectionsModal';
 export { default as pageNotFoundTemplate } from './pageNotFound';
+export { default as stationsModalTemplate } from './stationsModal';

@@ -1,7 +1,7 @@
 import { headerTemplate } from '../templates/index';
 import { StringKeyObject } from '../types/index';
 import { PagesPath } from '../utils/constants';
-import { render, renderPages } from '../utils/render';
+import { render, renderPages, renderModals } from '../utils/render';
 import $ from '../utils/dom';
 import bindEvents from '../utils/bindEvents';
 import pagesEvents from './pagesEvents';
@@ -48,6 +48,8 @@ const initPage = (): void => {
   if (!validatePathname(pathname)) return;
   render(headerTemplate, $header);
   renderPages(pathname, $main);
+  renderModals(pathname);
+  bindEvents(pathname, pagesEvents);
 };
 
 const onClickNavigate = (e: MouseEvent) => {
@@ -63,6 +65,7 @@ const onClickNavigate = (e: MouseEvent) => {
 
   pushHistoryState(path);
   renderPages(path, $main);
+  renderModals(path);
   bindEvents(path, pagesEvents);
 };
 
@@ -70,6 +73,8 @@ const onGoBack = (e: PopStateEvent): void => {
   const { path } = e.state;
 
   renderPages(path, $main);
+  renderModals(path);
+  bindEvents(path, pagesEvents);
 };
 
 $header.addEventListener('click', onClickNavigate);
