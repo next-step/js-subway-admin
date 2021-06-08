@@ -9,7 +9,7 @@ export const router = new Router({
     '/login': 'LoginPage',
     '/signup': 'SignUpPage',
     '/mypage': 'MyPage',
-  }
+  },
 });
 
 export * from "./RouterLink";
