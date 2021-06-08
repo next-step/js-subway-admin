@@ -7,7 +7,7 @@ const view = (isLoggedIn: boolean): string => {
   ${
     isLoggedIn
       ? `
-  <a href="/stations" class="my-1">
+  <a href="/" class="my-1">
     <button class="btn bg-white shadow mx-1">🚉 역 관리</button>
   </a>
   <a href="/lines" class="my-1">
