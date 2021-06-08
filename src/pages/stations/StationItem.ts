@@ -25,12 +25,12 @@ export class StationItem extends Component<{}, StationItemsProps> {
 
   protected setEvent() {
 
-    this.addEvent('click', '.update', (event: MouseEvent) => {
+    this.addEvent('click', '.update', (event: Event) => {
       event.preventDefault();
       this.$props.editStation();
     });
 
-    this.addEvent('click', '.delete', (event: MouseEvent) => {
+    this.addEvent('click', '.delete', (event: Event) => {
       event.preventDefault();
 
       if (confirm('정말로 삭제하시겠습니까?')) {

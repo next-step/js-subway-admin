@@ -17,7 +17,7 @@ export class RouterLink extends Component {
 
   protected setEvent() {
     const $target = this.$target as HTMLAnchorElement;
-    $target.addEventListener('click', (event: MouseEvent) => {
+    $target.addEventListener('click', (event: Event) => {
       event.preventDefault();
       router.push($target.href);
     });

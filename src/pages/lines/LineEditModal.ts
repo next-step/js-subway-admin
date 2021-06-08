@@ -150,7 +150,7 @@ export class LineEditModal extends Component<LineEditModalState, LineEditModalPr
   protected setEvent() {
     this.addEvent('click', '.modal-close', () => this.close());
 
-    this.addEvent('click', '.color-option', ({ target }: MouseEvent) => {
+    this.addEvent('click', '.color-option', ({ target }: Event) => {
       const frm = selectOne('form', this.$target) as HTMLFormElement;
       frm.color.value = (target as HTMLElement).dataset.color;
     });

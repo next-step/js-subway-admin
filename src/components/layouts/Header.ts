@@ -41,7 +41,7 @@ export class Header extends Component {
   }
 
   protected setEvent() {
-    this.addEvent('click', '.logout', (event: MouseEvent) => {
+    this.addEvent('click', '.logout', (event: Event) => {
       event.preventDefault();
       alert('로그아웃 되었습니다.');
       router.push('/login');
