@@ -1,8 +1,8 @@
-import { getLinesListsTemplate } from './shared';
-import { createMultipleLinesTemplates } from './createTemplate';
+import { createLinesListsTemplates } from './createTemplate';
+import { lines } from '../dummyData';
 
-const linesTemplate = `
-<div class="wrapper bg-white p-10">
+const linesTemplate = (): string => `
+<div class="wrapper bg-white p-10 lines-wrapper">
   <div class="heading d-flex">
     <h2 class="mt-1 w-100">🛤️ 노선 관리</h2>
     <button
@@ -13,7 +13,7 @@ const linesTemplate = `
     </button>
   </div>
   <ul class="mt-3 pl-0">
-  ${createMultipleLinesTemplates(getLinesListsTemplate)}
+  ${createLinesListsTemplates(lines)}
   </ul>
 </div>
 `;

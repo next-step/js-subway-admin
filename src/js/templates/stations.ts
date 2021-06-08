@@ -1,11 +1,11 @@
-import { getStationsListsTemplate } from './shared';
 import {
-  createMultipleStationsTemplates,
+  createStationListsTemplates,
   createInputTemplate
 } from './createTemplate';
+import { getData } from '../utils/storage';
 
-const stationsTemplate = `
-<div class="wrapper bg-white p-10">
+const stationsTemplate = (): string => `
+<div class="wrapper bg-white p-10 stations-wrapper">
   <div class="heading">
     <h2 class="mt-1">🚉 역 관리</h2>
   </div>
@@ -13,7 +13,7 @@ const stationsTemplate = `
     <div class="d-flex w-100">
       ${createInputTemplate('station-name', 'text', '역 이름', 'required')}
       <button
-        type="button"
+        type="submit"
         name="submit"
         class="input-submit bg-cyan-300 ml-2"
       >
@@ -22,7 +22,7 @@ const stationsTemplate = `
     </div>
   </form>
   <ul class="mt-3 pl-0">
-  ${createMultipleStationsTemplates(getStationsListsTemplate)}    
+  ${createStationListsTemplates(getData('stations'))}   
   </ul>
 </div>
 `;

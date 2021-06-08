@@ -1,11 +1,12 @@
-import { getStationsListsTemplate, getOptionsTemplate } from './shared';
 import {
-  createMultipleLinesTemplates,
-  createMultipleStationsTemplates
+  createOptionsTemplates,
+  createStationListsTemplates
 } from './createTemplate';
+import { getData } from '../utils/storage';
+import { lines } from '../dummyData';
 
-const sectionsTemplate = `
-<div class="wrapper bg-white p-10">
+const sectionsTemplate = (): string => `
+<div class="wrapper bg-white p-10 sections-wrapper">
   <div class="heading d-flex">
     <h2 class="mt-1 w-100">🔁 구간 관리</h2>
     <button
@@ -18,11 +19,11 @@ const sectionsTemplate = `
   <form class="d-flex items-center pl-1">
     <label for="subway-line" class="input-label" hidden>노선</label>
     <select id="subway-line" class="bg-blue-400">
-    ${createMultipleLinesTemplates(getOptionsTemplate)}
+    ${createOptionsTemplates(lines)}
     </select>
   </form>
   <ul class="mt-3 pl-0">
-  ${createMultipleStationsTemplates(getStationsListsTemplate)}
+  ${createStationListsTemplates(getData('stations'))}
   </ul>
 </div>
 `;

@@ -1,6 +1,6 @@
 import subwayEmoji from '../../images/subway_emoji.png';
 
-const homeTemplate = `
+const homeTemplate = (): string => `
 <div class="d-flex flex-col">
   <div class="d-flex justify-center">
     <img src=${subwayEmoji} width="200" />

@@ -6,3 +6,4 @@ export { default as loginTemplate } from './login';
 export { default as homeTemplate } from './home';
 export { default as linesModalTemplate } from './linesModal';
 export { default as sectionsModalTemplate } from './sectionsModal';
+export { default as pageNotFoundTemplate } from './pageNotFound';

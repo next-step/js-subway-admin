@@ -1,7 +1,7 @@
 import { createInputTemplate } from './createTemplate';
 
-const loginTemplate = `
-<div class="wrapper p-10 bg-white">
+const loginTemplate = (): string => `
+<div class="wrapper p-10 bg-white login-wrapper">
   <div class="heading">
     <h2>👋🏼 로그인</h2>
   </div>
