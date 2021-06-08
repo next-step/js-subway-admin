@@ -39,6 +39,7 @@ export const createInputTemplate = (
   type: string,
   placeholder: string,
   required = '',
+  length = '',
   className?: string
 ): string => `
 <label for=${id} class="input-label" hidden>
@@ -48,7 +49,9 @@ export const createInputTemplate = (
   type=${type}
   id=${id}
   name=${id}
+  autocomplete="off"
   class="input-field${className ? ` ${className}` : ''}"
+  ${length}
   placeholder="${placeholder}"
   ${required}
 />
