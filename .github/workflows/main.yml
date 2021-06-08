@@ -30,6 +30,9 @@ jobs:
           npm run build
           cd dist
           git init
+          git config user.name junilhwang
+          git config user.email junil.h@kakao.com
+          git remote add origin https://github.com/JunilHwang/js-subway-admin
           git remote set-url origin https://junilhwang:${{ secrets.GITHUB_TOKEN }}@github.com/junilhwang/js-subway-admin
           git add .
           git commit -m "deploy"
