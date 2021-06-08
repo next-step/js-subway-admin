@@ -100,6 +100,7 @@ export const onRemoveStation = (e: Event): void => {
   const target = e.target as HTMLElement;
 
   if (!include(target.classList, item => item === 'remove-btn')) return;
+  if (!confirm('정말로 삭제하시겠습니까?')) return;
 
   removeData('stations', getTargetStation(target));
   render($('.stations-container .stations-list'))(
