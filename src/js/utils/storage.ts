@@ -6,6 +6,12 @@ export const getData = <Item>(key: StorageKey): Item[] => {
   return JSON.parse(data);
 };
 
-export const setData = <Item>(key: string, value: Item[]): void => {
+export const setData = <Item>(key: StorageKey, value: Item[]): void => {
   localStorage.setItem(key, JSON.stringify(value));
+};
+
+export const addData = <Item>(key: StorageKey, value: Item): Item[] => {
+  const newData = [...getData<Item>(key), value];
+  setData(key, newData);
+  return newData;
 };

@@ -1,15 +1,17 @@
 export type valueof<T> = T[keyof T];
 
-export interface State {
-  currentPage: 'home' | 'sections' | 'lines' | 'stations' | 'login';
+export interface BindingList {
+  selector: string;
+  event: string;
+  handler: (e: Event) => void;
 }
-
 export interface PagesInfo {
   [key: string]: {
     path: string;
-    name: State['currentPage'];
+    name: string;
     title: string;
-    template: string;
+    template: string | (() => string);
+    bindingList?: BindingList[];
   };
 }
 

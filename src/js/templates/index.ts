@@ -1,10 +1,10 @@
 export { default as homeTemplate } from './home';
 export { default as loginTemplate } from './login';
-export { default as headerTemplate } from './header';
 export { default as linesTemplate } from './lines';
-export { default as linesModalTemplate } from './linesModal';
+export { default as headerTemplate } from './header';
 export { default as sectionsTemplate } from './sections';
-export { default as sectionsModalTemplate } from './sectionsModal';
 export { default as stationsTemplate } from './stations';
+export { default as linesModalTemplate } from './linesModal';
 export { default as itemButtonsTemplate } from './itemButtons';
+export { default as sectionsModalTemplate } from './sectionsModal';
 export { default as stationsSelectTemplate } from './stationsSelect';

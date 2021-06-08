@@ -1,9 +1,12 @@
+import {
+  stationsTemplate,
+  linesTemplate,
+  sectionsTemplate,
+  loginTemplate,
+  homeTemplate
+} from '../templates/index';
+import onAddStation from '../pages/stations';
 import { PagesInfo } from '../types/index';
-import stationsTemplate from '../templates/stations';
-import lineTemplate from '../templates/lines';
-import sectionsTemplate from '../templates/sections';
-import loginTemplate from '../templates/login';
-import homeTemplate from '../templates/home';
 
 export const pagesInfo: PagesInfo = {
   '/': {
@@ -22,19 +25,32 @@ export const pagesInfo: PagesInfo = {
     path: '/stations',
     name: 'stations',
     title: '🚉 역 관리',
-    template: stationsTemplate
+    template: stationsTemplate,
+    bindingList: [
+      {
+        selector: '.stations-container form',
+        event: 'submit',
+        handler: onAddStation
+      }
+    ]
   },
   '/lines': {
     path: '/lines',
     name: 'lines',
     title: '🛤️ 노선 관리',
-    template: lineTemplate
+    template: linesTemplate
   },
   '/sections': {
     path: '/sections',
     name: 'sections',
     title: '🔁 구간 관리',
     template: sectionsTemplate
+  },
+  '/page-not-found': {
+    path: '/page-not-found',
+    name: 'page-not-found',
+    title: '페이지를 찾을 수 없습니다',
+    template: '요청하신 페이지를 찾을 수 없습니다😢'
   }
 };
 

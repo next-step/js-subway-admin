@@ -1,8 +1,8 @@
-import stationsSelectTemplate from './stationsSelect';
-import { createOptionsTemplate } from '../utils/template';
 import { getData } from '../utils/storage';
+import { createOptionsTemplate } from '../utils/template';
+import stationsSelectTemplate from './stationsSelect';
 
-const sectionsModalTemplate = `<div class="modal">
+const sectionsModalTemplate = (): string => `<div class="modal">
 <div class="modal-inner p-8">
   <button class="modal-close">
     <svg viewbox="0 0 40 40">

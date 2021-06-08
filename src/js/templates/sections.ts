@@ -1,6 +1,6 @@
-import itemButtonsTemplate from './itemButtons';
-import { createListTemplate, createOptionsTemplate } from '../utils/template';
 import { getData } from '../utils/storage';
+import { createListTemplate, createOptionsTemplate } from '../utils/template';
+import itemButtonsTemplate from './itemButtons';
 
 const getSectionsItemTemplate = (
   section: string
@@ -10,7 +10,8 @@ ${itemButtonsTemplate}
 </li>
 <hr class="my-0" />`;
 
-const sectionsTemplate = `<div class="wrapper bg-white p-10 sections-container">
+const sectionsTemplate =
+  (): string => `<div class="wrapper bg-white p-10 sections-container">
 <div class="heading d-flex">
   <h2 class="mt-1 w-100">🔁 구간 관리</h2>
   <button

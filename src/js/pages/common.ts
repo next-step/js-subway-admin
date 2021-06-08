@@ -1,15 +1,20 @@
 import { $ } from '../utils/dom';
+import { each } from '../libs/index';
 import { pagesInfo } from '../utils/constants';
+import { BindingList } from '../types/index';
 import { headerTemplate } from '../templates/index';
 import render from '../utils/render';
-import { setState } from '../utils/state';
 
 const $header = $('header');
-const $main = $('main');
-const currentPath = window.location.pathname;
-const renderHeader = render($header);
-const renderMain = render($main);
-const { template, name } = pagesInfo[currentPath];
+const renderMain = render($('main'));
+const { template, bindingList } = pagesInfo[window.location.pathname];
+
+const bindEvents = (list: BindingList[]): void => {
+  each(list, (item: BindingList) => {
+    const { selector, event, handler } = item;
+    $(selector).addEventListener(event, handler);
+  });
+};
 
 const onClickNav = (e: MouseEvent): void => {
   e.preventDefault();
@@ -22,22 +27,24 @@ const onClickNav = (e: MouseEvent): void => {
 
   if (!href) return;
 
-  const { path, name, title, template } = pagesInfo[href];
+  const { path, title, template, bindingList } = pagesInfo[href];
 
   window.history.pushState({ path, title }, title, path);
   renderMain(template);
-  setState('currentPage', name);
+  bindingList && bindEvents(bindingList);
 };
 
 const onPopstate = (e: PopStateEvent): void => {
-  const { template, name } = pagesInfo[e.state.path];
+  const { template, bindingList } = pagesInfo[e.state.path];
   renderMain(template);
-  setState('currentPage', name);
+  bindingList && bindEvents(bindingList);
 };
 
-renderHeader(headerTemplate);
 renderMain(template);
-setState('currentPage', name);
+bindingList && bindEvents(bindingList);
 
 $header.addEventListener('click', onClickNav);
 window.addEventListener('popstate', onPopstate);
+window.addEventListener('DOMContentLoaded', () =>
+  render($header)(headerTemplate)
+);

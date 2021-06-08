@@ -13,7 +13,8 @@ ${itemButtonsTemplate}
 </li>
 <hr class="my-0" />`;
 
-const linesTemplate = `<div class="wrapper bg-white p-10 lines-container">
+const linesTemplate =
+  (): string => `<div class="wrapper bg-white p-10 lines-container">
 <div class="heading d-flex">
   <h2 class="mt-1 w-100">🛤️ 노선 관리</h2>
   <button
