@@ -43,3 +43,11 @@ export const some = <Item>(
 
   return false;
 };
+
+export const include = <Item>(list: Item[], target: Item): boolean => {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i] === target) return true;
+  }
+
+  return false;
+};
