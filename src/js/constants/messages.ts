@@ -2,6 +2,9 @@ const MESSAGES = {
   LOGIN_REQUIRED: "로그인을 하셔야 이용하실 수 있어요",
   NO_USER: "존재하지 않는 계정입니다!",
   WRONG_PASSWORD: "잘못된 비밀번호 입니다!",
+  EXIST_EMAIL: "이미 존재하는 이메일입니다!",
+  NOT_CORRECT_PASSWORD: "비밀번호가 일치하지 않습니다!",
+  SIGNUP_SUCCESS: "회원가입 성공! 로그인 해주세요!",
 };
 
 export default MESSAGES;

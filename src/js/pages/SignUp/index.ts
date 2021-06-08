@@ -1,16 +1,19 @@
 import Component from "@/core/component";
+import authService from "@/service/authService";
 import { PAGE_TITLE } from "@/constants";
 import { IPageInfo } from "@/types";
 import { authStore } from "@/store";
 import { $ } from "@/utils/dom";
-import authService from "@/service/authService";
 import view from "./view";
-import handleLink from "@/router/handleLink";
 
-class Login extends Component {
+class SignUp extends Component {
   protected initDom(): void {
     this.$container = document.createElement("div");
     this.$container.className = "wrapper p-10 bg-white";
+  }
+
+  protected componentMount(): void {
+    this.$container.innerHTML = view;
   }
 
   protected beforeChangeURL(): boolean {
@@ -20,20 +23,21 @@ class Login extends Component {
   }
 
   public bindEvents(): void {
-    const $form = $("#login-form");
-    const $link = $("#link");
+    const $form = $("#signup-form");
 
     $form.addEventListener("submit", (e: Event) => {
       e.preventDefault();
       const email = $("#email", $form) as HTMLInputElement;
+      const name = $("#name", $form) as HTMLInputElement;
       const password = $("#password", $form) as HTMLInputElement;
-      authService.login(email.value, password.value);
+      const confirmPassword = $("#password-confirm") as HTMLInputElement;
+      authService.signUp(
+        email.value,
+        name.value,
+        password.value,
+        confirmPassword.value
+      );
     });
-    $link.addEventListener("click", handleLink);
-  }
-
-  protected componentMount(): void {
-    this.$container.innerHTML = view;
   }
 
   public render(): IPageInfo {
@@ -45,4 +49,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default SignUp;

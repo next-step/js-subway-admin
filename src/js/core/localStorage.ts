@@ -10,14 +10,19 @@ class LocalStorage<T extends IDataBase> {
     return JSON.parse(items);
   }
 
-  public set(item: T): void {
-    localStorage.setItem(this.key, JSON.stringify(item));
+  public set(items: T[]): void {
+    localStorage.setItem(this.key, JSON.stringify(items));
   }
 
   public get(id: string): T | null {
     const datas = this.getAll();
     const item = datas.find((data) => data.id === id);
     return item;
+  }
+
+  public add(item: T): void {
+    const datas = this.getAll();
+    this.set([...datas, item]);
   }
 }
 

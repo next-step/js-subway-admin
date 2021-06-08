@@ -6,6 +6,7 @@ import router from "@/router";
 interface IAuthDB {
   id: string;
   email: string;
+  name: string;
   password: string;
 }
 
@@ -25,10 +26,21 @@ const authService = {
     }
   },
 
-  signUp: (email: string, password: string, repeatPassword: string) => {
+  signUp: (
+    email: string,
+    name: string,
+    password: string,
+    confirmPassword: string
+  ) => {
     try {
       const users = authDB.getAll();
-      // 중복체크
+      const isExisitedEmail =
+        users.findIndex((user) => user.id === email) !== -1;
+      if (isExisitedEmail) throw MESSAGE.EXIST_EMAIL;
+      if (password !== confirmPassword) throw MESSAGE.NOT_CORRECT_PASSWORD;
+      authDB.add({ id: email, email, name, password });
+      alert(MESSAGE.SIGNUP_SUCCESS);
+      router.push(PATH.LOGIN);
     } catch (error) {
       alert(error);
     }
