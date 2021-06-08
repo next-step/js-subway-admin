@@ -1,17 +1,25 @@
-import { stations, lines } from '../dummyData';
 import { _map } from '../utils/_';
-import { getOptionsTemplate } from './shared';
+import {
+  getOptionsTemplate,
+  getStationsListsTemplate,
+  getLinesListsTemplate
+} from './shared';
+import { getData } from '../utils/storage';
 
-const createMultipleTemplates = <T>(datas: T[]) => (
-  template: (data: T) => string
-) => _map<T, string>(datas, (data: T) => template(data)).join('');
+const createMultipleTemplates = <T>(template: (data: T) => string) => (
+  datas: T[]
+): string => _map<T, string>(datas, template).join('');
 
-export const createMultipleStationsTemplates = createMultipleTemplates<string>(
-  stations
+export const createStationListsTemplates = createMultipleTemplates(
+  getStationsListsTemplate
 );
 
-export const createMultipleLinesTemplates = createMultipleTemplates<string>(
-  lines
+export const createLinesListsTemplates = createMultipleTemplates(
+  getLinesListsTemplate
+);
+
+export const createOptionsTemplates = createMultipleTemplates(
+  getOptionsTemplate
 );
 
 export const createStationSelectTemplate = (
@@ -22,7 +30,7 @@ export const createStationSelectTemplate = (
 <label for=${id} class="input-label" hidden>${type}</label>
 <select id=${id} ${className ? `class=${className}` : ''}>
   <option value="" selected disabled hidden>${type}</option>
-  ${createMultipleStationsTemplates(getOptionsTemplate)}
+  ${createStationListsTemplates(getData('stations'))}
 </select>
 `;
 
