@@ -36,5 +36,6 @@ jobs:
           git remote set-url origin https://junilhwang:${{ secrets.GITHUB_TOKEN }}@github.com/junilhwang/js-subway-admin
           git add .
           git commit -m "deploy"
+          git checkout -b gh-pages
           git push origin +gh-pages
 
