@@ -1,7 +1,7 @@
 import { $, $closest } from '../utils/dom';
 import { findIndex, include } from '../libs/index';
 import { createStationsItemTemplate } from '../utils/template';
-import { addData, getData, replaceData } from '../utils/storage';
+import { addData, getData, removeData, replaceData } from '../utils/storage';
 import render from '../utils/render';
 import setState from '../utils/state';
 import initValue from '../utils/init';
@@ -94,4 +94,15 @@ export const onShowEditModal = (e: Event): void => {
       handlers: [onEditStation]
     }
   ]);
+};
+
+export const onRemoveStation = (e: Event): void => {
+  const target = e.target as HTMLElement;
+
+  if (!include(target.classList, item => item === 'remove-btn')) return;
+
+  removeData('stations', getTargetStation(target));
+  render($('.stations-container .stations-list'))(
+    createStationsItemTemplate(getData('stations'))
+  );
 };

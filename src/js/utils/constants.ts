@@ -1,12 +1,16 @@
 import {
-  stationsTemplate,
+  homeTemplate,
   linesTemplate,
-  sectionsTemplate,
   loginTemplate,
-  homeTemplate
+  sectionsTemplate,
+  stationsTemplate
 } from '../templates/index';
 import { PagesInfo } from '../types/index';
-import { onAddStation, onShowEditModal } from '../pages/stations';
+import {
+  onAddStation,
+  onShowEditModal,
+  onRemoveStation
+} from '../pages/stations';
 
 export const pagesInfo: PagesInfo = {
   '/': {
@@ -36,6 +40,11 @@ export const pagesInfo: PagesInfo = {
         selector: '.stations-container .stations-list',
         event: 'click',
         handlers: [onShowEditModal]
+      },
+      {
+        selector: '.stations-container .stations-list',
+        event: 'click',
+        handlers: [onRemoveStation]
       }
     ]
   },

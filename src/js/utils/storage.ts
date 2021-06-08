@@ -1,3 +1,4 @@
+import { filter } from '../libs/index';
 import { StorageKey } from '../types/index';
 
 export const getData = <Item>(key: StorageKey): Item[] => {
@@ -24,4 +25,11 @@ export const replaceData = <Item>(
   const newData = [...getData(key)];
   newData[index] = value;
   setData(key, newData);
+};
+
+export const removeData = <Item>(key: StorageKey, target: Item): void => {
+  setData(
+    key,
+    filter(getData<Item>(key), item => item !== target)
+  );
 };
