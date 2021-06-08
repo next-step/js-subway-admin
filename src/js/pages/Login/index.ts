@@ -3,6 +3,7 @@ import { PAGE_TITLE } from "@/constants";
 import { IPageInfo } from "@/types";
 import { authStore } from "@/store";
 import { $ } from "@/utils/dom";
+import authService from "@/service/authService";
 import view from "./view";
 import handleLink from "@/router/handleLink";
 
@@ -14,10 +15,6 @@ class Login extends Component {
     this.$container.className = "wrapper p-10 bg-white";
   }
 
-  protected initview() {
-    this.$container.innerHTML = ``;
-  }
-
   protected beforeChangeURL(): boolean {
     const { isLoggedIn } = authStore.getState();
     if (isLoggedIn) return false;
@@ -26,10 +23,15 @@ class Login extends Component {
 
   public bindEvents(): void {
     const $form = $("#login-form");
-    $form.addEventListener("click", handleLink);
-    $form.addEventListener("submit", (e) => {
+    const $link = $("#link");
+
+    $form.addEventListener("submit", (e: Event) => {
       e.preventDefault();
+      const email = $("#email", $form) as HTMLInputElement;
+      const password = $("#password", $form) as HTMLInputElement;
+      authService.login(email.value, password.value);
     });
+    $link.addEventListener("click", handleLink);
   }
 
   protected componentMount(): void {

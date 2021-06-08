@@ -12,7 +12,7 @@ class Store<IState> {
   }
   protected initState(): void {}
 
-  protected updateState(nextState: IState): void {
+  public updateState(nextState: IState): void {
     this.state = nextState;
     this.notify();
   }
