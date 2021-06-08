@@ -1,4 +1,5 @@
 import { IPageInfo } from "@/types";
+import { $ } from "@/utils/dom";
 
 class Component {
   protected $container: HTMLElement = document.createElement("div");
@@ -29,7 +30,16 @@ class Component {
     return true;
   }
 
-  public render(): IPageInfo | void {}
+  public pageInfo(): IPageInfo | void {}
+
+  public render(): void {
+    const main = $("main");
+    main.innerHTML = "";
+    main.appendChild(this.$container);
+    this.bindEvents();
+    this.componentMount();
+    this.children.forEach((child) => child.render());
+  }
 }
 
 export default Component;

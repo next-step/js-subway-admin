@@ -1,15 +1,17 @@
 import Component from "@/core/component";
 import authService from "@/service/authService";
-import { PAGE_TITLE } from "@/constants";
+import { PAGE_TITLE, PATH } from "@/constants";
 import { IPageInfo } from "@/types";
 import { authStore } from "@/store";
-import { $ } from "@/utils/dom";
+import { $, createElement } from "@/utils/dom";
 import view from "./view";
 
 class SignUp extends Component {
   protected initDom(): void {
-    this.$container = document.createElement("div");
-    this.$container.className = "wrapper p-10 bg-white";
+    this.$container = createElement({
+      tag: "div",
+      className: "wrapper p-10 bg-white",
+    });
   }
 
   protected componentMount(): void {
@@ -23,8 +25,7 @@ class SignUp extends Component {
   }
 
   public bindEvents(): void {
-    const $form = $("#signup-form");
-
+    const $form = $("#signup-form", this.$container);
     $form.addEventListener("submit", (e: Event) => {
       e.preventDefault();
       const email = $("#email", $form) as HTMLInputElement;
@@ -40,11 +41,11 @@ class SignUp extends Component {
     });
   }
 
-  public render(): IPageInfo {
+  public pageInfo(): IPageInfo {
     if (!this.beforeChangeURL()) return;
     return {
-      title: PAGE_TITLE.LOGIN,
-      contents: this.$container.outerHTML,
+      title: PAGE_TITLE.SIGNUP,
+      href: PATH.SIGNUP,
     };
   }
 }

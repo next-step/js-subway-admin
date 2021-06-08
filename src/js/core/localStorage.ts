@@ -20,9 +20,11 @@ class LocalStorage<T extends IDataBase> {
     return item;
   }
 
-  public add(item: T): void {
+  public add(item: T): T[] {
     const datas = this.getAll();
-    this.set([...datas, item]);
+    const newData = [...datas, item];
+    this.set(newData);
+    return newData;
   }
 }
 

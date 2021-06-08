@@ -1,16 +1,7 @@
-import LocalStorage from "@/core/localStorage";
-import { MESSAGE, PATH } from "@/constants";
-import { authStore } from "@/store";
 import router from "@/router";
-
-interface IAuthDB {
-  id: string;
-  email: string;
-  name: string;
-  password: string;
-}
-
-const authDB = new LocalStorage<IAuthDB>("auth");
+import { MESSAGE, PATH } from "@/constants";
+import { authDB } from "@/data";
+import { authStore } from "@/store";
 
 const authService = {
   login: (email: string, password: string): void => {

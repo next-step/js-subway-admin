@@ -12,10 +12,10 @@ class Router<Ipage> {
   }
 
   public push(href: string): void {
-    const pageInfo = this.pages[href]?.render();
+    const pageInfo = this.pages[href]?.pageInfo();
     if (!pageInfo) return;
-    const { title = "", contents } = pageInfo;
-    history.pushState({ contents, href }, title, href);
+    const { title = "" } = pageInfo;
+    history.pushState({ href }, title, href);
     this.render();
   }
 
@@ -30,9 +30,8 @@ class Router<Ipage> {
   }
 
   private render(): void {
-    const { contents, href } = history.state;
-    $("#main").innerHTML = contents;
-    this.pages[href].bindEvents();
+    const { href } = history.state;
+    this.pages[href]?.render();
   }
 }
 
