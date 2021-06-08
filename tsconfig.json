@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
         "target":"ESNext",
-        "module": "amd",
+        "allowJs": true,
         "sourceMap": true,
-        "strict": false ,
+        "esModuleInterop": true,
         "strictNullChecks": false,
         "noImplicitAny": false,
         "moduleResolution": "node",
