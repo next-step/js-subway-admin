@@ -20,7 +20,7 @@ class Router<Ipage> {
   }
 
   public pathname(): string {
-    return history.state.href;
+    return history.state?.href ?? "";
   }
 
   private bindEvents(): void {
@@ -31,7 +31,9 @@ class Router<Ipage> {
 
   private render(): void {
     const { href } = history.state;
-    this.pages[href]?.render($("#main"));
+    const $main = $("#main");
+    $main.innerHTML = "";
+    this.pages[href]?.render($main);
   }
 }
 

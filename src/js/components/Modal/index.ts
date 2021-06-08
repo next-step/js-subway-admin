@@ -9,7 +9,6 @@ class Modal extends Component {
 
   protected initDom(): void {
     this.$container = $("#modal");
-    this.bindEvents();
   }
 
   protected bindEvents(): void {

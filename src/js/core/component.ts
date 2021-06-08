@@ -24,6 +24,7 @@ class Component<IProps = unknown> {
     this.initChildren();
     this.beforeComponentMount();
     this.componentMount();
+    this.bindEvents();
   }
 
   protected beforeChangeURL(): boolean {
@@ -35,7 +36,6 @@ class Component<IProps = unknown> {
   public render(target?: HTMLElement): void {
     target.innerHTML = "";
     target.appendChild(this.$container);
-    this.bindEvents();
     this.componentMount();
     this.children.forEach((child) => child.render());
   }

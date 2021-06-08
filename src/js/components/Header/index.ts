@@ -6,10 +6,6 @@ import { authStore } from "@/store";
 import { $ } from "@/utils/dom";
 
 class Header extends Component {
-  constructor() {
-    super();
-    this.bindEvents();
-  }
   protected initDom() {
     this.$container = $("#header");
   }
