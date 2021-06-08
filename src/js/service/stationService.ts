@@ -1,11 +1,12 @@
 import stationStore from "@/store/stationStore";
 import { MESSAGE } from "@/constants";
 import { stationDB } from "@/data";
+import { stationNameValidator } from "@/utils/validator";
 
 const stationService = {
   add: (name: string): void => {
     try {
-      if (name.length < 2) throw MESSAGE.NOT_CORRECT_STATION;
+      if (stationNameValidator(name)) throw MESSAGE.NOT_CORRECT_STATION;
       const stations = stationDB.getAll();
       const isExistedStation =
         stations.findIndex((station) => station.name === name) !== -1;
