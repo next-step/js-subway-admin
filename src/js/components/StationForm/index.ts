@@ -1,32 +1,32 @@
 import Component from "@/core/component";
 import view from "./view";
 import stationService from "@/service/stationService";
-import { $ } from "@/utils/dom";
+import { $, createElement } from "@/utils/dom";
 
 class StationForm extends Component {
-  constructor(readonly $root: HTMLElement) {
-    super();
-    this.bindEvents();
+  protected componentMount(): void {
+    this.$container.innerHTML = view;
   }
 
-  // protected initDom():void{
-  //     this.$container = document.createElement('form');
-  //     this.$container.id="station-form";
-  //     this.$root.appendChild(this.$container);
-  // }
+  public bindEvents(): void {
+    this.$container.addEventListener("submit", (e: Event) => {
+      e.preventDefault();
+      const name = $("#station-name", this.$container) as HTMLInputElement;
+      stationService.add(name.value);
+      name.value = "";
+    });
+  }
 
-  // public bindEvents():void{
-  //     this.$container.addEventListener('submit',(e:Event)=>{
-  //         e.preventDefault();
-  //         const name = $('#station-name',this.$container) as HTMLInputElement;
-  //         stationService.add(name.value);
-  //         name.value ='';
-  //       })
-  // }
-
-  // protected componentMount():void{
-  //     this.$container.innerHTML=view;
-  // }
+  public render(): void {
+    this.$container = createElement({
+      tag: "form",
+      className: "form",
+      id: "station-form",
+    });
+    this.$root.appendChild(this.$container);
+    this.componentMount();
+    this.bindEvents();
+  }
 }
 
 export default StationForm;

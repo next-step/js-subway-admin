@@ -1,7 +1,7 @@
 import Component from "@/core/component";
 import router from "@/router";
 import view from "./view";
-import stationForm from "@/components/StationForm";
+import { StationForm, StationList } from "@/components";
 import { authStore, stationStore } from "@/store";
 import { PATH, MESSAGE, PAGE_TITLE } from "@/constants";
 import { IPageInfo } from "@/types";
@@ -16,12 +16,14 @@ class Stations extends Component {
   }
 
   protected initChildren(): void {
-    const $stationForm = new stationForm(this.$container);
+    const stationForm = new StationForm(this.$container);
+    const stationList = new StationList(this.$container);
+    stationStore.addObserver(stationList);
+    this.children = [stationForm, stationList];
   }
 
   protected componentMount(): void {
-    const { stations } = stationStore.getState();
-    this.$container.innerHTML = view(stations);
+    this.$container.innerHTML = view;
   }
 
   protected beforeChangeURL(): boolean {
