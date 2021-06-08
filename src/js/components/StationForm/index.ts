@@ -1,6 +1,6 @@
 import Component from "@/core/component";
 import view from "./view";
-import stationService from "@/service/stationService";
+import { stationService } from "@/service";
 import { $, createElement } from "@/utils/dom";
 
 class StationForm extends Component {

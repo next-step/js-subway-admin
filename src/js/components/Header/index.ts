@@ -1,7 +1,7 @@
 import Component from "@/core/component";
 import handleLink from "@/router/handleLink";
 import view from "./view";
-import authService from "@/service/authService";
+import { authService } from "@/service";
 import { authStore } from "@/store";
 import { $ } from "@/utils/dom";
 

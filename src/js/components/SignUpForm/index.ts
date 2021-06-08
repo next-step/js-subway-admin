@@ -1,6 +1,6 @@
 import Component from "@/core/component";
-import authService from "@/service/authService";
 import view from "./view";
+import { authService } from "@/service";
 import { $, createElement } from "@/utils/dom";
 
 class SignUpForm extends Component {

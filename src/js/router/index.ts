@@ -9,12 +9,13 @@ type IPages = {
 
 const login = new Login();
 const station = new Stations();
+const signUp = new SignUp();
 
 const router = new Router<IPages>({
   [PATH.LOGIN]: login,
   [PATH.LINE]: new Login(),
   [PATH.SECTIONS]: new Login(),
-  [PATH.SIGNUP]: new SignUp(),
+  [PATH.SIGNUP]: signUp,
   [PATH.STATIONS]: station,
 });
 

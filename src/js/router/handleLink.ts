@@ -1,4 +1,5 @@
 import router from "@/router";
+import { BASE } from "@/constants";
 import { closest } from "@/utils/dom";
 
 const handleLink = (e: Event) => {
@@ -7,7 +8,7 @@ const handleLink = (e: Event) => {
   const anchor = closest(target, "a") as HTMLAnchorElement;
   if (!anchor) return;
 
-  const link = anchor.href.replace("http://localhost:8080", "");
+  const link = anchor.href.replace(BASE.URL, "");
   router.push(link);
 };
 

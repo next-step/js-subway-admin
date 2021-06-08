@@ -1,6 +1,6 @@
 import Component from "@/core/component";
 import view from "./view";
-import stationService from "@/service/stationService";
+import { stationService } from "@/service";
 import { stationStore } from "@/store";
 import { $, createElement, closest } from "@/utils/dom";
 

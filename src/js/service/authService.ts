@@ -28,6 +28,7 @@ const authService = {
         users.findIndex((user) => user.id === email) !== -1;
       if (isExisitedEmail) throw MESSAGE.EXIST_EMAIL;
       if (password !== confirmPassword) throw MESSAGE.NOT_CORRECT_PASSWORD;
+
       authDB.add({ id: email, email, name, password });
       alert(MESSAGE.SIGNUP_SUCCESS);
       router.push(PATH.LOGIN);
