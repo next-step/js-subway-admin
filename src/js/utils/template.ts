@@ -4,7 +4,7 @@ import itemButtonsTemplate from '../templates/itemButtons';
 const getStationsItemTemplate = (
   station: string
 ): string => `<li class="station-list-item d-flex items-center py-2">
-<span class="w-100 pl-2">${station}</span>
+<span class="w-100 pl-2 station-name">${station}</span>
 ${itemButtonsTemplate}
 </li>
 <hr class="my-0" />`;

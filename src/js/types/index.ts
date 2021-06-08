@@ -3,7 +3,7 @@ export type valueof<T> = T[keyof T];
 export interface BindingList {
   selector: string;
   event: string;
-  handler: (e: Event) => void;
+  handlers: ((e: Event) => void)[];
 }
 export interface PagesInfo {
   [key: string]: {

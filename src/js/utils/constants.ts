@@ -30,12 +30,12 @@ export const pagesInfo: PagesInfo = {
       {
         selector: '.stations-container form',
         event: 'submit',
-        handler: onAddStation
+        handlers: [onAddStation]
       },
       {
-        selector: '.stations-container .edit-btn',
+        selector: '.stations-container .stations-list',
         event: 'click',
-        handler: onShowEditModal
+        handlers: [onShowEditModal]
       }
     ]
   },

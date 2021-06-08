@@ -4,7 +4,9 @@ import { addData, getData } from '../utils/storage';
 import { createStationsItemTemplate } from '../utils/template';
 import render from '../utils/render';
 import initValue from '../utils/init';
+import bindEvents from '../utils/bindEvents';
 import stationsEditModal from '../templates/stationsEditModal';
+import onCloseModal from './common';
 
 let prevValue = '';
 
@@ -18,7 +20,7 @@ const validateValue = (value: string): boolean => {
 };
 
 const getTargetStation = (node: HTMLElement): string => {
-  const targetNode = $closest('li', node).firstElementChild as HTMLElement;
+  const targetNode = $('.station-name', $closest('li', node)) as HTMLElement;
   return targetNode.innerHTML;
 };
 
@@ -46,7 +48,17 @@ export const onShowEditModal = (e: Event): void => {
   if (!include(target.classList, item => item === 'edit-btn')) return;
 
   const $modal = $('.modal');
+
   $modal.classList.add('open');
+
   render($modal)(stationsEditModal);
+  bindEvents([
+    {
+      selector: '.modal-close',
+      event: 'click',
+      handlers: [onCloseModal]
+    }
+  ]);
+
   prevValue = getTargetStation(target);
 };
