@@ -10,7 +10,7 @@ class Component {
   }
 
   protected beforeComponentMount(): void {}
-  public bindEvents(): void {}
+  protected bindEvents(): void {}
   protected initDom(): void {}
   protected initChildren(): void {}
   protected componentMount(): void {}

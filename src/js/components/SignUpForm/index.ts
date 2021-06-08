@@ -4,11 +4,19 @@ import view from "./view";
 import { $, createElement } from "@/utils/dom";
 
 class SignUpForm extends Component {
+  protected initDom(): void {
+    this.$container = createElement({
+      tag: "form",
+      className: "form",
+      id: "signup-form",
+    });
+  }
+
   protected componentMount(): void {
     this.$container.innerHTML = view;
   }
 
-  public bindEvents(): void {
+  protected bindEvents(): void {
     this.$container.addEventListener("submit", (e: Event) => {
       e.preventDefault();
       const email = $("#email", this.$container) as HTMLInputElement;
@@ -25,11 +33,6 @@ class SignUpForm extends Component {
   }
 
   public render(): void {
-    this.$container = createElement({
-      tag: "form",
-      className: "form",
-      id: "signup-form",
-    });
     this.$root.appendChild(this.$container);
     this.componentMount();
     this.bindEvents();

@@ -4,11 +4,19 @@ import stationService from "@/service/stationService";
 import { $, createElement } from "@/utils/dom";
 
 class StationForm extends Component {
+  protected initDom(): void {
+    this.$container = createElement({
+      tag: "form",
+      className: "form",
+      id: "station-form",
+    });
+  }
+
   protected componentMount(): void {
     this.$container.innerHTML = view;
   }
 
-  public bindEvents(): void {
+  protected bindEvents(): void {
     this.$container.addEventListener("submit", (e: Event) => {
       e.preventDefault();
       const name = $("#station-name", this.$container) as HTMLInputElement;
@@ -18,11 +26,6 @@ class StationForm extends Component {
   }
 
   public render(): void {
-    this.$container = createElement({
-      tag: "form",
-      className: "form",
-      id: "station-form",
-    });
     this.$root.appendChild(this.$container);
     this.componentMount();
     this.bindEvents();

@@ -5,11 +5,19 @@ import handleLink from "@/router/handleLink";
 import { $, createElement } from "@/utils/dom";
 
 class LoginForm extends Component {
+  protected initDom(): void {
+    this.$container = createElement({
+      tag: "form",
+      className: "form",
+      id: "login-form",
+    });
+  }
+
   protected componentMount(): void {
     this.$container.innerHTML = view;
   }
 
-  public bindEvents(): void {
+  protected bindEvents(): void {
     this.$container.addEventListener("submit", (e: Event) => {
       e.preventDefault();
       const email = $("#email", this.$container) as HTMLInputElement;
@@ -21,11 +29,6 @@ class LoginForm extends Component {
   }
 
   public render(): void {
-    this.$container = createElement({
-      tag: "form",
-      className: "form",
-      id: "login-form",
-    });
     this.$root.appendChild(this.$container);
     this.componentMount();
     this.bindEvents();

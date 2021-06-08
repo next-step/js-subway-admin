@@ -14,7 +14,7 @@ class Header extends Component {
     this.$container = $("#header");
   }
 
-  public bindEvents(): void {
+  protected bindEvents(): void {
     this.$container.addEventListener("click", (e: Event) => {
       const target = e.target as HTMLElement;
       if (target.id !== "logout") {
