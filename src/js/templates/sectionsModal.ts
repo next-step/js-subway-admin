@@ -1,6 +1,6 @@
 import { createStationSelectTemplate } from './createTemplate';
 
-const sectionsModalTemplate = `
+const sectionsModalTemplate = (): string => `
 <div class="modal-inner p-8">
   <button class="modal-close">
     <svg viewbox="0 0 40 40">
