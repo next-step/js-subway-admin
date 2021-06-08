@@ -22,3 +22,7 @@ export type StorageKey =
   | 'sections'
   | 'upLineStations'
   | 'downLineStations';
+
+export interface StateObj<T> {
+  [key: string]: T;
+}

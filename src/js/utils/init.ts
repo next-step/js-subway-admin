@@ -1,5 +1,5 @@
-const initValue = (node: HTMLInputElement): void => {
-  node.value = '';
+const initValue = (node: HTMLInputElement, value?: string): void => {
+  node.value = value || '';
 };
 
 export default initValue;

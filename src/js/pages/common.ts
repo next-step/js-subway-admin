@@ -1,7 +1,7 @@
 import { $ } from '../utils/dom';
 
-const onCloseModal = (): void => {
+const closeModal = (): void => {
   $('.modal').classList.remove('open');
 };
 
-export default onCloseModal;
+export default closeModal;

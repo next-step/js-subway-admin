@@ -1,14 +1,17 @@
-import { include } from '../libs/index';
 import { $, $closest } from '../utils/dom';
-import { addData, getData } from '../utils/storage';
+import { findIndex, include } from '../libs/index';
 import { createStationsItemTemplate } from '../utils/template';
+import { addData, getData, replaceData } from '../utils/storage';
 import render from '../utils/render';
+import setState from '../utils/state';
 import initValue from '../utils/init';
+import closeModal from './common';
 import bindEvents from '../utils/bindEvents';
 import stationsEditModal from '../templates/stationsEditModal';
-import onCloseModal from './common';
 
-let prevValue = '';
+const stationsState = {
+  prevValue: ''
+};
 
 const validateValue = (value: string): boolean => {
   if (
@@ -19,10 +22,8 @@ const validateValue = (value: string): boolean => {
   return false;
 };
 
-const getTargetStation = (node: HTMLElement): string => {
-  const targetNode = $('.station-name', $closest('li', node)) as HTMLElement;
-  return targetNode.innerHTML;
-};
+const getTargetStation = (node: HTMLElement): string =>
+  $('.station-name', $closest('li', node)).innerHTML;
 
 export const onAddStation = (e: Event): void => {
   e.preventDefault();
@@ -42,6 +43,30 @@ export const onAddStation = (e: Event): void => {
   initValue($input);
 };
 
+export const onEditStation = (e: Event): void => {
+  e.preventDefault();
+
+  const $input = $('.modal form .input-field') as HTMLInputElement;
+  const { value } = $input;
+
+  if (!validateValue(value)) {
+    alert('형식에 맞지 않거나 중복된 이름입니다.');
+    return;
+  }
+
+  replaceData(
+    'stations',
+    value,
+    findIndex(getData('stations'), item => item === stationsState.prevValue)
+  );
+  render($('.stations-container .stations-list'))(
+    createStationsItemTemplate(getData('stations'))
+  );
+  initValue($input);
+  setState(stationsState, 'prevValue', '');
+  closeModal();
+};
+
 export const onShowEditModal = (e: Event): void => {
   const target = e.target as HTMLElement;
 
@@ -52,13 +77,21 @@ export const onShowEditModal = (e: Event): void => {
   $modal.classList.add('open');
 
   render($modal)(stationsEditModal);
+  setState(stationsState, 'prevValue', getTargetStation(target));
+  initValue(
+    $('.modal form .input-field') as HTMLInputElement,
+    stationsState.prevValue
+  );
   bindEvents([
     {
       selector: '.modal-close',
       event: 'click',
-      handlers: [onCloseModal]
+      handlers: [() => closeModal()]
+    },
+    {
+      selector: '.modal form',
+      event: 'submit',
+      handlers: [onEditStation]
     }
   ]);
-
-  prevValue = getTargetStation(target);
 };
