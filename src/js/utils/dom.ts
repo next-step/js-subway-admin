@@ -3,3 +3,6 @@ export const $ = (selector: string, node = document): HTMLElement =>
 
 export const $$ = (selector: string, node = document): NodeList =>
   node.querySelectorAll(selector) as NodeList;
+
+export const $closest = (selector: string, node: HTMLElement): HTMLElement =>
+  node.closest(selector) as HTMLElement;

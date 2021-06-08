@@ -1,3 +1,5 @@
+import { valueof } from '../types/index';
+
 export const each = <Item>(
   list: Item[],
   iterate: (item: Item) => void
@@ -44,10 +46,23 @@ export const some = <Item>(
   return false;
 };
 
-export const include = <Item>(list: Item[], target: Item): boolean => {
+export const include = <Item>(
+  list: Item[] | DOMTokenList,
+  predicate: (item: Item | valueof<DOMTokenList>) => boolean
+): boolean => {
   for (let i = 0; i < list.length; i++) {
-    if (list[i] === target) return true;
+    if (predicate(list[i])) return true;
   }
 
   return false;
+};
+
+export const findIndex = <Item>(
+  list: Item[],
+  predicate: (item: Item) => boolean
+): number => {
+  for (let i = 0; i < list.length; i++) {
+    if (predicate(list[i])) return i;
+  }
+  return -1;
 };

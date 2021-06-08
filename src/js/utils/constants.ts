@@ -5,8 +5,8 @@ import {
   loginTemplate,
   homeTemplate
 } from '../templates/index';
-import onAddStation from '../pages/stations';
 import { PagesInfo } from '../types/index';
+import { onAddStation, onShowEditModal } from '../pages/stations';
 
 export const pagesInfo: PagesInfo = {
   '/': {
@@ -31,6 +31,11 @@ export const pagesInfo: PagesInfo = {
         selector: '.stations-container form',
         event: 'submit',
         handler: onAddStation
+      },
+      {
+        selector: '.stations-container .edit-btn',
+        event: 'click',
+        handler: onShowEditModal
       }
     ]
   },

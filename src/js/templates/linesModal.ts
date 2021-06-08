@@ -1,7 +1,6 @@
 import stationsSelectTemplate from './stationsSelect';
 
-const linesModalTemplate = `<div class="modal">
-<div class="modal-inner p-8">
+const linesModalTemplate = `<div class="modal-inner p-8">
   <button class="modal-close">
     <svg viewbox="0 0 40 40">
       <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
@@ -76,7 +75,6 @@ const linesModalTemplate = `<div class="modal">
       </button>
     </div>
   </form>
-</div>
 </div>`;
 
 export default linesModalTemplate;

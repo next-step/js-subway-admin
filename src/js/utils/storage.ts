@@ -15,3 +15,13 @@ export const addData = <Item>(key: StorageKey, value: Item): Item[] => {
   setData(key, newData);
   return newData;
 };
+
+export const replaceData = <Item>(
+  key: StorageKey,
+  value: Item,
+  index: number
+): void => {
+  const newData = [...getData(key)];
+  newData[index] = value;
+  setData(key, newData);
+};
