@@ -1,6 +1,6 @@
 import routes from 'js/utils/routes';
 import { Header } from 'js/components';
-import { Home, Lines, NotFound } from 'js/pages';
+import { Home, Lines, Login, Sections, NotFound, Stations } from 'js/pages';
 
 const { HOME, LINES, LOGIN, SECTIONS, STATIONS } = routes;
 const $root = document.querySelector('#root');
@@ -18,6 +18,9 @@ const routeHandler = () => {
   const routesMatchComponents = [
     { path: HOME, component: Home },
     { path: LINES, component: Lines },
+    { path: LOGIN, component: Login },
+    { path: SECTIONS, component: Sections },
+    { path: STATIONS, component: Stations },
   ];
 
   const pathMatchRoute = routesMatchComponents.find(({ path }) => path === window.location.pathname);

@@ -1,6 +1,6 @@
 import routeHandler from 'js/utils/routeHandler';
 
-const Link = ({ href, children, className }) => {
+const Link = ({ href, children, className = '' }) => {
   const $link = document.createElement('a');
   $link.href = href;
   $link.className = className;
