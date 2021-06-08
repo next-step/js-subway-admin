@@ -11,7 +11,13 @@ const stationsTemplate = (): string => `
   </div>
   <form>
     <div class="d-flex w-100">
-      ${createInputTemplate('station-name', 'text', '역 이름', 'required')}
+      ${createInputTemplate(
+        'station-name',
+        'text',
+        '역 이름',
+        'required',
+        'minlength="2" maxlength="20"'
+      )}
       <button
         type="submit"
         name="submit"
