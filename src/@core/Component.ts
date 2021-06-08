@@ -27,7 +27,7 @@ export abstract class Component<State = {}, Props = {}> {
   protected abstract template(): string;
   protected setEvent() {}
 
-  protected addEvent (eventType: string, selector: string, callback: (e: Event) => void) {
+  protected addEvent(eventType: string, selector: string, callback: (e: Event) => void) {
     selectAll(selector, this.$target)
       .forEach(el => {
         el.removeEventListener(eventType, callback);

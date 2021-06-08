@@ -112,12 +112,13 @@ export class SectionEditorModal extends Component<SectionEditorModalState, Secti
   protected setEvent() {
     this.addEvent('click', '.modal-close', () => this.close());
 
-    this.addEvent('change', '.sectionAppenderLineSelector', (event: InputEvent) => {
+    this.addEvent('change', '.sectionAppenderLineSelector', (event: Event) => {
       const target = event.target as HTMLSelectElement;
       this.$state.selectedLineIdx = Number(target.value);
     });
 
     this.addEvent('submit', '.sectionAppender', (event: Event) => {
+      event.preventDefault();
       const frm = event.target as HTMLFormElement;
       const sectionRequest = Object.entries(parseFormData(frm))
                                    .reduce((obj: any, [k, v]) => {
