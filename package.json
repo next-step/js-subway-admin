@@ -2,7 +2,6 @@
   "name": "js-subway-admin",
   "version": "1.0.0",
   "description": "블랙커피 스터디 Level 3 - 지하철 노선도 미션",
-  "main": "index.js",
   "scripts": {
     "build": "parcel build ./src/index.html",
     "dev": "parcel ./src/index.html"
@@ -22,6 +21,8 @@
   },
   "homepage": "https://github.com/JunilHwang/js-subway-admin#readme",
   "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
     "parcel-bundler": "^1.12.5",
     "typescript": "^4.3.2"
   },

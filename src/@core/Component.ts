@@ -75,5 +75,4 @@ export abstract class Component<State = {}, Props = {}> {
     }
   }
 
-  public setRoot() { this.isRoot = true; }
-}
+ }
