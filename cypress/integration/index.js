@@ -67,5 +67,72 @@ describe('지하철 노선도 어드민', () => {
         });
     });
 
-  })
+  });
+
+  describe('지하철역 관리', () => {
+
+    beforeEach(() => {
+      localStorage.setItem('STATION_REPOSITORY', JSON.stringify([
+        {
+          idx: Date.now(),
+          name: '포동역',
+        }
+      ]));
+    });
+
+    it('지하철역 추가', () => {
+      const stub = cy.stub();
+      cy.on('window:alert', stub);
+      cy.get("#station-name").type('포동역{enter}')
+        .then(() => {
+          expect(stub.getCall(0)).to.be.calledWith('이미 존재하는 역입니다.')
+        });
+
+      cy.get("#station-name").clear().type('반포역{enter}');
+      cy.get('ul').contains('반포역').should('exist');
+    });
+
+    it('지하철역 수정', () => {
+      cy.reload()
+
+      const stub = cy.stub();
+      cy.on('window:alert', stub);
+
+      cy.wait(1000 / 60);
+
+      cy.contains('ul li', '포동역')
+        .should('exist')
+        .find('button.update')
+        .should('exist')
+        .click()
+
+      cy.get('#updateStationName')
+        .clear()
+        .type('반포동이역{enter}')
+        .then(() => {
+          expect(stub.getCall(0)).to.be.calledWith('역이 수정되었습니다.');
+        });
+
+    });
+
+    it('지하철역 삭제', () => {
+      cy.reload()
+
+      const stub = cy.stub();
+      cy.on('window:alert', stub);
+
+      cy.wait(1000 / 60);
+
+      cy.contains('ul li', '포동역')
+        .should('exist')
+        .find('button.delete')
+        .should('exist')
+        .click()
+        .then(() => {
+          expect(stub.getCall(0)).to.be.calledWith('역이 삭제되었습니다.');          
+        })
+
+    });
+
+  });
 })

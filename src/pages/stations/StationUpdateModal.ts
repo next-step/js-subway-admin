@@ -38,7 +38,7 @@ export class StationUpdateModal extends Component<StationUpdateModalState, Stati
               <label for="stationName" class="input-label" hidden>역 이름</label>
               <input
                 type="text"
-                id="stationName"
+                id="updateStationName"
                 name="stationName"
                 class="input-field"
                 placeholder="역 이름"
