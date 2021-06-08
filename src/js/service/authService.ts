@@ -13,13 +13,12 @@ interface IAuthDB {
 const authDB = new LocalStorage<IAuthDB>("auth");
 
 const authService = {
-  login: (email: string, password: string) => {
+  login: (email: string, password: string): void => {
     try {
       const user = authDB.get(email);
       if (!user) throw MESSAGE.NO_USER;
       if (user.password !== password) throw MESSAGE.WRONG_PASSWORD;
-      const state = authStore.getState();
-      authStore.updateState({ ...state, isLoggedIn: true });
+      authStore.updateState({ isLoggedIn: true });
       router.push(PATH.STATIONS);
     } catch (error) {
       alert(error);
@@ -31,7 +30,7 @@ const authService = {
     name: string,
     password: string,
     confirmPassword: string
-  ) => {
+  ): void => {
     try {
       const users = authDB.getAll();
       const isExisitedEmail =
@@ -44,6 +43,11 @@ const authService = {
     } catch (error) {
       alert(error);
     }
+  },
+
+  logout: (): void => {
+    authStore.updateState({ isLoggedIn: false });
+    router.push(PATH.STATIONS);
   },
 };
 

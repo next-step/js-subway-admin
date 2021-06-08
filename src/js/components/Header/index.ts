@@ -1,36 +1,33 @@
 import Component from "@/core/component";
 import handleLink from "@/router/handleLink";
+import view from "./view";
+import authService from "@/service/authService";
+import { authStore } from "@/store";
 import { $ } from "@/utils/dom";
 
 class Header extends Component {
+  constructor() {
+    super();
+    this.bindEvents();
+  }
   protected initDom() {
     this.$container = $("#header");
   }
 
-  protected bindEvents(): void {
-    this.$container.addEventListener("click", handleLink);
+  public bindEvents(): void {
+    this.$container.addEventListener("click", (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (target.id !== "logout") {
+        handleLink(e);
+        return;
+      }
+      authService.logout();
+    });
   }
 
   protected componentMount(): void {
-    this.$container.innerHTML = `
-    <a href="/" class="text-black">
-      <h1 class="text-center font-bold">🚇 지하철 노선도</h1>
-     </a>
-    <nav class="d-flex justify-center flex-wrap">
-      <a href="/stations" class="my-1">
-        <button class="btn bg-white shadow mx-1">🚉 역 관리</button>
-      </a>
-      <a href="/lines" class="my-1">
-        <button class="btn bg-white shadow mx-1">🛤️ 노선 관리</button>
-      </a>
-      <a href="/sections" class="my-1">
-        <button class="btn bg-white shadow mx-1">🔁 구간 관리</button>
-      </a>
-      <a href="/login" class="my-1">
-      <button class="btn bg-white shadow mx-1">👤 로그인</button>
-      </a>
-    </nav>
-      `;
+    const { isLoggedIn } = authStore.getState();
+    this.$container.innerHTML = view(isLoggedIn);
   }
 }
 
