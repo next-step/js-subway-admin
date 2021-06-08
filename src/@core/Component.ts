@@ -1,4 +1,5 @@
-import {observable, observe} from "./";
+import {applyDomDiff, observable, observe} from "./";
+import {selectAll} from "~utils";
 
 export abstract class Component<State = {}, Props = {}> {
 
@@ -26,20 +27,22 @@ export abstract class Component<State = {}, Props = {}> {
   protected abstract template(): string;
   protected setEvent() {}
 
-  protected addEvent (eventType: string, selector: string, callback: Function) {
-    this.$target.addEventListener(eventType, (e) => {
-      const target = e.target as HTMLElement;
-      const currentTarget = e.currentTarget as HTMLElement;
-      const checked = target.closest(selector) || [ ...currentTarget.querySelectorAll(selector) ].includes(target);
-      if (!checked) return;
-      callback(e);
-    })
+  protected addEvent (eventType: string, selector: string, callback: (e: Event) => void) {
+    selectAll(selector, this.$target)
+      .forEach(el => {
+        el.removeEventListener(eventType, callback);
+        el.addEventListener(eventType, callback);
+      });
   }
 
   private render() {
     this.$components = {};
 
-    this.$target.innerHTML = this.template();
+    const $target = this.$target.cloneNode(true) as HTMLElement;
+    $target.innerHTML = this.template();
+
+    applyDomDiff(this.$target, $target);
+
     this.$target.querySelectorAll('[data-component]')
                 .forEach(el => this.setupChildComponent(el));
 
