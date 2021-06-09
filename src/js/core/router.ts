@@ -5,7 +5,7 @@ const notFound = new NotFound();
 
 class Router<Ipage> {
   private pages: Ipage = {} as Ipage;
-  constructor(pages) {
+  constructor(pages: Ipage) {
     this.setPages(pages);
     this.bindEvents();
   }
