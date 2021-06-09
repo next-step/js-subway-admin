@@ -20,7 +20,7 @@ export const getStationsListsTemplate = (station: string): string => `
 `;
 
 export const getLinesListsTemplate = (linesInfo: LinesInfo): string => `
-<li class="d-flex items-center py-2 relative">
+<li class="lines-list-item d-flex items-center py-2 relative">
   <span class="subway-line-color-dot ${linesInfo.color}"></span>
   <span class="w-100 pl-6 subway-line-list-item-name"
     >${linesInfo.name}</span
@@ -33,7 +33,7 @@ export const getLinesListsTemplate = (linesInfo: LinesInfo): string => `
   </button>
   <button
     type="button"
-    class="bg-gray-50 text-gray-500 text-sm"
+    class="bg-gray-50 text-gray-500 text-sm delete-btn"
   >
     삭제
   </button>

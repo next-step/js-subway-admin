@@ -1,8 +1,8 @@
-import { $, $$ } from '../../utils/dom';
+import { $, $$, $closest } from '../../utils/dom';
 import { _filter, _map, _reduce, _each } from '../../utils/_';
 import { StringKeyObject, LinesInfo } from '../../types/index';
 import { setData, getData } from '../../utils/storage';
-import { render } from '../../utils/render';
+import { render, renderSnackBar } from '../../utils/render';
 import { createLinesListsTemplates } from '../../templates/createTemplate';
 import checkDuplicate from '../validate';
 import { Message } from '../../utils/constants';
@@ -68,4 +68,28 @@ export const onPickColor = (e: Event): void => {
   $colorInput.value = target.classList[1];
 
   target.classList.add('border-selected-color');
+};
+
+export const onClickDeleteLine = (e: Event): void => {
+  const target = e.target as HTMLElement;
+
+  if (!target.matches('.lines-list-item .delete-btn')) return;
+
+  if (window.confirm(Message.DELETE_LINE_CONFIRM)) {
+    const { innerText } = $(
+      '.subway-line-list-item-name',
+      $closest('.lines-list-item', target)
+    );
+
+    setData(
+      'lines',
+      _filter(getData('lines'), (linesInfo: LinesInfo) => {
+        const { name } = linesInfo;
+
+        return name !== innerText;
+      })
+    );
+    render(createLinesListsTemplates(getData('lines')), $('.lines-wrapper ul'));
+    renderSnackBar(Message.DELETE_LINE);
+  }
 };

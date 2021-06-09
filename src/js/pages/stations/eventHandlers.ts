@@ -84,7 +84,7 @@ export const onClickDelete = (e: Event): void => {
 
   if (!target.matches('.station-list-item .delete-btn')) return;
 
-  if (window.confirm(Message.DELETE_CONFIRM)) {
+  if (window.confirm(Message.DELETE_STATION_CONFIRM)) {
     const { innerText } = $(
       '.station-name',
       $closest('.station-list-item', target)

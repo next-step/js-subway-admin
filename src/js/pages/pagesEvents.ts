@@ -11,7 +11,8 @@ import {
   onModalOpen,
   onModalClose,
   onSubmitAddLine,
-  onPickColor
+  onPickColor,
+  onClickDeleteLine
 } from './lines/eventHandlers';
 
 const pagesEvents: StringKeyObject<BindingEvent[]> = {
@@ -58,6 +59,11 @@ const pagesEvents: StringKeyObject<BindingEvent[]> = {
       selector: '.subway-line-color-selector',
       event: 'click',
       eventHandlerList: [onPickColor]
+    },
+    {
+      selector: '.lines-wrapper ul',
+      event: 'click',
+      eventHandlerList: [onClickDeleteLine]
     }
   ],
   [PagesPath.SECTIONS]: [],
