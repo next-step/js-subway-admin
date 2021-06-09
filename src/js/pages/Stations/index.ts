@@ -16,8 +16,8 @@ class Stations extends Component {
   }
 
   protected initChildren(): void {
-    const stationForm = new StationForm(this.$container);
-    const stationList = new StationList(this.$container);
+    const stationForm = new StationForm();
+    const stationList = new StationList();
     stationStore.addObserver(stationList);
     this.children = [stationForm, stationList];
   }

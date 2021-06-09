@@ -5,7 +5,7 @@ class Component<IProps = unknown> {
   protected $container: HTMLElement = document.createElement("div");
   protected children: Component[] = [];
 
-  constructor(readonly $root?: HTMLElement, readonly props?: IProps) {
+  constructor(readonly props?: IProps) {
     this.mount();
   }
 

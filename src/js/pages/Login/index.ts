@@ -15,7 +15,7 @@ class Login extends Component {
   }
 
   protected initChildren(): void {
-    const loginForm = new LoginForm(this.$container);
+    const loginForm = new LoginForm();
     this.children = [loginForm];
   }
 

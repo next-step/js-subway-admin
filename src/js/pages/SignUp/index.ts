@@ -15,7 +15,7 @@ class SignUp extends Component {
   }
 
   protected initChildren(): void {
-    const signUpForm = new SignUpForm(this.$container);
+    const signUpForm = new SignUpForm();
     this.children = [signUpForm];
   }
 
