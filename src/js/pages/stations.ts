@@ -1,14 +1,14 @@
-import { Message } from '../types/index';
-import { $, $closest } from '../utils/dom';
-import { findIndex, include } from '../libs/index';
-import { closeModal, validateValue } from './common';
-import { createStationsItemTemplate } from '../utils/template';
-import { addData, getData, removeData, replaceData } from '../utils/storage';
 import render from '../utils/render';
 import setState from '../utils/state';
 import initValue from '../utils/init';
 import bindEvents from '../utils/bindEvents';
 import stationsEditModal from '../templates/stationsEditModal';
+import { $, $closest } from '../utils/dom';
+import { findIndex, include } from '../libs/index';
+import { Message, LinesFormData } from '../types/index';
+import { closeModal, validateValue } from './common';
+import { createStationsItemTemplate } from '../utils/template';
+import { addData, getData, removeData, replaceData } from '../utils/storage';
 
 const stationsState = {
   prevValue: ''
@@ -75,7 +75,6 @@ export const onShowEditModal = (e: Event): void => {
   if (!include(target.classList, item => item === 'edit-btn')) return;
 
   const $modal = $('.modal');
-
   $modal.classList.add('open');
 
   render($modal)(stationsEditModal);
@@ -102,6 +101,17 @@ export const onRemoveStation = (e: Event): void => {
   const target = e.target as HTMLElement;
 
   if (!include(target.classList, item => item === 'remove-btn')) return;
+  if (
+    include<LinesFormData>(
+      getData('lines'),
+      data =>
+        (data as LinesFormData).upLineStation === getTargetStation(target) ||
+        (data as LinesFormData).downLineStation === getTargetStation(target)
+    )
+  ) {
+    alert(Message.CANNOT_REMOVE_STATION);
+    return;
+  }
   if (!confirm(Message.CONFIRM_REMOVE)) return;
 
   removeData('stations', getTargetStation(target));
