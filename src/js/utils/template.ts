@@ -30,6 +30,8 @@ export const createOptionsTemplate = createListTemplate(
   (item: string): string => `<option>${item}</option>`
 );
 
+export const createLinesItemTemplate = createListTemplate(linesItemTemplate);
+
 export const createStationsItemTemplate =
   createListTemplate(stationsItemTemplate);
 
@@ -40,5 +42,3 @@ export const createSubwayLineColorOptionsTemplate = (list: string[]): string =>
       hasNewLine ? '<br/>' : ''
     }`;
   }).join('');
-
-export const createLinesItemTemplate = createListTemplate(linesItemTemplate);

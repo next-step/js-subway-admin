@@ -1,21 +1,38 @@
+import {
+  closeModal,
+  getTargetItemName,
+  removeItem,
+  validateValue
+} from './common';
+import { $ } from '../utils/dom';
+import { findIndex, include } from '../libs/index';
+import { Message, LinesFormData } from '../types/index';
+import { createStationsItemTemplate } from '../utils/template';
+import { addData, getData, replaceData } from '../utils/storage';
 import render from '../utils/render';
 import setState from '../utils/state';
 import initValue from '../utils/init';
 import bindEvents from '../utils/bindEvents';
 import stationsEditModal from '../templates/stationsEditModal';
-import { $, $closest } from '../utils/dom';
-import { findIndex, include } from '../libs/index';
-import { Message, LinesFormData } from '../types/index';
-import { closeModal, validateValue } from './common';
-import { createStationsItemTemplate } from '../utils/template';
-import { addData, getData, removeData, replaceData } from '../utils/storage';
 
 const stationsState = {
   prevValue: ''
 };
 
-const getTargetStation = (node: HTMLElement): string =>
-  $('.station-name', $closest('li', node)).innerHTML;
+const isIncludedInLines = (target: string) => {
+  if (
+    include<LinesFormData>(
+      getData('lines'),
+      data =>
+        (data as LinesFormData).upLineStation === target ||
+        (data as LinesFormData).downLineStation === target
+    )
+  ) {
+    alert(Message.CANNOT_REMOVE_STATION);
+    return true;
+  }
+  return false;
+};
 
 export const onAddStation = (e: Event): void => {
   e.preventDefault();
@@ -78,7 +95,11 @@ export const onShowEditModal = (e: Event): void => {
   $modal.classList.add('open');
 
   render($modal)(stationsEditModal);
-  setState(stationsState, 'prevValue', getTargetStation(target));
+  setState(
+    stationsState,
+    'prevValue',
+    getTargetItemName('.station-name', target)
+  );
   initValue(
     $('.modal form .input-field') as HTMLInputElement,
     stationsState.prevValue
@@ -97,25 +118,11 @@ export const onShowEditModal = (e: Event): void => {
   ]);
 };
 
-export const onRemoveStation = (e: Event): void => {
-  const target = e.target as HTMLElement;
-
-  if (!include(target.classList, item => item === 'remove-btn')) return;
-  if (
-    include<LinesFormData>(
-      getData('lines'),
-      data =>
-        (data as LinesFormData).upLineStation === getTargetStation(target) ||
-        (data as LinesFormData).downLineStation === getTargetStation(target)
-    )
-  ) {
-    alert(Message.CANNOT_REMOVE_STATION);
-    return;
-  }
-  if (!confirm(Message.CONFIRM_REMOVE)) return;
-
-  removeData('stations', getTargetStation(target));
-  render($('.stations-container .stations-list'))(
-    createStationsItemTemplate(getData('stations'))
-  );
-};
+export const onRemoveStation = removeItem<string>(
+  'stations',
+  '.stations-container .stations-list',
+  '.station-name',
+  createStationsItemTemplate,
+  target => data => data !== target,
+  isIncludedInLines
+);

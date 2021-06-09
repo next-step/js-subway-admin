@@ -27,9 +27,9 @@ export const replaceData = <Item>(
   setData(key, newData);
 };
 
-export const removeData = <Item>(key: StorageKey, target: Item): void => {
-  setData(
-    key,
-    filter(getData<Item>(key), item => item !== target)
-  );
+export const removeData = <Item>(
+  key: StorageKey,
+  predicate: (data: Item) => boolean
+): void => {
+  setData(key, filter(getData<Item>(key), predicate));
 };

@@ -11,7 +11,7 @@ import {
   stationsTemplate
 } from '../templates/index';
 import { PagesInfo } from '../types/index';
-import { onShowModal } from '../pages/lines';
+import { onRemoveLine, onShowModal } from '../pages/lines';
 
 export const pagesInfo: PagesInfo = {
   '/': {
@@ -59,6 +59,11 @@ export const pagesInfo: PagesInfo = {
         selector: '.lines-container .create-line-btn',
         event: 'click',
         handlers: [onShowModal]
+      },
+      {
+        selector: '.lines-container .lines-list',
+        event: 'click',
+        handlers: [onRemoveLine]
       }
     ]
   },

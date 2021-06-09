@@ -5,8 +5,8 @@ import linesModalTemplate from '../templates/linesModal';
 import { $, $$ } from '../utils/dom';
 import { addData, getData } from '../utils/storage';
 import { createLinesItemTemplate } from '../utils/template';
-import { Message, ObjectStringKey } from '../types/index';
-import { closeModal, validateValue } from './common';
+import { LinesFormData, Message, ObjectStringKey } from '../types/index';
+import { closeModal, removeItem, validateValue } from './common';
 import { each, filter, find, include, map, reduce, slice } from '../libs/index';
 
 const onPickColor = (e: Event): void => {
@@ -94,3 +94,11 @@ export const onShowModal = (): void => {
     }
   ]);
 };
+
+export const onRemoveLine = removeItem<LinesFormData>(
+  'lines',
+  '.lines-container .lines-list',
+  '.subway-line-list-item-name',
+  createLinesItemTemplate,
+  target => data => data.lineName !== target
+);
