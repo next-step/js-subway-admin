@@ -11,7 +11,7 @@ import {
   sectionsModalTemplate,
   stationsModalTemplate
 } from '../templates/index';
-import $ from './dom';
+import { $ } from './dom';
 import { _some } from './_';
 
 const $snackBar = $('#snackBar');
