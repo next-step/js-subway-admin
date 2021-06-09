@@ -1,5 +1,8 @@
 @import "./shared/index.css";
 @import "./ui/index.css";
+@import "./pages/auth.css";
+@import "./pages/lines.css";
+@import "./pages/sections.css";
 
 html,
 body {

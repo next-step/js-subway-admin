@@ -33,6 +33,16 @@ class LocalStorage<T extends IDataBase> {
     this.set(newData);
     return newData;
   }
+
+  public update(id: string, nextData: object): T[] {
+    const datas = this.getAll();
+    const newData = datas.map((data) => {
+      if (data.id === id) return { ...data, ...nextData };
+      return data;
+    });
+    this.set(newData);
+    return newData;
+  }
 }
 
 export default LocalStorage;
