@@ -1,8 +1,10 @@
-import $ from '../../utils/dom';
+import { $, $closest } from '../../utils/dom';
 import { setData, getData } from '../../utils/storage';
-import { render } from '../../utils/render';
+import { render, renderSnackBar } from '../../utils/render';
 import { createStationListsTemplates } from '../../templates/createTemplate';
 import checkDuplicateStation from './validate';
+import { _filter, _some } from '../../utils/_';
+import { LinesInfo } from '../../types/index';
 
 const $modal = $('.modal');
 
@@ -30,7 +32,10 @@ export const onClickEditModalOpen = (e: Event): void => {
   if (!target.matches('.station-list-item .modal-trigger-btn')) return;
   const $editInput = $('#station-name-edit') as HTMLInputElement;
 
-  const { innerText } = target.previousElementSibling as HTMLSpanElement;
+  const { innerText } = $(
+    '.station-name',
+    $closest('.station-list-item', target)
+  );
 
   stationState.stationName = innerText;
   $editInput.value = innerText;
@@ -57,4 +62,38 @@ export const onEdit = (e: Event): void => {
     createStationListsTemplates(getData('stations')),
     $('.stations-wrapper ul')
   );
+};
+
+export const onClickDelete = (e: Event): void => {
+  const target = e.target as HTMLElement;
+
+  if (!target.matches('.station-list-item .delete-btn')) return;
+
+  if (window.confirm('정말로 해당 역을 삭제하시겠습니까?')) {
+    const { innerText } = $(
+      '.station-name',
+      $closest('.station-list-item', target)
+    );
+    if (
+      _some(getData<LinesInfo>('lines'), (line: LinesInfo) => {
+        const { upLine, downLine } = line;
+
+        return innerText === upLine || innerText === downLine;
+      })
+    ) {
+      renderSnackBar(
+        '해당 역은 이미 노선에 등록되어있어서 삭제가 불가능합니다.'
+      );
+    } else {
+      setData(
+        'stations',
+        _filter(getData('stations'), station => station !== innerText)
+      );
+      render(
+        createStationListsTemplates(getData('stations')),
+        $('.stations-wrapper ul')
+      );
+      renderSnackBar('해당 역이 삭제되었습니다.');
+    }
+  }
 };
