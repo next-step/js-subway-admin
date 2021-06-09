@@ -1,6 +1,6 @@
 import Component from "@/core/component";
 import view from "./view";
-import { stationService, uiService } from "@/service";
+import { stationService } from "@/service";
 import { $, createElement } from "@/utils/dom";
 
 interface IProps {
@@ -21,14 +21,13 @@ class StationUpdate extends Component<IProps> {
       e.preventDefault();
       const input = $("#station-name", this.$container) as HTMLInputElement;
       const newName = input.value;
-      if (newName === this.props.value) return;
-      stationService.update(this.props.id, newName);
-      uiService.closeModal();
+      if (newName === this.props?.value) return;
+      stationService.update(this.props?.id, newName);
     });
   }
 
   protected componentMount(): void {
-    this.$container.innerHTML = view(this.props.value);
+    if (this.props) this.$container.innerHTML = view(this.props.value);
   }
 }
 

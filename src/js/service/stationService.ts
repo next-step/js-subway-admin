@@ -1,5 +1,6 @@
-import { stationStore } from "@/store";
 import { MESSAGE } from "@/constants";
+import { uiService } from "@/service";
+import { stationStore } from "@/store";
 import { stationDB } from "@/data";
 import { stationNameValidator } from "@/utils/validator";
 
@@ -34,6 +35,7 @@ const stationService = {
   update: (id: string, newName: string): void => {
     const newData = stationDB.update(id, { name: newName });
     stationStore.updateState({ stations: newData });
+    uiService.closeModal();
   },
 
   updateLine: (name, lines: string | null) => {

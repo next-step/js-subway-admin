@@ -6,6 +6,8 @@ import { stationStore } from "@/store";
 import { $, createElement, closest } from "@/utils/dom";
 
 class StationList extends Component {
+  stationUpdate = new StationUpdate();
+
   protected initDom(): void {
     this.$container = createElement({
       tag: "ul",
@@ -25,8 +27,8 @@ class StationList extends Component {
       const { id, name } = closest(target, "li").dataset;
       const actions = {
         update: () => {
-          const stationUpdate = new StationUpdate({ id, value: name });
-          uiService.openModal(stationUpdate, "역 이름 수정하기");
+          this.stationUpdate.updateProps({ id, value: name });
+          uiService.openModal(this.stationUpdate, "역 이름 수정하기");
           return;
         },
         remove: () => {

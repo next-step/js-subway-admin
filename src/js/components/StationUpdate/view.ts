@@ -1,4 +1,4 @@
-const view = (currentValue: string) => `
+const view = (currentValue: string): string => `
 <div class="d-flex w-100">
 <label for="station-name" class="input-label" hidden>
   역 이름

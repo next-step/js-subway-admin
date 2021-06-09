@@ -8,9 +8,8 @@ import { uiService } from "@/service";
 import { authStore, lineStore } from "@/store";
 import { PATH, MESSAGE, PAGE_TITLE } from "@/constants";
 
-const lineForm = new LineForm();
-
 class Lines extends Component {
+  lineForm = new LineForm();
   protected initDom(): void {
     this.$container = createElement({
       tag: "div",
@@ -29,7 +28,7 @@ class Lines extends Component {
       const target = e.target as HTMLElement;
       const id = target.id;
       if (id !== "add-line") return;
-      uiService.openModal(lineForm, "노선 등록하기");
+      uiService.openModal(this.lineForm, "노선 등록하기");
     });
   }
 

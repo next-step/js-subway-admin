@@ -1,11 +1,12 @@
 import { IPageInfo } from "@/types";
-import { $ } from "@/utils/dom";
 
 class Component<IProps = unknown> {
   protected $container: HTMLElement = document.createElement("div");
   protected children: Component[] = [];
+  protected props: IProps;
 
-  constructor(readonly props?: IProps) {
+  constructor(props?: IProps) {
+    this.props = props;
     this.mount();
   }
 
@@ -29,6 +30,11 @@ class Component<IProps = unknown> {
 
   protected beforeChangeURL(): boolean {
     return true;
+  }
+
+  public updateProps(nextProps: IProps): void {
+    this.props = nextProps;
+    this.componentMount();
   }
 
   public pageInfo(): IPageInfo | void {}
