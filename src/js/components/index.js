@@ -14,3 +14,4 @@ export { default as SectionList } from 'js/components/SectionList/SectionList';
 export { default as AddSectionModal } from 'js/components/AddSectionModal/AddSectionModal';
 export { default as AddStationForm } from 'js/components/AddStationForm/AddStationForm';
 export { default as StationList } from 'js/components/StationList/StationList';
+export { default as ModifyStationModal } from 'js/components/ModifyStationModal/ModifyStationModal';

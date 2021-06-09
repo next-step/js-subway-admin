@@ -9,6 +9,12 @@ const Stations = (async () => {
     // routeHandler가 render함수의 역할까지 같이하게된 것이 어색
     routeHandler();
   };
+
+  let modalState = { id: null, isModalOpen: false, prevStationName: '' };
+  const setModalState = nextModalState => {
+    modalState = nextModalState;
+    routeHandler();
+  };
   return () => {
     const $stations = document.createElement('div');
     $stations.className = 'wrapper bg-white p-10';
@@ -20,7 +26,7 @@ const Stations = (async () => {
     $stations.appendChild($headingContainer);
     $stations.appendChild(AddStationForm({ stations, setStations }));
 
-    $stations.appendChild(StationList({ stations }));
+    $stations.appendChild(StationList({ stations, setStations, modalState, setModalState }));
 
     return $stations;
   };

@@ -9,3 +9,8 @@ export const addStation = async station => {
   const res = await customAxios.post('/stations', station);
   return res.data;
 };
+
+export const modifyStation = async (id, station) => {
+  const res = await customAxios.patch(`/stations/${id}`, station);
+  return res.data;
+};
