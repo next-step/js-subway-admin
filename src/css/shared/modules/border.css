@@ -463,3 +463,8 @@ rounded {
 .border-black {
   border-color: black;
 }
+
+.border-selected-color {
+  outline: thick double #bfff00;
+  box-sizing: border-box;
+}
