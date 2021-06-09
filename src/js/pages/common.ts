@@ -1,7 +1,15 @@
 import { $ } from '../utils/dom';
 
-const closeModal = (): void => {
+export const closeModal = (): void => {
   $('.modal').classList.remove('open');
 };
 
-export default closeModal;
+export const validateValue = <Value>(
+  value: Value,
+  predicateList: ((value: Value) => boolean)[]
+): boolean => {
+  for (let i = 0; i < predicateList.length; i++) {
+    if (!predicateList[i](value)) return false;
+  }
+  return true;
+};

@@ -1,4 +1,4 @@
-export const colorOptions: string[] = [
+const colorOptions: string[] = [
   'gray-300',
   'gray-400',
   'gray-500',
@@ -71,18 +71,4 @@ export const colorOptions: string[] = [
   'pink-900'
 ];
 
-export const subwayLines: string[] = [
-  '1호선',
-  '2호선',
-  '3호선',
-  '4호선',
-  '5호선',
-  '6호선',
-  '7호선',
-  '8호선',
-  '9호선'
-];
-
-export const upLineStations: string[] = ['사당', '방배', '서초', '교대'];
-
-export const downLineStations: string[] = ['강남', '역삼', '선릉', '삼성'];
+export default colorOptions;

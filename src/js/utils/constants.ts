@@ -1,4 +1,9 @@
 import {
+  onAddStation,
+  onShowEditModal,
+  onRemoveStation
+} from '../pages/stations';
+import {
   homeTemplate,
   linesTemplate,
   loginTemplate,
@@ -6,11 +11,7 @@ import {
   stationsTemplate
 } from '../templates/index';
 import { PagesInfo } from '../types/index';
-import {
-  onAddStation,
-  onShowEditModal,
-  onRemoveStation
-} from '../pages/stations';
+import { onShowModal } from '../pages/lines';
 
 export const pagesInfo: PagesInfo = {
   '/': {
@@ -52,7 +53,14 @@ export const pagesInfo: PagesInfo = {
     path: '/lines',
     name: 'lines',
     title: '🛤️ 노선 관리',
-    template: linesTemplate
+    template: linesTemplate,
+    bindingList: [
+      {
+        selector: '.lines-container .create-line-btn',
+        event: 'click',
+        handlers: [onShowModal]
+      }
+    ]
   },
   '/sections': {
     path: '/sections',

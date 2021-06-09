@@ -1,25 +1,17 @@
+import { Message } from '../types/index';
 import { $, $closest } from '../utils/dom';
 import { findIndex, include } from '../libs/index';
+import { closeModal, validateValue } from './common';
 import { createStationsItemTemplate } from '../utils/template';
 import { addData, getData, removeData, replaceData } from '../utils/storage';
 import render from '../utils/render';
 import setState from '../utils/state';
 import initValue from '../utils/init';
-import closeModal from './common';
 import bindEvents from '../utils/bindEvents';
 import stationsEditModal from '../templates/stationsEditModal';
 
 const stationsState = {
   prevValue: ''
-};
-
-const validateValue = (value: string): boolean => {
-  if (
-    !include<string>(getData<string>('stations'), item => item === value) &&
-    value.match(/^[가-힣]{2,20}$/)
-  )
-    return true;
-  return false;
 };
 
 const getTargetStation = (node: HTMLElement): string =>
@@ -31,8 +23,13 @@ export const onAddStation = (e: Event): void => {
   const $input = $('.stations-container form .input-field') as HTMLInputElement;
   const { value } = $input;
 
-  if (!validateValue(value)) {
-    alert('형식에 맞지 않거나 중복된 이름입니다.');
+  if (
+    !validateValue(value, [
+      value => /^[가-힣]{2,20}$/.test(value),
+      value => !include(getData('stations'), item => item === value)
+    ])
+  ) {
+    alert(Message.INVALID_VALUE);
     return;
   }
 
@@ -49,8 +46,13 @@ export const onEditStation = (e: Event): void => {
   const $input = $('.modal form .input-field') as HTMLInputElement;
   const { value } = $input;
 
-  if (!validateValue(value)) {
-    alert('형식에 맞지 않거나 중복된 이름입니다.');
+  if (
+    !validateValue(value, [
+      value => /^[가-힣]{2,20}$/.test(value),
+      value => !include(getData('stations'), item => item === value)
+    ])
+  ) {
+    alert(Message.INVALID_VALUE);
     return;
   }
 
@@ -100,7 +102,7 @@ export const onRemoveStation = (e: Event): void => {
   const target = e.target as HTMLElement;
 
   if (!include(target.classList, item => item === 'remove-btn')) return;
-  if (!confirm('정말로 삭제하시겠습니까?')) return;
+  if (!confirm(Message.CONFIRM_REMOVE)) return;
 
   removeData('stations', getTargetStation(target));
   render($('.stations-container .stations-list'))(

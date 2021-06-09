@@ -1,17 +1,5 @@
 import { getData } from '../utils/storage';
-import { createListTemplate } from '../utils/template';
-import itemButtonsTemplate from './itemButtons';
-
-const getLinesItemTemplate = (
-  line: string
-): string => `<li class="d-flex items-center py-2 relative">
-<span class="subway-line-color-dot bg-blue-400"></span>
-<span class="w-100 pl-6 subway-line-list-item-name"
-  >${line}</span
->
-${itemButtonsTemplate}
-</li>
-<hr class="my-0" />`;
+import { createLinesItemTemplate } from '../utils/template';
 
 const linesTemplate =
   (): string => `<div class="wrapper bg-white p-10 lines-container">
@@ -24,8 +12,8 @@ const linesTemplate =
     노선 추가
   </button>
 </div>
-<ul class="mt-3 pl-0">
-  ${createListTemplate(getLinesItemTemplate)(getData('lines'))}
+<ul class="mt-3 pl-0 lines-list">
+  ${createLinesItemTemplate(getData('lines'))}
 </ul>
 </div>`;
 

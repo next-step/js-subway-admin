@@ -1,4 +1,19 @@
+export enum Message {
+  INVALID_VALUE = '형식에 맞지 않거나 중복된 이름입니다.',
+  CONFIRM_REMOVE = '정말로 삭제하시겠습니까?'
+}
+
 export type valueof<T> = T[keyof T];
+
+export type StorageKey = 'lines' | 'stations' | 'sections';
+
+export interface ObjectStringKey<T> {
+  [key: string]: T;
+}
+
+export interface StateObj<T> {
+  [key: string]: T;
+}
 
 export interface BindingList {
   selector: string;
@@ -15,14 +30,11 @@ export interface PagesInfo {
   };
 }
 
-export type StorageKey =
-  | 'lines'
-  | 'stations'
-  | 'subwayLines'
-  | 'sections'
-  | 'upLineStations'
-  | 'downLineStations';
-
-export interface StateObj<T> {
-  [key: string]: T;
+export interface LinesFormData {
+  lineName: string;
+  upLineStation: string;
+  downLineStation: string;
+  distance: number;
+  time: number;
+  color: string;
 }

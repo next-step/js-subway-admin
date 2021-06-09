@@ -1,6 +1,8 @@
+import colorOptions from '../utils/mock';
 import stationsSelectTemplate from './stationsSelect';
+import { createSubwayLineColorOptionsTemplate } from '../utils/template';
 
-const linesModalTemplate = `<div class="modal-inner p-8">
+const linesModalTemplate = (): string => `<div class="modal-inner p-8">
   <button class="modal-close">
     <svg viewbox="0 0 40 40">
       <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
@@ -18,12 +20,12 @@ const linesModalTemplate = `<div class="modal-inner p-8">
         type="text"
         id="subway-line-name"
         name="subway-line-name"
-        class="input-field"
+        class="input-field line-name-input"
         placeholder="노선 이름"
         required
       />
     </div>
-    ${stationsSelectTemplate}
+    ${stationsSelectTemplate()}
     <div class="input-control">
       <label for="distance" class="input-label" hidden
         >상행 하행역 거리</label
@@ -57,14 +59,16 @@ const linesModalTemplate = `<div class="modal-inner p-8">
           type="text"
           id="subway-line-color"
           name="subway-line-color"
-          class="input-field"
+          class="input-field subway-line-color-input"
           placeholder="색상을 아래에서 선택해주세요."
           disabled
           required
         />
       </div>
     </div>
-    <div class="subway-line-color-selector px-2"></div>
+    <div class="subway-line-color-selector px-2">${createSubwayLineColorOptionsTemplate(
+      colorOptions
+    )}</div>
     <div class="d-flex justify-end mt-3">
       <button
         type="submit"
