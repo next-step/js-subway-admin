@@ -1,4 +1,7 @@
 import { $ } from "@/utils/dom";
+import { NotFound } from "@/pages";
+
+const notFound = new NotFound();
 
 class Router<Ipage> {
   private pages: Ipage = {} as Ipage;
@@ -33,7 +36,11 @@ class Router<Ipage> {
     const { href } = history.state;
     const $main = $("#main");
     $main.innerHTML = "";
-    this.pages[href]?.render($main);
+    if (this.pages[href]) {
+      this.pages[href].render($main);
+    } else {
+      notFound.render($main);
+    }
   }
 }
 
