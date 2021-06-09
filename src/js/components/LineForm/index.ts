@@ -40,5 +40,3 @@ class LineForm extends Component {
 }
 
 export default LineForm;
-
-// line Store에서 이미 등록된 라인 정보 가져옥 -> 서비스에서 할 것

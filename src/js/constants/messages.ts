@@ -8,6 +8,8 @@ const MESSAGES = {
   NOT_CORRECT_STATION:
     "올바르지 않은 역 이름입니다. 2글자 이상, 20글자 이하로 입력해주세요.",
   EXIST_STATION: "이미 존재하는 역 입니다.",
+  STATION_REMOVE_NOT_POSSIBLE:
+    "이미 노선으로 등록된 역이므로 삭제 불가능 합니다. 노선을 먼저 삭제해주세요.",
   CONFIRM_REMOVE_STATION: "정말로 역을 삭제하시겠습니까?",
   EXIST_LINE: "이미 존재하는 노선 이름입니다.",
   NOT_CORRECT_LINE_STATION: "상행역과 하행역은 같을 수 없습니다.",

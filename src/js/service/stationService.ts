@@ -20,9 +20,15 @@ const stationService = {
   },
 
   remove: (id: string): void => {
-    if (!confirm(MESSAGE.CONFIRM_REMOVE_STATION)) return;
-    const newData = stationDB.remove(id);
-    stationStore.updateState({ stations: newData });
+    try {
+      if (!confirm(MESSAGE.CONFIRM_REMOVE_STATION)) return;
+      const isLineExisted = !!stationDB.get(id).lines;
+      if (isLineExisted) throw MESSAGE.STATION_REMOVE_NOT_POSSIBLE;
+      const newData = stationDB.remove(id);
+      stationStore.updateState({ stations: newData });
+    } catch (error) {
+      alert(error);
+    }
   },
 
   update: (id: string, newName: string): void => {
