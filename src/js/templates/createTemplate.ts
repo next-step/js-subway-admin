@@ -6,9 +6,9 @@ import {
 } from './shared';
 import { getData } from '../utils/storage';
 
-const createMultipleTemplates = <T>(template: (data: T) => string) => (
-  datas: T[]
-): string => _map<T, string>(datas, template).join('');
+export const createMultipleTemplates = <T>(
+  template: (data: T, idx?: number) => string
+) => (datas: T[]): string => _map<T, string>(datas, template).join('');
 
 export const createStationListsTemplates = createMultipleTemplates(
   getStationsListsTemplate
@@ -28,9 +28,9 @@ export const createStationSelectTemplate = (
   className?: string
 ): string => `
 <label for=${id} class="input-label" hidden>${type}</label>
-<select id=${id} ${className ? `class=${className}` : ''}>
+<select id=${id} ${className ? `class=${className}` : ''} required>
   <option value="" selected disabled hidden>${type}</option>
-  ${createStationListsTemplates(getData('stations'))}
+  ${createOptionsTemplates(getData('stations'))}
 </select>
 `;
 

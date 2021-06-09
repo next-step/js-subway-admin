@@ -1,5 +1,5 @@
 import { createLinesListsTemplates } from './createTemplate';
-import { lines } from '../dummyData';
+import { getData } from '../utils/storage';
 
 const linesTemplate = (): string => `
 <div class="wrapper bg-white p-10 lines-wrapper">
@@ -13,7 +13,7 @@ const linesTemplate = (): string => `
     </button>
   </div>
   <ul class="mt-3 pl-0">
-  ${createLinesListsTemplates(lines)}
+  ${createLinesListsTemplates(getData('lines'))}
   </ul>
 </div>
 `;

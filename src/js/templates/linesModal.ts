@@ -1,7 +1,10 @@
 import {
   createStationSelectTemplate,
-  createInputTemplate
+  createInputTemplate,
+  createMultipleTemplates
 } from './createTemplate';
+import { getSubwayLineColorOptionTemplate } from './shared';
+import colorOptions from '../utils/mock';
 
 const linesModalTemplate = (): string => `
 <div class="modal-inner p-8">
@@ -19,7 +22,8 @@ const linesModalTemplate = (): string => `
         'subway-line-name',
         'text',
         '노선 이름',
-        'required'
+        'required',
+        'minlength="2" maxlength="10"'
       )}
     </div>
     <div class="d-flex items-center input-control">
@@ -50,14 +54,16 @@ const linesModalTemplate = (): string => `
           type="text"
           id="subway-line-color"
           name="subway-line-color"
-          class="input-field"
+          class="input-field subway-line-color"
           placeholder="색상을 아래에서 선택해주세요."
-          disabled
           required
+          disabled
         />
       </div>
     </div>
-    <div class="subway-line-color-selector px-2"></div>
+    <div class="subway-line-color-selector px-2">
+      ${createMultipleTemplates(getSubwayLineColorOptionTemplate)(colorOptions)}
+    </div>
     <div class="d-flex justify-end mt-3">
       <button
         type="submit"

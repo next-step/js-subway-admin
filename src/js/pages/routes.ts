@@ -2,7 +2,7 @@ import { headerTemplate } from '../templates/index';
 import { StringKeyObject } from '../types/index';
 import { PagesPath } from '../utils/constants';
 import { render, renderPages, renderModals } from '../utils/render';
-import $ from '../utils/dom';
+import { $ } from '../utils/dom';
 import bindEvents from '../utils/bindEvents';
 import pagesEvents from './pagesEvents';
 import { _some } from '../utils/_';
