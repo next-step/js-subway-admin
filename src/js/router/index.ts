@@ -7,17 +7,11 @@ type IPages = {
   [pathname in PATH]: Component;
 };
 
-const login = new Login();
-const station = new Stations();
-const signUp = new SignUp();
-const lines = new Lines();
-
 const router = new Router<IPages>({
-  [PATH.LOGIN]: login,
-  [PATH.LINE]: lines,
-  [PATH.SECTIONS]: new Login(),
-  [PATH.SIGNUP]: signUp,
-  [PATH.STATIONS]: station,
+  [PATH.LOGIN]: new Login(),
+  [PATH.LINE]: new Lines(),
+  [PATH.SIGNUP]: new SignUp(),
+  [PATH.STATIONS]: new Stations(),
 });
 
 export default router;

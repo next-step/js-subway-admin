@@ -12,9 +12,6 @@ const view = (isLoggedIn: boolean): string => {
   </a>
   <a href="/lines" class="my-1">
     <button class="btn bg-white shadow mx-1">🛤️ 노선 관리</button>
-  </a>
-  <a href="/sections" class="my-1">
-    <button class="btn bg-white shadow mx-1">🔁 구간 관리</button>
   </a>`
       : ""
   }
