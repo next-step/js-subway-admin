@@ -42,6 +42,7 @@ const stationService = {
 
   update: (id: string, newName: string): void => {
     try {
+      if (!stationNameValidator(newName)) throw MESSAGE.NOT_CORRECT_STATION;
       if (isExistedStation(newName)) throw MESSAGE.EXIST_STATION;
       const newData = stationDB.update(id, { name: newName });
       stationStore.updateState({ stations: newData });
