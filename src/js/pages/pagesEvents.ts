@@ -4,8 +4,15 @@ import {
   onAddStation,
   onClickEditModalOpen,
   onClickEditModalClose,
-  onEdit
+  onEdit,
+  onClickDelete
 } from './stations/eventHandlers';
+import {
+  onModalOpen,
+  onModalClose,
+  onSubmitAddLine,
+  onPickColor
+} from './lines/eventHandlers';
 
 const pagesEvents: StringKeyObject<BindingEvent[]> = {
   [PagesPath.HOME]: [],
@@ -13,30 +20,46 @@ const pagesEvents: StringKeyObject<BindingEvent[]> = {
     {
       selector: '.stations-wrapper form',
       event: 'submit',
-      eventHandler: onAddStation
+      eventHandlerList: [onAddStation]
     },
     {
       selector: '.stations-wrapper ul',
       event: 'click',
-      eventHandler: onClickEditModalOpen
+      eventHandlerList: [onClickEditModalOpen, onClickDelete]
     },
     {
       selector: '.modal .modal-close',
       event: 'click',
-      eventHandler: onClickEditModalClose
+      eventHandlerList: [onClickEditModalClose]
     },
     {
       selector: '.modal form',
       event: 'submit',
-      eventHandler: onEdit
-    },
-    {
-      selector: '.modal form',
-      event: 'submit',
-      eventHandler: onClickEditModalClose
+      eventHandlerList: [onEdit, onClickEditModalClose]
     }
   ],
-  [PagesPath.LINES]: [],
+  [PagesPath.LINES]: [
+    {
+      selector: '.lines-wrapper .modal-trigger-btn',
+      event: 'click',
+      eventHandlerList: [onModalOpen]
+    },
+    {
+      selector: '.modal .modal-close',
+      event: 'click',
+      eventHandlerList: [onModalClose]
+    },
+    {
+      selector: '.modal form',
+      event: 'submit',
+      eventHandlerList: [onSubmitAddLine, onModalClose]
+    },
+    {
+      selector: '.subway-line-color-selector',
+      event: 'click',
+      eventHandlerList: [onPickColor]
+    }
+  ],
   [PagesPath.SECTIONS]: [],
   [PagesPath.LOGIN]: []
 };
