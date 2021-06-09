@@ -2,9 +2,10 @@ import { $, $closest } from '../../utils/dom';
 import { setData, getData } from '../../utils/storage';
 import { render, renderSnackBar } from '../../utils/render';
 import { createStationListsTemplates } from '../../templates/createTemplate';
-import checkDuplicateStation from './validate';
+import checkDuplicate from '../validate';
 import { _filter, _some } from '../../utils/_';
 import { LinesInfo } from '../../types/index';
+import { Message } from '../../utils/constants';
 
 const $modal = $('.modal');
 
@@ -17,7 +18,14 @@ export const onAddStation = (e: Event): void => {
 
   const { value } = $('.stations-wrapper input') as HTMLInputElement;
 
-  if (checkDuplicateStation(value)) return;
+  if (
+    checkDuplicate(
+      'stations',
+      station => value === station,
+      Message.DUPLICATE_STATION
+    )
+  )
+    return;
 
   setData('stations', [...getData('stations'), value]);
   render(
@@ -52,7 +60,14 @@ export const onEdit = (e: Event): void => {
   const $editInput = $('#station-name-edit') as HTMLInputElement;
   const { value } = $editInput;
 
-  if (checkDuplicateStation(value)) return;
+  if (
+    checkDuplicate(
+      'stations',
+      station => value === station,
+      Message.DUPLICATE_STATION
+    )
+  )
+    return;
 
   const newStationsLists = [...getData('stations')];
 
@@ -69,7 +84,7 @@ export const onClickDelete = (e: Event): void => {
 
   if (!target.matches('.station-list-item .delete-btn')) return;
 
-  if (window.confirm('정말로 해당 역을 삭제하시겠습니까?')) {
+  if (window.confirm(Message.DELETE_CONFIRM)) {
     const { innerText } = $(
       '.station-name',
       $closest('.station-list-item', target)
@@ -81,9 +96,7 @@ export const onClickDelete = (e: Event): void => {
         return innerText === upLine || innerText === downLine;
       })
     ) {
-      renderSnackBar(
-        '해당 역은 이미 노선에 등록되어있어서 삭제가 불가능합니다.'
-      );
+      renderSnackBar(Message.CANNOT_DELETE_REGISTERED_STATION);
     } else {
       setData(
         'stations',
@@ -93,7 +106,7 @@ export const onClickDelete = (e: Event): void => {
         createStationListsTemplates(getData('stations')),
         $('.stations-wrapper ul')
       );
-      renderSnackBar('해당 역이 삭제되었습니다.');
+      renderSnackBar(Message.DELETE_STATION);
     }
   }
 };
