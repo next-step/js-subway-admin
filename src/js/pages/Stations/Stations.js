@@ -1,19 +1,18 @@
 import ajax from 'js/api';
 import { AddStationForm, Heading, StationList } from 'js/components';
-import routeHandler from 'js/utils/routeHandler';
+import render from 'js/utils/render';
 
 const Stations = (async () => {
   let stations = await ajax.getStations();
   const setStations = newStations => {
     stations = newStations;
-    // routeHandler가 render함수의 역할까지 같이하게된 것이 어색
-    routeHandler();
+    render();
   };
 
   let modalState = { id: null, isModalOpen: false, prevStationName: '' };
   const setModalState = nextModalState => {
     modalState = nextModalState;
-    routeHandler();
+    render();
   };
   return () => {
     const $stations = document.createElement('div');

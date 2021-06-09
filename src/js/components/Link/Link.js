@@ -1,4 +1,4 @@
-import routeHandler from 'js/utils/routeHandler';
+import render from 'js/utils/render';
 
 const Link = ({ href, children, className = '' }) => {
   const $link = document.createElement('a');
@@ -10,7 +10,7 @@ const Link = ({ href, children, className = '' }) => {
   $link.addEventListener('click', e => {
     e.preventDefault();
     window.history.pushState(null, '', href);
-    routeHandler();
+    render();
   });
   return $link;
 };

@@ -3,7 +3,6 @@ import { Header } from 'js/components';
 import { Home, Lines, Login, Sections, NotFound, Stations } from 'js/pages';
 
 const { HOME, LINES, LOGIN, SECTIONS, STATIONS } = routes;
-const $root = document.querySelector('#root');
 
 const routeHandler = async () => {
   const $app = document.createElement('div');
@@ -32,8 +31,7 @@ const routeHandler = async () => {
 
   $app.appendChild($appInnerContainner);
 
-  $root.innerHTML = '';
-  $root.appendChild($app);
+  return $app;
 };
 
 export default routeHandler;

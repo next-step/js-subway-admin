@@ -1,6 +1,6 @@
 import 'normalize.css';
 import 'css/index.css';
-import routeHandler from './utils/routeHandler';
+import render from './utils/render';
 
-window.addEventListener('DOMContentLoaded', routeHandler);
-window.addEventListener('popstate', routeHandler);
+window.addEventListener('DOMContentLoaded', render);
+window.addEventListener('popstate', render);
