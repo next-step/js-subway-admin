@@ -9,14 +9,17 @@ interface IUpdateStation {
   lines: string | null;
 }
 
+const isExistedStation = (name: string): boolean => {
+  return (
+    stationDB.getAll().findIndex((station) => station.name === name) !== -1
+  );
+};
+
 const stationService = {
   add: (name: string): void => {
     try {
       if (!stationNameValidator(name)) throw MESSAGE.NOT_CORRECT_STATION;
-      const stations = stationDB.getAll();
-      const isExistedStation =
-        stations.findIndex((station) => station.name === name) !== -1;
-      if (isExistedStation) throw MESSAGE.EXIST_STATION;
+      if (isExistedStation(name)) throw MESSAGE.EXIST_STATION;
 
       const newData = stationDB.add({ id: name, name, lines: null });
       stationStore.updateState({ stations: newData });
@@ -38,9 +41,12 @@ const stationService = {
   },
 
   update: (id: string, newName: string): void => {
-    const newData = stationDB.update(id, { name: newName });
-    stationStore.updateState({ stations: newData });
-    uiService.closeModal();
+    try {
+      if (isExistedStation(newName)) throw MESSAGE.EXIST_STATION;
+      const newData = stationDB.update(id, { name: newName });
+      stationStore.updateState({ stations: newData });
+      uiService.closeModal();
+    } catch (error) {}
   },
 
   updateLine: (datas: IUpdateStation[]) => {
