@@ -36,7 +36,15 @@ class LineUpdate extends Component<ILine> {
       ) as HTMLInputElement;
       const { value: time } = $("#time", this.$container) as HTMLInputElement;
       lineService.update(
-        { id: name, name, upStation, downStation, color, distance, time },
+        {
+          id: this.props.id,
+          name,
+          upStation,
+          downStation,
+          color,
+          distance,
+          time,
+        },
         this.props
       );
     });

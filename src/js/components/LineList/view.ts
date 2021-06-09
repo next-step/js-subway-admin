@@ -1,7 +1,7 @@
 import { ILine } from "@/types";
 
-const lineView = (name: string, color: string) => `
-<li class="d-flex items-center py-2 relative" data-id=${name}>
+const lineView = (id: string, name: string, color: string) => `
+<li class="d-flex items-center py-2 relative" data-id=${id}>
 <span class="subway-line-color-dot bg-${color}"></span>
 <span class="w-100 pl-6 subway-line-list-item-name ${color}"
   >${name}</span
@@ -26,7 +26,7 @@ const lineView = (name: string, color: string) => `
 const view = (lines: ILine[]): string => {
   return lines.length > 0
     ? `${lines
-        .map((line) => lineView(line.name, line.color))
+        .map((line) => lineView(line.id, line.name, line.color))
         .join("")}<hr class="my-0" />`
     : "아직 등록된 노선이 없습니다.";
 };

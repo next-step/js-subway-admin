@@ -21,14 +21,14 @@ class LineList extends Component {
       const target = e.target as HTMLElement;
       const id = target.id;
       if (id !== "update" && id !== "remove") return;
-      const name = closest(target, "li").dataset.id;
+      const lineId = closest(target, "li").dataset.id;
       const actions = {
         update: () => {
-          const lineInfo = lineDB.get(name);
+          const lineInfo = lineDB.get(lineId);
           this.lineUpdate.updateProps(lineInfo);
           uiService.openModal(this.lineUpdate, "노선 정보 수정하기");
         },
-        remove: () => lineService.remove(name),
+        remove: () => lineService.remove(lineId),
       };
       actions[id]();
     });
