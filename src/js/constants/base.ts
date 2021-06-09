@@ -1,5 +1,5 @@
 const BASE = {
-  URL: "http://localhost:8080",
+  URL: "https://quirky-archimedes-88d9e7.netlify.app",
 };
 
 export default BASE;
