@@ -1,11 +1,20 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-restricted-globals */
+import ajax from 'js/api';
 import { ModifyStationModal } from '..';
 
 const StationListItem = ({ id, stationName, stations, setStations, modalState, setModalState }) => {
   const onshowModalHandler = () => setModalState({ id, prevStationName: stationName, isModalOpen: true });
 
+  const onDeleteStationHandler = ({ target }) => {
+    if (confirm('정말 삭제하시겠습니까?')) {
+      setStations(stations.filter(station => station.id !== +target.id));
+      ajax.deleteStation(target.id);
+    }
+  };
+
   const $stationListItem = document.createElement('li');
   $stationListItem.className = 'station-list-item d-flex items-center py-2';
-  $stationListItem.id = id;
   if (modalState.isModalOpen) {
     $stationListItem.appendChild(ModifyStationModal({ modalState, setModalState, stations, setStations }));
   }
@@ -24,6 +33,8 @@ const StationListItem = ({ id, stationName, stations, setStations, modalState, s
   $deleteButton.type = 'button';
   $deleteButton.className = 'bg-gray-50 text-gray-500 text-sm';
   $deleteButton.textContent = '삭제';
+  $deleteButton.id = id;
+  $deleteButton.addEventListener('click', onDeleteStationHandler);
 
   $stationListItem.append($stationName, $editButton, $deleteButton);
 
