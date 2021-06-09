@@ -12,7 +12,7 @@ const App = (async () => {
     stations = newStations;
     render();
   };
-  return async () => {
+  return () => {
     const $app = document.createElement('div');
     $app.className = 'd-flex justify-center mt-5 w-100';
 
@@ -27,7 +27,7 @@ const App = (async () => {
       { path: LINES, component: Lines },
       { path: LOGIN, component: Login },
       { path: SECTIONS, component: Sections },
-      { path: STATIONS, component: await Stations },
+      { path: STATIONS, component: Stations },
     ];
 
     const pathMatchRoute = routesMatchComponents.find(({ path }) => path === window.location.pathname);

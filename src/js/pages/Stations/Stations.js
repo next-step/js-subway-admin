@@ -1,13 +1,13 @@
 import { AddStationForm, Heading, StationList } from 'js/components';
 import render from 'js/utils/render';
 
-const Stations = (async () => {
+const Stations = (() => {
   let modalState = { id: null, isModalOpen: false, prevStationName: '' };
   const setModalState = nextModalState => {
     modalState = nextModalState;
     render();
   };
-  return (stations, setStations) => {
+  return ({ stations, setStations }) => {
     const $stations = document.createElement('div');
     $stations.className = 'wrapper bg-white p-10';
 
