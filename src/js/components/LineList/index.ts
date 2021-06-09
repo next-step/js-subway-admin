@@ -1,10 +1,14 @@
 import Component from "@/core/component";
 import view from "./view";
-import { lineService } from "@/service";
+import { lineDB } from "@/data";
+import { LineUpdate } from "@/components";
+import { lineService, uiService } from "@/service";
 import { lineStore } from "@/store";
 import { createElement, closest } from "@/utils/dom";
 
 class LineList extends Component {
+  lineUpdate = new LineUpdate();
+
   protected initDom(): void {
     this.$container = createElement({
       tag: "ul",
@@ -19,7 +23,11 @@ class LineList extends Component {
       if (id !== "update" && id !== "remove") return;
       const name = closest(target, "li").dataset.id;
       const actions = {
-        update: () => {},
+        update: () => {
+          const lineInfo = lineDB.get(name);
+          this.lineUpdate.updateProps(lineInfo);
+          uiService.openModal(this.lineUpdate, "노선 정보 수정하기");
+        },
         remove: () => lineService.remove(name),
       };
       actions[id]();

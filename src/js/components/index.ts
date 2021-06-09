@@ -7,3 +7,4 @@ export { default as StationList } from "./StationList";
 export { default as StationUpdate } from "./StationUpdate";
 export { default as LineForm } from "./LineForm";
 export { default as LineList } from "./LineList";
+export { default as LineUpdate } from "./LineUpdate";

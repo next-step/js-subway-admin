@@ -33,9 +33,8 @@ class LineForm extends Component {
   }
 
   protected componentMount(): void {
-    const { stations } = stationStore.getState();
-    const availableStations = stations.filter((station) => !station.lines);
-    this.$container.innerHTML = view(availableStations);
+    const stations = stationStore.getAvailableStations();
+    this.$container.innerHTML = view(stations);
   }
 }
 

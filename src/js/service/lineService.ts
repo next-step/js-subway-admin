@@ -1,6 +1,7 @@
 import { lineDB } from "@/data";
-import { lineStore } from "@/store";
+import { lineStore, stationStore } from "@/store";
 import { MESSAGE } from "@/constants";
+import { ILine } from "@/types";
 import { uiService, stationService } from "@/service";
 
 const lineService = {
@@ -21,8 +22,16 @@ const lineService = {
       if (!upStation || !downStation) throw MESSAGE.NOT_EXIST_LINE_STATION;
       if (upStation === downStation) throw MESSAGE.NOT_CORRECT_LINE_STATION;
 
-      stationService.updateLine(upStation, name);
-      stationService.updateLine(downStation, name);
+      stationService.updateLine([
+        {
+          name: upStation,
+          lines: name,
+        },
+        {
+          name: downStation,
+          lines: name,
+        },
+      ]);
 
       const newLine = lineDB.add({
         id: name,
@@ -46,11 +55,69 @@ const lineService = {
     if (!confirm(MESSAGE.CONFIRM_REMOVE_LINE)) return;
     const { upStation, downStation } = lineDB.get(id);
 
-    stationService.updateLine(upStation, null);
-    stationService.updateLine(downStation, null);
+    stationService.updateLine([
+      { name: upStation, lines: null },
+      { name: downStation, lines: null },
+    ]);
 
     const newData = lineDB.remove(id);
     lineStore.updateState({ lines: newData });
+  },
+
+  update: (nextData: ILine, prevData: ILine) => {
+    try {
+      const { id, name, upStation, downStation, color, distance, time } =
+        nextData;
+      const {
+        name: prevName,
+        upStation: prevUpStation,
+        downStation: prevDownStation,
+        color: prevColor,
+        distance: prevDisance,
+        time: prevTime,
+      } = prevData;
+      if (
+        name === prevName &&
+        upStation === prevUpStation &&
+        downStation === prevDownStation &&
+        color === prevColor &&
+        distance === prevDisance &&
+        time === prevTime
+      )
+        return;
+      let nextState;
+      if (name !== prevName) {
+        lineDB.remove(prevName);
+        nextState = lineDB.add(nextData);
+      } else {
+        nextState = lineDB.update(id, nextData);
+      }
+
+      // 이름 검사 해야함.
+      stationService.updateLine([
+        {
+          name: prevUpStation,
+          lines: null,
+        },
+        {
+          name: prevDownStation,
+          lines: null,
+        },
+        {
+          name: upStation,
+          lines: name,
+        },
+        {
+          name: downStation,
+          lines: name,
+        },
+      ]);
+
+      lineStore.updateState({ lines: nextState });
+      uiService.closeModal();
+    } catch (error) {
+      alert(error);
+    }
   },
 };
 

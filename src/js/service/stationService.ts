@@ -4,6 +4,11 @@ import { stationStore } from "@/store";
 import { stationDB } from "@/data";
 import { stationNameValidator } from "@/utils/validator";
 
+interface IUpdateStation {
+  name: string;
+  lines: string | null;
+}
+
 const stationService = {
   add: (name: string): void => {
     try {
@@ -38,8 +43,11 @@ const stationService = {
     uiService.closeModal();
   },
 
-  updateLine: (name, lines: string | null) => {
-    const newData = stationDB.update(name, { lines });
+  updateLine: (datas: IUpdateStation[]) => {
+    let newData;
+    datas.forEach(({ name, lines }) => {
+      newData = stationDB.update(name, { lines });
+    });
     stationStore.updateState({ stations: newData });
   },
 };

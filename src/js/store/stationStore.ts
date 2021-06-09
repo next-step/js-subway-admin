@@ -10,6 +10,10 @@ class StationStore extends Store<IState> {
   protected initState(): void {
     this.state = { stations: stationDB.getAll() };
   }
+
+  public getAvailableStations(): IStation[] {
+    return this.state.stations.filter((station) => !station.lines);
+  }
 }
 
 const stationStore = new StationStore();
