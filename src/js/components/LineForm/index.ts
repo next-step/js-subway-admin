@@ -21,7 +21,7 @@ class LineForm extends Component {
       const color = $("#colors", this.$container) as HTMLInputElement;
       const distance = $("#distance", this.$container) as HTMLInputElement;
       const time = $("#time", this.$container) as HTMLInputElement;
-      lineService.addLine(
+      lineService.add(
         name.value,
         upStation?.value ?? "",
         downStation?.value ?? "",

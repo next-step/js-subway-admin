@@ -35,6 +35,11 @@ const stationService = {
     const newData = stationDB.update(id, { name: newName });
     stationStore.updateState({ stations: newData });
   },
+
+  updateLine: (name, lines: string | null) => {
+    const newData = stationDB.update(name, { lines });
+    stationStore.updateState({ stations: newData });
+  },
 };
 
 export default stationService;

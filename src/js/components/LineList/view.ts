@@ -1,7 +1,7 @@
 import { ILine } from "@/types";
 
 const lineView = (name: string, color: string) => `
-<li class="d-flex items-center py-2 relative" dataset-id=${name}>
+<li class="d-flex items-center py-2 relative" data-id=${name}>
 <span class="subway-line-color-dot bg-${color}"></span>
 <span class="w-100 pl-6 subway-line-list-item-name ${color}"
   >${name}</span
@@ -9,12 +9,14 @@ const lineView = (name: string, color: string) => `
 <button
   type="button"
   class="bg-gray-50 text-gray-500 text-sm mr-1"
+  id="update"
 >
   수정
 </button>
 <button
   type="button"
   class="bg-gray-50 text-gray-500 text-sm"
+  id="remove"
 >
   삭제
 </button>

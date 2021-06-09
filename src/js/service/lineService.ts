@@ -1,10 +1,10 @@
-import { lineDB, stationDB } from "@/data";
+import { lineDB } from "@/data";
 import { lineStore } from "@/store";
 import { MESSAGE } from "@/constants";
-import { uiService } from "@/service";
+import { uiService, stationService } from "@/service";
 
 const lineService = {
-  addLine: (
+  add: (
     name: string,
     upStation: string,
     downStation: string,
@@ -21,8 +21,8 @@ const lineService = {
       if (!upStation || !downStation) throw MESSAGE.NOT_EXIST_LINE_STATION;
       if (upStation === downStation) throw MESSAGE.NOT_CORRECT_LINE_STATION;
 
-      stationDB.update(upStation, { lines: name });
-      stationDB.update(downStation, { lines: name });
+      stationService.updateLine(upStation, name);
+      stationService.updateLine(downStation, name);
 
       const newLine = lineDB.add({
         id: name,
@@ -40,6 +40,17 @@ const lineService = {
     } catch (error) {
       alert(error);
     }
+  },
+
+  remove: (id: string) => {
+    if (!confirm(MESSAGE.CONFIRM_REMOVE_LINE)) return;
+    const { upStation, downStation } = lineDB.get(id);
+
+    stationService.updateLine(upStation, null);
+    stationService.updateLine(downStation, null);
+
+    const newData = lineDB.remove(id);
+    lineStore.updateState({ lines: newData });
   },
 };
 
