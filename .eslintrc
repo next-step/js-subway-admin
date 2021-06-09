@@ -13,3 +13,4 @@
         "plugin":["prettier/recommended", "cypress/recommended"]
     }
 }
+
