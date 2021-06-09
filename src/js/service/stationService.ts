@@ -46,7 +46,9 @@ const stationService = {
       const newData = stationDB.update(id, { name: newName });
       stationStore.updateState({ stations: newData });
       uiService.closeModal();
-    } catch (error) {}
+    } catch (error) {
+      alert(error);
+    }
   },
 
   updateLine: (datas: IUpdateStation[]) => {
