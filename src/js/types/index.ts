@@ -5,7 +5,16 @@ export interface StringKeyObject<T> {
 export interface BindingEvent {
   selector: string;
   event: string;
-  eventHandler: (e: Event) => void;
+  eventHandlerList: ((e: Event) => void)[];
 }
 
 export type LocalStorageKey = 'stations' | 'lines';
+
+export interface LinesInfo {
+  name: string;
+  upLine: string;
+  downLine: string;
+  dist: number;
+  time: number;
+  color: string;
+}
