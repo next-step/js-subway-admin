@@ -1,11 +1,13 @@
-import {stationRepository, StationRepository} from "~repositories";
+import {StationRepository} from "~repositories";
 import {Station, StationRequest} from "~@domain";
 import {ExistedStationError, NotFoundStationError} from "~exceptions";
 import {getNextIdx} from "~utils";
+import {Inject, Injectable} from "~@core";
 
+@Injectable
 export class StationService {
   constructor(
-    private readonly stationRepository: StationRepository
+    @Inject(StationRepository) private readonly stationRepository: StationRepository
   ) {}
 
   public getStations(): Station[] {
@@ -54,5 +56,3 @@ export class StationService {
     this.stationRepository.set(stations);
   }
 }
-
-export const stationService = new StationService(stationRepository);

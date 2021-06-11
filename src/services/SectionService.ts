@@ -1,11 +1,13 @@
-import {sectionRepository, SectionRepository} from "~repositories";
+import {SectionRepository} from "~repositories";
 import {Section, SectionRequest} from "~@domain";
 import {ExistedSectionError, NotFoundSectionError} from "~exceptions";
 import {getNextIdx} from "~utils";
+import {Inject, Injectable} from "~@core";
 
+@Injectable
 export class SectionService {
   constructor(
-    private readonly sectionRepository: SectionRepository
+    @Inject(SectionRepository) private readonly sectionRepository: SectionRepository
   ) {}
 
   public getSections(): Section[] {
@@ -66,4 +68,3 @@ export class SectionService {
   }
 }
 
-export const sectionService = new SectionService(sectionRepository);

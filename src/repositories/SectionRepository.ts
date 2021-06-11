@@ -1,10 +1,9 @@
-import {Repository} from "~@core";
+import {Injectable, Repository} from "~@core";
 import {Section} from "~@domain";
 
+@Injectable
 export class SectionRepository extends Repository<Section[]> {
   constructor() {
     super('SECTION_REPOSITORY');
   }
 }
-
-export const sectionRepository = new SectionRepository();

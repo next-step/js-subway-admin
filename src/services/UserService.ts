@@ -1,12 +1,14 @@
-import {authRepository, AuthRepository, userRepository, UserRepository} from "~repositories";
+import {AuthRepository, UserRepository} from "~repositories";
 import {Auth, AuthRequest, UpdateUserRequest, User, UserRequest} from "~@domain";
 import {ExistedUserError, InvalidCredentialError} from "~exceptions";
 import {getNextIdx} from "~utils";
+import {Inject, Injectable} from "~@core";
 
+@Injectable
 export class UserService {
   constructor(
-    private readonly userRepository: UserRepository,
-    private readonly authRepository: AuthRepository,
+    @Inject(UserRepository) private readonly userRepository: UserRepository,
+    @Inject(AuthRepository) private readonly authRepository: AuthRepository,
   ) {}
 
   private getUsers(): User[] {
@@ -68,6 +70,3 @@ export class UserService {
     this.authRepository.clear();
   }
 }
-
-export const userService = new UserService(userRepository, authRepository);
-

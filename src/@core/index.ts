@@ -1,3 +1,4 @@
+export * from './AppContainer';
 export * from './Component';
 export * from './Store';
 export * from './Observer';

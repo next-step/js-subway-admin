@@ -1,13 +1,14 @@
-import {lineRepository, LineRepository, sectionRepository, SectionRepository} from "~repositories";
+import {LineRepository, SectionRepository} from "~repositories";
 import {Line, LineRequest} from "~@domain";
 import {ExistedLineError, NotFoundLineError} from "~exceptions";
 import {getNextIdx} from "~utils";
-import get = Reflect.get;
+import {Inject, Injectable} from "~@core";
 
+@Injectable
 export class LineService {
   constructor(
-    private readonly lineRepository: LineRepository,
-    private readonly sectionRepository: SectionRepository,
+    @Inject(LineRepository) private readonly lineRepository: LineRepository,
+    @Inject(SectionRepository) private readonly sectionRepository: SectionRepository,
   ) {}
 
   public getLines(): Line[] {
@@ -55,5 +56,3 @@ export class LineService {
     this.lineRepository.set(lines);
   }
 }
-
-export const lineService = new LineService(lineRepository, sectionRepository);

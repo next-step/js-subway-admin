@@ -4,24 +4,22 @@ export const container = new WeakMap<Clazz, any>();
 
 type Clazz = { new(...args: any[]): Object }
 
-export function getComponent(constructor: Clazz): any {
+export function instanceOf<T extends Clazz>(constructor: T): T {
   const resolved = container.get(constructor);
   if (resolved) return resolved;
 
   const properties: Clazz[] = clazzProperties.get(constructor) || [];
 
   const instance = new constructor(
-    ...properties.map(getComponent)!
+    ...properties.map(instanceOf)!
   );
 
   container.set(constructor, instance);
-  return instance;
+  return instance as T;
 }
 
-export function Injectable () {
-  return function (constructor: Clazz) {
-    constructors.set(constructor, clazzProperties.get(constructor));
-  }
+export function Injectable (constructor: Clazz) {
+  constructors.set(constructor, clazzProperties.get(constructor));
 }
 
 export function Inject (singleton: Clazz) {
