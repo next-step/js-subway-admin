@@ -9,7 +9,7 @@ import { authStore, lineStore } from "@/store";
 import { PATH, MESSAGE, PAGE_TITLE } from "@/constants";
 
 class Lines extends Component {
-  lineForm = new LineForm();
+  private lineForm = new LineForm();
   protected initDom(): void {
     this.$container = createElement({
       tag: "div",

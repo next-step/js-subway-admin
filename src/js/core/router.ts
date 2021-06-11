@@ -1,9 +1,8 @@
 import { $ } from "@/utils/dom";
 import { NotFound } from "@/pages";
 
-const notFound = new NotFound();
-
 class Router<Ipage> {
+  private notFound = new NotFound();
   private pages: Ipage = {} as Ipage;
   constructor(pages: Ipage) {
     this.setPages(pages);
@@ -38,9 +37,9 @@ class Router<Ipage> {
     $main.innerHTML = "";
     if (this.pages[href]) {
       this.pages[href].render($main);
-    } else {
-      notFound.render($main);
+      return;
     }
+    this.notFound.render($main);
   }
 }
 
