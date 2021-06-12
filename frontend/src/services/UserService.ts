@@ -1,5 +1,5 @@
 import {AuthRepository, UserRepository} from "~repositories";
-import {Auth, AuthRequest, UpdateUserRequest, User, UserRequest} from "~@domain";
+import {AuthResponse, AuthRequest, UpdateUserRequest, UserResponse, UserRequest} from "@domain";
 import {ExistedUserError, InvalidCredentialError} from "~exceptions";
 import {getNextIdx} from "~utils";
 import {Inject, Injectable} from "~@core";
@@ -11,16 +11,16 @@ export class UserService {
     @Inject(AuthRepository) private readonly authRepository: AuthRepository,
   ) {}
 
-  private getUsers(): User[] {
+  private getUsers(): UserResponse[] {
     return this.userRepository.get() || [];
   }
 
-  public getAuth(): Auth | null {
+  public getAuth(): AuthResponse | null {
     return this.authRepository.get() || null;
   }
 
   public signUp(request: UserRequest): void {
-    const users: User[] = this.getUsers();
+    const users: UserResponse[] = this.getUsers();
     const { repeatPassword, ...user } = request;
     const existed = users.find(v => v.email === user.email);
     if (existed) {
@@ -36,8 +36,8 @@ export class UserService {
   }
 
   public updateUser(request: UpdateUserRequest): void {
-    const users: User[] = this.getUsers();
-    const user: User = users.find(v => v.idx === request.idx)!;
+    const users: UserResponse[] = this.getUsers();
+    const user: UserResponse = users.find(v => v.idx === request.idx)!;
     const existed = users.find(v => v.idx !== request.idx && v.email === request.email);
     if (existed) {
       throw new ExistedUserError();
@@ -54,8 +54,8 @@ export class UserService {
 
   }
 
-  public signIn({ email, password }: AuthRequest): Auth {
-    const users: User[] = this.getUsers();
+  public signIn({ email, password }: AuthRequest): AuthResponse {
+    const users: UserResponse[] = this.getUsers();
     const user = users.find(v => v.email === email && v.password === password);
     if (!user) {
       throw new InvalidCredentialError();

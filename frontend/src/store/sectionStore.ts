@@ -1,5 +1,5 @@
 import {Store} from "~@core";
-import {Section, SectionRequest} from "~@domain";
+import {SectionResponse, SectionRequest} from "@domain";
 import {sectionService} from "~services";
 
 export const SET_SECTIONS = 'SET_SECTIONS';
@@ -9,7 +9,7 @@ export const UPDATE_SECTION = 'UPDATE_SECTION';
 export const REMOVE_SECTION = 'REMOVE_SECTION';
 
 interface SectionStoreState {
-  sections: Section[];
+  sections: SectionResponse[];
 }
 
 export const sectionStore = new Store<SectionStoreState>({
@@ -18,7 +18,7 @@ export const sectionStore = new Store<SectionStoreState>({
   },
 
   mutations: {
-    [SET_SECTIONS](state: SectionStoreState, sections: Section[]) {
+    [SET_SECTIONS](state: SectionStoreState, sections: SectionResponse[]) {
       state.sections = sections;
     }
   },

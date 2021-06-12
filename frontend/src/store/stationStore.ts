@@ -1,5 +1,5 @@
 import {Store} from "~@core";
-import {Station} from "~@domain";
+import {StationResponse} from "@domain";
 import {stationService} from "~services";
 
 export const SET_STATIONS = 'SET_STATIONS';
@@ -9,7 +9,7 @@ export const UPDATE_STATION = 'UPDATE_STATION';
 export const REMOVE_STATION = 'REMOVE_STATION';
 
 interface StationStoreState {
-  stations: Station[];
+  stations: StationResponse[];
 }
 
 export const stationStore = new Store<StationStoreState>({
@@ -18,7 +18,7 @@ export const stationStore = new Store<StationStoreState>({
   },
 
   mutations: {
-    [SET_STATIONS](state: StationStoreState, stations: Station[]) {
+    [SET_STATIONS](state: StationStoreState, stations: StationResponse[]) {
       state.stations = stations;
     }
   },
@@ -34,12 +34,12 @@ export const stationStore = new Store<StationStoreState>({
       dispatch(GET_STATIONS);
     },
 
-    [UPDATE_STATION]({ dispatch }, station: Station) {
+    [UPDATE_STATION]({ dispatch }, station: StationResponse) {
       stationService.updateStation(station);
       dispatch(GET_STATIONS);
     },
 
-    [REMOVE_STATION]({ dispatch }, station: Station) {
+    [REMOVE_STATION]({ dispatch }, station: StationResponse) {
       stationService.removeStation(station);
       dispatch(GET_STATIONS);
     },

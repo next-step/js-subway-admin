@@ -1,17 +1,17 @@
 import {Component} from "~@core";
 import {colorOptions} from "~constants";
-import {Line, LineRequest, Station} from "~@domain";
+import {LineResponse, LineRequest, StationResponse} from "@domain";
 import {parseFormData, selectOne} from "~utils";
 
 interface LineEditModalState {
   visible: boolean;
-  formData: Line | null;
+  formData: LineResponse | null;
 }
 
 interface LineEditModalProps {
-  stations: Station[];
+  stations: StationResponse[];
   addLine: (lineRequest: LineRequest) => void;
-  updateLine: (line: Line) => void;
+  updateLine: (line: LineResponse) => void;
 }
 
 export class LineEditModal extends Component<LineEditModalState, LineEditModalProps> {
@@ -138,7 +138,7 @@ export class LineEditModal extends Component<LineEditModalState, LineEditModalPr
     `;
   }
 
-  public open(line?: Line) {
+  public open(line?: LineResponse) {
     this.$state.visible = true;
     this.$state.formData = line || null;
   }

@@ -1,5 +1,5 @@
 import {LineRepository, SectionRepository} from "~repositories";
-import {Line, LineRequest} from "~@domain";
+import {LineResponse, LineRequest} from "@domain";
 import {ExistedLineError, NotFoundLineError} from "~exceptions";
 import {getNextIdx} from "~utils";
 import {Inject, Injectable} from "~@core";
@@ -11,11 +11,11 @@ export class LineService {
     @Inject(SectionRepository) private readonly sectionRepository: SectionRepository,
   ) {}
 
-  public getLines(): Line[] {
+  public getLines(): LineResponse[] {
     return this.lineRepository.get() || [];
   }
 
-  private getLineIndex(idx: number, lines: Line[] = this.getLines()): number {
+  private getLineIndex(idx: number, lines: LineResponse[] = this.getLines()): number {
     const index = lines.findIndex(v => v.idx === idx);
     if (index === -1) {
       throw new NotFoundLineError();
@@ -35,7 +35,7 @@ export class LineService {
 
   }
 
-  public updateLine(line: Line) {
+  public updateLine(line: LineResponse) {
     const lines = this.getLines();
     const has = !!lines.find(v => v.idx !== line.idx && v.name === line.name);
 
@@ -49,7 +49,7 @@ export class LineService {
     this.lineRepository.set(lines);
   }
 
-  public removeLine(line: Line) {
+  public removeLine(line: LineResponse) {
     const lines = this.getLines();
     const index = this.getLineIndex(line.idx, lines);
     lines.splice(index, 1);

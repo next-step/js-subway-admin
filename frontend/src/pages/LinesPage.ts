@@ -1,6 +1,6 @@
 import '../assets/css/pages/lines.css';
 import {Component} from "~@core";
-import {Line, LineRequest} from "~@domain";
+import {LineResponse, LineRequest} from "@domain";
 import {ADD_LINE, lineStore, REMOVE_LINE, stationStore, UPDATE_LINE} from "~store";
 import {LineItem, LineEditModal} from "./lines";
 
@@ -74,7 +74,7 @@ export class LinesPage extends Component {
     }
   }
 
-  private updateLine(line: Line) {
+  private updateLine(line: LineResponse) {
     try {
       this.validateLineName(line.name);
     } catch (message) {
@@ -89,7 +89,7 @@ export class LinesPage extends Component {
     }
   }
 
-  private removeLine(line: Line) {
+  private removeLine(line: LineResponse) {
     try {
       lineStore.dispatch(REMOVE_LINE, line);
       alert('노선이 삭제되었습니다.');

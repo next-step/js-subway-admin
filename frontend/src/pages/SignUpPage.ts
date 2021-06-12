@@ -1,6 +1,6 @@
 import {Component} from "~@core";
 import {userService} from "~services";
-import { UserRequest} from "~@domain";
+import { UserRequest} from "@domain";
 import {parseFormData} from "~utils";
 import {router} from "~router";
 

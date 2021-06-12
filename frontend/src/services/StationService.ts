@@ -1,5 +1,5 @@
 import {StationRepository} from "~repositories";
-import {Station, StationRequest} from "~@domain";
+import {StationResponse, StationRequest} from "@domain";
 import {ExistedStationError, NotFoundStationError} from "~exceptions";
 import {getNextIdx} from "~utils";
 import {Inject, Injectable} from "~@core";
@@ -10,11 +10,11 @@ export class StationService {
     @Inject(StationRepository) private readonly stationRepository: StationRepository
   ) {}
 
-  public getStations(): Station[] {
+  public getStations(): StationResponse[] {
     return this.stationRepository.get() || [];
   }
 
-  private getStationIndex(idx: number, stations: Station[] = this.getStations()): number {
+  private getStationIndex(idx: number, stations: StationResponse[] = this.getStations()): number {
     const index = stations.findIndex(v => v.idx === idx);
     if (index === -1) {
       throw new NotFoundStationError();
@@ -38,7 +38,7 @@ export class StationService {
     ]);
   }
 
-  public updateStation(station: Station) {
+  public updateStation(station: StationResponse) {
     const stations = this.getStations();
     const index = this.getStationIndex(station.idx, stations);
     if (stations.find(v => v.idx !== station.idx &&  v.name === station.name)) {
@@ -49,7 +49,7 @@ export class StationService {
     this.stationRepository.set(stations);
   }
 
-  public removeStation(station: Station) {
+  public removeStation(station: StationResponse) {
     const stations = this.getStations();
     const index = this.getStationIndex(station.idx, stations);
     stations.splice(index, 1);

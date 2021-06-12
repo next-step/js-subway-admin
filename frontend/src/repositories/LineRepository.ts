@@ -1,8 +1,8 @@
 import {Injectable, Repository} from "~@core";
-import {Line} from "~@domain";
+import {LineResponse} from "@domain";
 
 @Injectable
-export class LineRepository extends Repository<Line[]> {
+export class LineRepository extends Repository<LineResponse[]> {
   constructor() {
     super('LINE_REPOSITORY');
   }

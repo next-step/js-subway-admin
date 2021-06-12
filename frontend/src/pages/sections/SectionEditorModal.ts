@@ -1,5 +1,5 @@
 import {Component} from "~@core";
-import {Line, SectionRequest, Station} from "~@domain";
+import {LineResponse, SectionRequest, StationResponse} from "@domain";
 import {parseFormData} from "~utils";
 
 interface SectionEditorModalState {
@@ -9,8 +9,8 @@ interface SectionEditorModalState {
 
 interface SectionEditorModalProps {
   addSection: (sectionRequest: SectionRequest) => void;
-  lines: Line[];
-  stations: Station[];
+  lines: LineResponse[];
+  stations: StationResponse[];
 }
 
 export class SectionEditorModal extends Component<SectionEditorModalState, SectionEditorModalProps> {
@@ -22,7 +22,7 @@ export class SectionEditorModal extends Component<SectionEditorModalState, Secti
     }
   }
 
-  private get selectedLine(): Line | null {
+  private get selectedLine(): LineResponse | null {
     const { selectedLineIdx } = this.$state;
     const { lines } = this.$props;
     return lines.find(v => v.idx === selectedLineIdx) || null;

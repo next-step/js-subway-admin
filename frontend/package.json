@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "블랙커피 스터디 Level 3 - 지하철 노선도 미션",
   "scripts": {
-    "build": "parcel build ./src/index.html --public-url /js-subway-admin",
-    "dev": "parcel ./src/index.html",
+    "frontend:build": "parcel build ./src/index.html --public-url /js-subway-admin",
+    "frontend:dev": "parcel ./src/index.html",
     "cypress:open": "cypress open"
   },
   "browserslist": [

@@ -1,5 +1,5 @@
 import {Component} from "~@core";
-import {AuthRequest} from "~@domain";
+import {AuthRequest} from "@domain";
 import {parseFormData} from "~utils";
 import {authStore, SIGN_IN} from "~store";
 import {router, RouterLink} from "~router";

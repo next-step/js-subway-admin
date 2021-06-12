@@ -1,5 +1,5 @@
 import {Store} from "~@core";
-import {Auth, AuthRequest, UpdateUserRequest} from "~@domain";
+import {AuthResponse, AuthRequest, UpdateUserRequest} from "@domain";
 import {userService} from "~services";
 
 export const SET_AUTHENTICATION = 'SET_AUTHENTICATION';
@@ -9,7 +9,7 @@ export const LOAD_AUTHENTICATION = 'LOAD_AUTHENTICATION';
 export const UPDATE_USER = 'UPDATE_USER';
 
 interface AuthState {
-  authentication: Auth | null;
+  authentication: AuthResponse | null;
 }
 
 export const authStore = new Store<AuthState>({
@@ -18,7 +18,7 @@ export const authStore = new Store<AuthState>({
   },
 
   mutations: {
-    [SET_AUTHENTICATION] (state: AuthState, authentication: Auth | null) {
+    [SET_AUTHENTICATION] (state: AuthState, authentication: AuthResponse | null) {
       state.authentication = authentication;
     },
   },

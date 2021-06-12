@@ -1,5 +1,5 @@
 import {Component} from "~@core";
-import {Station} from "~@domain";
+import {StationResponse} from "@domain";
 import {StationAppender, StationItem, StationUpdateModal} from "./stations";
 import {ADD_STATION, lineStore, REMOVE_STATION, stationStore, UPDATE_STATION} from "~store";
 
@@ -19,7 +19,7 @@ export class StationsPage extends Component {
         <div data-component="StationAppender"></div>
         ${stations.length > 0 ? `
           <ul class="mt-3 pl-0" data-component="StationItems">
-            ${stations.map(({ idx, name }: Station, key) => `
+            ${stations.map(({ idx, name }: StationResponse, key) => `
               <li style="list-style: none" data-idx="${idx}" data-key="${key}" data-component="StationItem"></li>
             `).join('')}
           </ul>
@@ -73,7 +73,7 @@ export class StationsPage extends Component {
     }
   }
 
-  private updateStation(station: Station) {
+  private updateStation(station: StationResponse) {
     try {
       this.validateStationName(station.name);
     } catch (message) {
@@ -89,7 +89,7 @@ export class StationsPage extends Component {
     }
   }
 
-  private removeStation(station: Station) {
+  private removeStation(station: StationResponse) {
 
     const isReferencing = !!lineStore.$state.lines.find(({ upStation, downStation }) => (
       upStation === station.idx ||

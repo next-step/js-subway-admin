@@ -1,8 +1,8 @@
 import {Injectable, Repository} from "~@core";
-import {Section} from "~@domain";
+import {SectionResponse} from "@domain";
 
 @Injectable
-export class SectionRepository extends Repository<Section[]> {
+export class SectionRepository extends Repository<SectionResponse[]> {
   constructor() {
     super('SECTION_REPOSITORY');
   }

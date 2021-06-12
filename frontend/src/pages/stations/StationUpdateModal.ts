@@ -1,13 +1,13 @@
 import {Component} from "~@core";
-import {Station} from "~@domain";
+import {StationResponse} from "@domain";
 
 interface StationUpdateModalState {
   visible: boolean;
-  formData: Station | null;
+  formData: StationResponse | null;
 }
 
 interface StationUpdateModalProps {
-  update: (station: Station) => void;
+  update: (station: StationResponse) => void;
 }
 
 export class StationUpdateModal extends Component<StationUpdateModalState, StationUpdateModalProps> {
@@ -57,7 +57,7 @@ export class StationUpdateModal extends Component<StationUpdateModalState, Stati
     `;
   }
 
-  public open(station: Station) {
+  public open(station: StationResponse) {
     this.$state.visible = true;
     this.$state.formData = station;
   }

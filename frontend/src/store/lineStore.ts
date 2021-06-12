@@ -1,5 +1,5 @@
 import {Store} from "~@core";
-import {Line, LineRequest} from "~@domain";
+import {LineResponse, LineRequest} from "@domain";
 import {lineService, sectionService} from "~services";
 
 export const SET_LINES = 'SET_LINES';
@@ -9,7 +9,7 @@ export const UPDATE_LINE = 'UPDATE_LINE';
 export const REMOVE_LINE = 'REMOVE_LINE';
 
 interface LineStoreState {
-  lines: Line[];
+  lines: LineResponse[];
 }
 
 export const lineStore = new Store<LineStoreState>({
@@ -18,7 +18,7 @@ export const lineStore = new Store<LineStoreState>({
   },
 
   mutations: {
-    [SET_LINES](state: LineStoreState, lines: Line[]) {
+    [SET_LINES](state: LineStoreState, lines: LineResponse[]) {
       state.lines = lines
     }
   },
@@ -34,12 +34,12 @@ export const lineStore = new Store<LineStoreState>({
       dispatch(GET_LINES);
     },
 
-    [UPDATE_LINE]({ dispatch }, line: Line) {
+    [UPDATE_LINE]({ dispatch }, line: LineResponse) {
       lineService.updateLine(line);
       dispatch(GET_LINES);
     },
 
-    [REMOVE_LINE]({ dispatch }, line: Line) {
+    [REMOVE_LINE]({ dispatch }, line: LineResponse) {
       lineService.removeLine(line);
       dispatch(GET_LINES);
     },

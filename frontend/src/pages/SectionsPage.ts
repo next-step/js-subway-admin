@@ -3,7 +3,7 @@ import {Component} from "~@core";
 import {SectionEditorModal} from "./sections";
 import {SectionItem} from "~pages/sections/SectionItem";
 import {ADD_SECTION, lineStore, REMOVE_SECTION, sectionStore, stationStore} from "~store";
-import {Line, Section, SectionRequest, Station} from "~@domain";
+import {LineResponse, SectionResponse, SectionRequest, StationResponse} from "@domain";
 
 interface SectionsPageState {
   selectedLineIdx: number;
@@ -17,7 +17,7 @@ export class SectionsPage extends Component<SectionsPageState> {
     }
   }
 
-  private get selectedLine(): Line | null {
+  private get selectedLine(): LineResponse | null {
     const { selectedLineIdx } = this.$state;
     const { lines } = lineStore.$state;
     return lines.find(v => v.idx === selectedLineIdx) || null;
@@ -28,17 +28,17 @@ export class SectionsPage extends Component<SectionsPageState> {
     return selectedLine?.color || 'bg-400';
   }
 
-  private get lineSections(): Section[] {
+  private get lineSections(): SectionResponse[] {
     const { selectedLine } = this;
     const { sections } = sectionStore.$state;
     return sections.filter(v => v.line === selectedLine?.idx);
   }
 
-  private get sectionStations(): Station[] {
+  private get sectionStations(): StationResponse[] {
     const { lineSections } = this;
     const { stations } = stationStore.$state;
     const stationIdxSet = new Set(lineSections.flatMap(v => [ v.upStation, v.downStation ]));
-    return [ ...stationIdxSet ].map(idx => stations.find(v => v.idx === idx)) as Station[];
+    return [ ...stationIdxSet ].map(idx => stations.find(v => v.idx === idx)) as StationResponse[];
   }
 
   protected template(): string {

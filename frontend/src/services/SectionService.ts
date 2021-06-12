@@ -1,5 +1,5 @@
 import {SectionRepository} from "~repositories";
-import {Section, SectionRequest} from "~@domain";
+import {SectionResponse, SectionRequest} from "@domain";
 import {ExistedSectionError, NotFoundSectionError} from "~exceptions";
 import {getNextIdx} from "~utils";
 import {Inject, Injectable} from "~@core";
@@ -10,11 +10,11 @@ export class SectionService {
     @Inject(SectionRepository) private readonly sectionRepository: SectionRepository
   ) {}
 
-  public getSections(): Section[] {
+  public getSections(): SectionResponse[] {
     return this.sectionRepository.get() || [];
   }
 
-  private getSectionIndex(idx: number, sections: Section[] = this.getSections()): number {
+  private getSectionIndex(idx: number, sections: SectionResponse[] = this.getSections()): number {
     const index = sections.findIndex(v => v.idx === idx);
     if (index === -1) {
       throw new NotFoundSectionError();
@@ -38,7 +38,7 @@ export class SectionService {
     ]);
   }
 
-  public updateSection(section: Section) {
+  public updateSection(section: SectionResponse) {
     const sections = this.getSections();
     const index = this.getSectionIndex(section.idx, sections);
     sections[index] = section;
