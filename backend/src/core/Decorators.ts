@@ -1,7 +1,10 @@
 import {HttpMethod} from "subway-constant";
 import {join} from "path";
 import {Request, Response} from "express";
+import * as jwt from "jsonwebtoken";
+
 import {Injectable, instanceOf} from "./AppContainer";
+import {ForbiddenException, UnauthorizedException} from "@/core/HttpException";
 
 interface ChildRouter {
   httpMethod: HttpMethod;
@@ -63,4 +66,23 @@ export function DeleteMapping(uri?: string) {
 
 export function getRouters() {
   return routers;
+}
+
+export function AuthGuard(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  const originMethod = descriptor.value;
+  descriptor.value = function (request: Request, response: Response) {
+    const { headers } = request;
+    const { authorization } = headers;
+    if (!authorization) throw new UnauthorizedException();
+
+    const token = authorization.replace('Bearer ', '');
+
+    try {
+      const { email } = jwt.verify(token, 'secret') as { name: string, email: string };
+      return originMethod.apply(this, [request, response, email]);
+    } catch (e) {
+      throw new ForbiddenException();
+    }
+
+  }
 }

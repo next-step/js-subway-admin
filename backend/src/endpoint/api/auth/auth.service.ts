@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 
 import {Inject, Injectable} from "@/core";
 import {UserEntity, UserRepository} from "@/data";
-import {ExistUserError, NotFoundUserError} from "@/endpoint";
+import {ExistUserException, NotFoundUserException} from "@/endpoint";
 
 @Injectable
 export class AuthService {
@@ -16,7 +16,7 @@ export class AuthService {
     const user = this.userRepository.findByEmail(email);
 
     if (user) {
-      throw new ExistUserError();
+      throw new ExistUserException();
     }
 
     this.userRepository.save({ name, email, password });
@@ -26,7 +26,7 @@ export class AuthService {
     const user = this.userRepository.findByEmailAndPassword(email, password);
 
     if (!user) {
-      throw new NotFoundUserError();
+      throw new NotFoundUserException();
     }
 
     const token: string = await new Promise((resolve, reject) => {
@@ -49,7 +49,7 @@ export class AuthService {
   public updateUser({ idx, name, email }: UpdateUserRequest): UserEntity {
     const user = this.userRepository.findByIdx(idx);
     if (!user) {
-      throw new NotFoundUserError();
+      throw new NotFoundUserException();
     }
 
     return this.userRepository.save({ ...user, name, email });

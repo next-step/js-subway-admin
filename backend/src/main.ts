@@ -2,8 +2,8 @@ import * as express from "express";
 import {NextFunction, Request, Response} from "express";
 import {HttpStatus} from "subway-constant";
 
-import {getRouters} from "@/core";
-import {NotFoundUserError} from "@/endpoint";
+import {getRouters, HttpException} from "@/core";
+import {NotFoundUserException} from "@/endpoint";
 
 import './endpoint';
 
@@ -23,10 +23,12 @@ for (const {httpMethod, path, callback} of getRouters()) {
 }
 
 app.use((err, req, res, next) => {
-  if (err instanceof NotFoundUserError) {
-    res.status(HttpStatus.BAD_REQUEST)
+  if (err instanceof HttpException) {
+    return res.status(err.statusCode).send(err);
   }
-  res.send({ message: err.message });
+  console.error(err.stack);
+  const httpException = new HttpException();
+  res.status(httpException.statusCode).send(httpException)
 });
 
 app.listen(3000, () => {
