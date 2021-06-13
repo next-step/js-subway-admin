@@ -4,7 +4,6 @@ import { PAGE_TITLE, PATH } from "@/constants";
 import { IPageInfo } from "@/types";
 import { authStore } from "@/store";
 import { createElement } from "@/utils/dom";
-import view from "./view";
 
 class SignUp extends Component {
   protected initDom(): void {
@@ -19,10 +18,6 @@ class SignUp extends Component {
     this.children = [signUpForm];
   }
 
-  protected componentMount(): void {
-    this.$container.innerHTML = view;
-  }
-
   protected beforeChangeURL(): boolean {
     const { isLoggedIn } = authStore.getState();
     if (isLoggedIn) return false;
@@ -35,6 +30,14 @@ class SignUp extends Component {
       title: PAGE_TITLE.SIGNUP,
       href: PATH.SIGNUP,
     };
+  }
+
+  protected componentMount(): void {
+    this.$container.innerHTML = `
+    <div class="heading">
+      <h2 class="text">📝 회원가입</h2>
+    </div>
+    `;
   }
 }
 

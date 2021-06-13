@@ -1,5 +1,4 @@
 import Component from "@/core/component";
-import view from "./view";
 import { lineDB } from "@/data";
 import { LineUpdate } from "@/components";
 import { lineService, uiService } from "@/service";
@@ -36,7 +35,37 @@ class LineList extends Component {
 
   protected componentMount(): void {
     const { lines } = lineStore.getState();
-    this.$container.innerHTML = view(lines);
+    this.$container.innerHTML =
+      lines.length > 0
+        ? `${lines
+            .map(
+              ({
+                color,
+                name,
+                id,
+              }) => `<li class="d-flex items-center py-2 relative" data-id=${id}>
+        <span class="subway-line-color-dot bg-${color}"></span>
+        <span class="w-100 pl-6 subway-line-list-item-name ${color}"
+          >${name}</span
+        >
+        <button
+          type="button"
+          class="bg-gray-50 text-gray-500 text-sm mr-1"
+          id="update"
+        >
+          수정
+        </button>
+        <button
+          type="button"
+          class="bg-gray-50 text-gray-500 text-sm"
+          id="remove"
+        >
+          삭제
+        </button>
+        </li>`
+            )
+            .join("")}<hr class="my-0" />`
+        : "아직 등록된 노선이 없습니다.";
   }
 }
 

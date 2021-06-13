@@ -1,6 +1,5 @@
 import Component from "@/core/component";
 import router from "@/router";
-import view from "./view";
 import { LineForm, LineList } from "@/components";
 import { IPageInfo } from "@/types";
 import { createElement } from "@/utils/dom";
@@ -32,10 +31,6 @@ class Lines extends Component {
     });
   }
 
-  protected componentMount(): void {
-    this.$container.innerHTML = view;
-  }
-
   protected beforeChangeURL(): boolean {
     const { isLoggedIn } = authStore.getState();
     if (isLoggedIn) return true;
@@ -50,6 +45,21 @@ class Lines extends Component {
       title: PAGE_TITLE.LINES,
       href: PATH.LINE,
     };
+  }
+
+  protected componentMount(): void {
+    this.$container.innerHTML = `
+    <div class="heading d-flex">
+      <h2 class="mt-1 w-100">🛤️ 노선 관리</h2>
+      <button
+      type="button"
+      id="add-line"
+      class="create-line-btn modal-trigger-btn bg-cyan-300 ml-2"
+      >
+      추가
+      </button>
+  </div>
+`;
   }
 }
 

@@ -1,6 +1,5 @@
 import Component from "@/core/component";
 import router from "@/router";
-import view from "./view";
 import { StationForm, StationList } from "@/components";
 import { authStore, stationStore } from "@/store";
 import { PATH, MESSAGE, PAGE_TITLE } from "@/constants";
@@ -22,10 +21,6 @@ class Stations extends Component {
     this.children = [stationForm, stationList];
   }
 
-  protected componentMount(): void {
-    this.$container.innerHTML = view;
-  }
-
   protected beforeChangeURL(): boolean {
     const { isLoggedIn } = authStore.getState();
     if (isLoggedIn) return true;
@@ -40,6 +35,14 @@ class Stations extends Component {
       title: PAGE_TITLE.STATIONS,
       href: PATH.STATIONS,
     };
+  }
+
+  protected componentMount(): void {
+    this.$container.innerHTML = `
+    <div class="heading">
+      <h2 class="mt-1">🚉 역 관리</h2>
+    </div>
+    `;
   }
 }
 

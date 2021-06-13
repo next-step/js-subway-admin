@@ -1,5 +1,4 @@
 import Component from "@/core/component";
-import view from "./view";
 import { stationService } from "@/service";
 import { $, createElement } from "@/utils/dom";
 
@@ -12,10 +11,6 @@ class StationForm extends Component {
     });
   }
 
-  protected componentMount(): void {
-    this.$container.innerHTML = view;
-  }
-
   protected bindEvents(): void {
     this.$container.addEventListener("submit", (e: Event) => {
       e.preventDefault();
@@ -23,6 +18,30 @@ class StationForm extends Component {
       stationService.add(name.value);
       name.value = "";
     });
+  }
+
+  protected componentMount(): void {
+    this.$container.innerHTML = `
+    <div class="d-flex w-100">
+      <label for="station-name" class="input-label" hidden>
+        역 이름
+      </label>
+      <input
+        type="text"
+        id="station-name"
+        name="stationName"
+        class="input-field"
+        placeholder="역 이름"
+        required
+      />
+      <button
+        name="submit"
+        class="input-submit bg-cyan-300 ml-2"
+      >
+        확인
+      </button>
+    </div>
+    `;
   }
 }
 

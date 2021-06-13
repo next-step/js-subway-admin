@@ -1,9 +1,8 @@
 import Component from "@/core/component";
-import view from "./view";
 import { StationUpdate } from "@/components";
 import { stationService, uiService } from "@/service";
 import { stationStore } from "@/store";
-import { $, createElement, closest } from "@/utils/dom";
+import { createElement, closest } from "@/utils/dom";
 
 class StationList extends Component {
   stationUpdate = new StationUpdate();
@@ -13,10 +12,6 @@ class StationList extends Component {
       tag: "ul",
       id: "station-list",
     });
-  }
-  protected componentMount(): void {
-    const { stations } = stationStore.getState();
-    this.$container.innerHTML = view(stations);
   }
 
   protected bindEvents(): void {
@@ -38,6 +33,38 @@ class StationList extends Component {
       };
       actions[type]();
     });
+  }
+
+  protected componentMount(): void {
+    const { stations } = stationStore.getState();
+    this.$container.innerHTML =
+      stations.length > 0
+        ? `
+    ${stations
+      .map(
+        ({ id, name }) => `
+    <li class="station-list-item d-flex items-center py-2" data-id=${id} data-name=${name}>
+      <span class="w-100 pl-2">${name}</span>
+      <button
+        type="button"
+        class="bg-gray-50 text-gray-500 text-sm mr-1"
+        id="update"
+      >
+        수정
+      </button>
+      <button
+        type="button"
+        class="bg-gray-50 text-gray-500 text-sm"
+        id="remove"
+      >
+        삭제
+      </button>
+  </li>
+    `
+      )
+      .join("")}
+    `
+        : "아직 등록된 역이 없습니다.";
   }
 }
 

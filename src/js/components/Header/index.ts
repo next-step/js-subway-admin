@@ -1,6 +1,5 @@
 import Component from "@/core/component";
 import handleLink from "@/router/handleLink";
-import view from "./view";
 import { authService } from "@/service";
 import { authStore } from "@/store";
 import { $ } from "@/utils/dom";
@@ -23,7 +22,35 @@ class Header extends Component {
 
   protected componentMount(): void {
     const { isLoggedIn } = authStore.getState();
-    this.$container.innerHTML = view(isLoggedIn);
+    this.$container.innerHTML = `
+    <a href="/" class="text-black">
+      <h1 class="text-center font-bold">🚇 지하철 노선도</h1>
+     </a>
+    <nav class="d-flex justify-center flex-wrap">
+    ${
+      isLoggedIn
+        ? `
+    <a href="/" class="my-1">
+      <button class="btn bg-white shadow mx-1">🚉 역 관리</button>
+    </a>
+    <a href="/lines" class="my-1">
+      <button class="btn bg-white shadow mx-1">🛤️ 노선 관리</button>
+    </a>`
+        : ""
+    }
+      ${
+        isLoggedIn
+          ? `
+      <div class="my-1">
+        <button class="btn bg-white shadow mx-1" id="logout">🔓 로그아웃</button>
+      </div>
+      `
+          : `<a href="/login" class="my-1">
+        <button class="btn bg-white shadow mx-1">👤 로그인</button>
+      </a>`
+      }
+    </nav>
+      `;
   }
 }
 
