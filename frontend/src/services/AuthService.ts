@@ -11,8 +11,9 @@ export class AuthService {
     @Inject(AuthRepository) private readonly authRepository: AuthRepository,
   ) {}
 
-  public login(request: AuthRequest): Promise<void> {
-    return this.restClient.post('/auth/login', request);
+  public async login(request: AuthRequest): Promise<void> {
+    const { token } = await this.restClient.post('/auth/login', request);
+    this.authRepository.set({ token });
   }
 
   public logout() {

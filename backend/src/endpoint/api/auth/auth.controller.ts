@@ -14,6 +14,7 @@ export class AuthController {
   @PostMapping('/login')
   public async login({ body }: Request, res: Response): Promise<AuthResponse> {
     res.status(201);
+    console.log(body);
     return await this.authService.login(body as AuthRequest);
   }
 

@@ -26,7 +26,6 @@ export const authStore = new Store<AuthState>({
   actions: {
     async [SIGN_IN] ({ commit }, authRequest: AuthRequest) {
       const authentication = await authService.login(authRequest);
-      console.log({ authentication });
       commit(SET_AUTHENTICATION, authentication);
     },
 

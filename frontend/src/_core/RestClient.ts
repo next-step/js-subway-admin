@@ -12,11 +12,17 @@ export class RestClient {
   ) {}
 
   private getResponse = (responseInit: Response) => {
-    let response = responseInit.json();
-    for (const interceptor of this.responseInterceptors) {
-      response = interceptor(response);
-    }
-    return response;
+    return responseInit.json().then(json => {
+      if (responseInit.status >= 400) {
+        throw new Error(json.message);
+      }
+
+      let response = json;
+      for (const interceptor of this.responseInterceptors) {
+        response = interceptor(response);
+      }
+      return response;
+    })
   }
 
   private getRequest (requestInit: RequestInit): RequestInit {
@@ -35,7 +41,13 @@ export class RestClient {
 
   private requestWithBody<T, B> (method: HttpMethod, uri: string, body: B): Promise<T> {
     const url = new URL(`.${uri}`, this.baseUrl);
-    return fetch(url.href, this.getRequest({ method, body: JSON.stringify(body) }))
+    return fetch(url.href, this.getRequest({
+              method,
+              body: JSON.stringify(body),
+              headers: {
+                'content-type': 'application/json'
+              },
+            }))
             .then(this.getResponse);
   }
 
