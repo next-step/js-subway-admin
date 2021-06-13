@@ -2,7 +2,7 @@ interface IDataBase {
   id: string;
 }
 
-class LocalStorage<T extends IDataBase> {
+class storage<T extends IDataBase> {
   constructor(readonly key: string, readonly storage: Storage = localStorage) {}
 
   public getAll(): T[] {
@@ -45,4 +45,4 @@ class LocalStorage<T extends IDataBase> {
   }
 }
 
-export default LocalStorage;
+export default storage;

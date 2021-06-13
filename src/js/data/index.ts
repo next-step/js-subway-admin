@@ -1,4 +1,4 @@
-import Storage from "@/core/Storage";
+import Storage from "@/core/storage";
 import { IStation, IAuth, ILine } from "@/types";
 
 export const authDB = new Storage<IAuth>("auth");
