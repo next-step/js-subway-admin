@@ -1,7 +1,10 @@
 import * as express from "express";
 import {Request, Response} from "express";
+import {HttpStatus} from "subway-constant";
 
 import {getRouters} from "@/core";
+import {NotFoundUserError} from "@/endpoint";
+
 import './endpoint';
 
 const app = express();
@@ -14,6 +17,13 @@ for (const {httpMethod, path, callback} of getRouters()) {
     response.json(result);
   });
 }
+
+app.use((err, req, res, next) => {
+  if (err instanceof NotFoundUserError) {
+    res.status(HttpStatus.BAD_REQUEST)
+  }
+  res.send({ message: err.message });
+});
 
 app.listen(3000, () => {
   console.log('http://localhost:3000 listen')

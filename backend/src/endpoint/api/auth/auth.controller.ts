@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {AuthRequest, AuthResponse} from "subway-domain";
+import {AuthRequest, AuthResponse, UserRequest} from "subway-domain";
 
 import {RestController, Inject, PostMapping} from "@/core";
 import {AuthService} from "./auth.service";
@@ -13,15 +13,14 @@ export class AuthController {
 
   @PostMapping('/login')
   public login({ body }: Request, res: Response): AuthResponse {
+    res.status(201);
     return this.authService.login(body as AuthRequest)
   }
 
   @PostMapping('/signup')
-  public signup(req: Request, res: Response) {
-
-    return {
-      path: req.path
-    }
+  public signup({ body }: Request, res: Response) {
+    this.authService.signup(body as UserRequest);
+    res.status(201);
   }
 
 }

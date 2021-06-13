@@ -11,7 +11,7 @@ export class AuthService {
     @Inject(UserRepository) private readonly userRepository: UserRepository
   ) {}
 
-  public signUp({ name, email, password }: UserRequest): void {
+  public signup({ name, email, password }: UserRequest): void {
     const user = this.userRepository.findByEmail(email);
 
     if (user) {

@@ -47,6 +47,9 @@ module.exports = {
   devServer: {
     contentBase: './public',
     hot: true,
+    proxy: {
+      '/api': 'http://localhost:3000',
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
