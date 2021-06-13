@@ -1,5 +1,5 @@
 import * as express from "express";
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
 import {HttpStatus} from "subway-constant";
 
 import {getRouters} from "@/core";
@@ -12,9 +12,13 @@ app.use(express.json());
 
 for (const {httpMethod, path, callback} of getRouters()) {
   const method = httpMethod.toLowerCase();
-  app[method](path, (request: Request, response: Response) => {
-    const result = callback(request, response);
-    response.json(result);
+  app[method](path, async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const result = await callback(request, response);
+      response.json(result);
+    } catch (Error) {
+      next(Error);
+    }
   });
 }
 

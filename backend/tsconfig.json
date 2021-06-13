@@ -11,8 +11,9 @@
     "lib": ["esnext"],
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"],
-    }
+      "@/*": ["./*"]
+    },
+    "allowSyntheticDefaultImports": true
   },
 
   "include": [

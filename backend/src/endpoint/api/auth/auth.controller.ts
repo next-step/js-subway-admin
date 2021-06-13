@@ -12,9 +12,9 @@ export class AuthController {
   ) {}
 
   @PostMapping('/login')
-  public login({ body }: Request, res: Response): AuthResponse {
+  public async login({ body }: Request, res: Response): Promise<AuthResponse> {
     res.status(201);
-    return this.authService.login(body as AuthRequest)
+    return await this.authService.login(body as AuthRequest);
   }
 
   @PostMapping('/signup')

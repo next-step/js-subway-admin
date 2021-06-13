@@ -1,7 +1,5 @@
 export interface AuthResponse {
-  idx: number;
-  email: string;
-  name: string;
+  token: string
 }
 
 export interface AuthRequest {
