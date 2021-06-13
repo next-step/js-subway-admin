@@ -1,14 +1,9 @@
-import {Request, Response} from "express";
+import * as express from "express";
 
-import {Controller, GetMapping} from "@/core";
+import {getAllRouter} from "@/core";
+import './endpoint';
 
-@Controller('/')
-class HomeController {
+const app = express();
+app.use(express.json());
 
-  @GetMapping()
-  public home(request: Request, response: Response) {
-    return 'hello world';
-  }
-
-}
-
+console.log(getAllRouter());

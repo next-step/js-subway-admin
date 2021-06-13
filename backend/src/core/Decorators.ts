@@ -1,30 +1,59 @@
 import { Injectable } from "./AppContainer";
-import {HttpMethod} from "subway-domain";
+import {HttpMethod} from "subway-constant";
+import { join } from "path";
+import {Request, Response} from "express";
 
-export function Controller (basePath: string) {
+
+interface Router {
+  httpMethod: HttpMethod;
+  path: string;
+  callback: (request: Request, response: Response) => any;
+}
+
+const allRouters: Router[] = [];
+const currentRouters: Router[] = [];
+
+export function Controller (basePath: string = '/') {
   return function (controller: any) {
     Injectable(controller);
+    allRouters.push(
+      ...currentRouters.map(({path, ...router}) => {
+        return {
+          ...router,
+          path: join(basePath, path).replace(/\\/g, "/"),
+        }
+      })
+    );
+    currentRouters.length = 0;
   }
 }
 
-export function RequestMapping(uri?: string, method: string = HttpMethod.GET) {
+export function RequestMapping(method: HttpMethod = HttpMethod.GET, uri?: string) {
   return function (target: any, property: string, descriptor: PropertyDescriptor) {
-    console.log({ uri, target, property, descriptor });
+    currentRouters.push({
+      httpMethod: method,
+      path: uri || '',
+      callback: descriptor.value,
+    });
   }
 }
 
 export function GetMapping(uri?: string) {
-  return RequestMapping(uri, HttpMethod.GET);
+  return RequestMapping(HttpMethod.GET, uri);
 }
 
 export function PostMapping(uri?: string) {
-  return RequestMapping(uri, HttpMethod.POST);
+  return RequestMapping(HttpMethod.POST, uri);
 }
 
 export function PutMapping(uri?: string) {
-  return RequestMapping(uri, HttpMethod.PUT);
+  return RequestMapping(HttpMethod.PUT, uri);
 }
 
 export function DeleteMapping(uri?: string) {
-  return RequestMapping(uri, HttpMethod.DELETE);
+  return RequestMapping(HttpMethod.DELETE, uri);
+}
+
+export function getAllRouter() {
+  return allRouters;
 }
