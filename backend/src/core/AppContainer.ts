@@ -4,17 +4,17 @@ export const container = new WeakMap<Clazz, any>();
 
 type Clazz = { new(...args: any[]): Object }
 
-export function instanceOf<T>(constructor: any): T {
-  const resolved = container.get(constructor);
+export function instanceOf<T>(Constructor: any): T {
+  const resolved = container.get(Constructor);
   if (resolved) return resolved;
 
-  const properties: Clazz[] = clazzProperties.get(constructor) || [];
+  const properties: Clazz[] = clazzProperties.get(Constructor) || [];
 
-  const instance = new constructor(
+  const instance = new Constructor(
     ...properties.map(instanceOf)!
   );
 
-  container.set(constructor, instance);
+  container.set(Constructor, instance);
   return instance as T;
 }
 

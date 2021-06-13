@@ -1,15 +1,12 @@
 import * as fs from "fs";
 import * as path from "path";
 
-export interface BaseEntity {
-  idx: number;
-  updatedAt: number;
-  createdAt: number;
-}
+import {AllEntities, BaseEntity} from "@/data";
+
 
 export class Repository<Entity extends BaseEntity> {
   private static readonly PATH: string = path.resolve(__dirname, '../data/data.json');
-  private static data: any = Repository.getData();
+  private static data: AllEntities = Repository.getData();
 
   private readonly entities: Entity[];
 
@@ -19,12 +16,13 @@ export class Repository<Entity extends BaseEntity> {
     this.entities = Repository.data[entityName] || [];
   }
 
-  private static loadData(): any {
-    return JSON.parse(fs.readFileSync(this.PATH, { encoding: 'utf-8' }));
+  private static loadData(): AllEntities {
+    return JSON.parse(fs.readFileSync(this.PATH, { encoding: 'utf-8' })) as AllEntities;
   }
 
-  private static getData() {
+  private static getData(): AllEntities {
     this.data = this.data || this.loadData();
+    return this.data;
   }
 
   private static setData<T>(entityName: string, entities: T[]): void {
@@ -33,7 +31,7 @@ export class Repository<Entity extends BaseEntity> {
       [entityName]: entities
     }
     fs.writeFileSync(this.PATH, JSON.stringify(data), { encoding: 'utf-8' });
-    this.data = data;
+    this.data = Repository.loadData();
   }
 
   public findAll(): Entity[] {

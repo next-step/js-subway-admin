@@ -21,9 +21,9 @@ const childRouters: ChildRouter[] = [];
 export function RestController(basePath: string = '/') {
   return function (controller: any) {
     Injectable(controller);
+    const controllerInstance = instanceOf(controller);
     routers.push(
       ...childRouters.map(({path, httpMethod, methodName}) => {
-        const controllerInstance = instanceOf(controller);
         return {
           httpMethod,
           path: join(basePath, path).replace(/\\/g, "/"),
