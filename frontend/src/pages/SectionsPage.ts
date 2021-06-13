@@ -1,5 +1,5 @@
 import '../assets/css/pages/sections.css';
-import {Component} from "@/@core";
+import {Component} from "@/_core";
 import {SectionEditorModal} from "./sections";
 import {SectionItem} from "@/pages/sections/SectionItem";
 import {ADD_SECTION, lineStore, REMOVE_SECTION, sectionStore, stationStore} from "@/store";

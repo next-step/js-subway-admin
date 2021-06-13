@@ -2,7 +2,7 @@ import {SectionRepository} from "@/repositories";
 import {SectionResponse, SectionRequest} from "subway-domain";
 import {ExistedSectionError, NotFoundSectionError} from "@/exceptions";
 import {getNextIdx} from "@/utils";
-import {Inject, Injectable} from "@/@core";
+import {Inject, Injectable} from "@/_core";
 
 @Injectable
 export class SectionService {

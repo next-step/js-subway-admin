@@ -1,4 +1,4 @@
-import {Component} from "@/@core";
+import {Component} from "@/_core";
 import {router} from "@/router";
 import {authStore} from "@/store";
 import * as pages from "@/pages";

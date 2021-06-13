@@ -2,7 +2,7 @@ import {LineRepository, SectionRepository} from "@/repositories";
 import {LineResponse, LineRequest} from "subway-domain";
 import {ExistedLineError, NotFoundLineError} from "@/exceptions";
 import {getNextIdx} from "@/utils";
-import {Inject, Injectable} from "@/@core";
+import {Inject, Injectable} from "@/_core";
 
 @Injectable
 export class LineService {

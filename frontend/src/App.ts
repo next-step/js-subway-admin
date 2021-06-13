@@ -1,4 +1,4 @@
-import {Component} from "@/@core";
+import {Component} from "@/_core";
 import {Header} from "@/components/layouts/Header";
 import subwayEmoji from './assets/images/subway_emoji.png';
 import {authStore, LOAD_AUTHENTICATION} from "@/store";

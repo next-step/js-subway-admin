@@ -1,5 +1,5 @@
-import {Component} from "@/@core";
-import {userService} from "@/services";
+import {Component} from "@/_core";
+import {authService} from "@/services";
 import { UserRequest} from "subway-domain";
 import {parseFormData} from "@/utils";
 import {router} from "@/router";
@@ -73,7 +73,7 @@ export class SignUpPage extends Component {
   }
 
   protected setEvent() {
-    this.addEvent('submit', 'form', (event: Event) => {
+    this.addEvent('submit', 'form', async (event: Event) => {
       event.preventDefault();
       const frm = event.target as HTMLFormElement;
       const request = parseFormData<UserRequest>(frm);
@@ -83,7 +83,7 @@ export class SignUpPage extends Component {
       }
 
       try {
-        userService.signUp(request);
+        await authService.signup(request);
         alert('회원가입이 완료되었습니다.');
         router.push('/login');
       } catch (e) {

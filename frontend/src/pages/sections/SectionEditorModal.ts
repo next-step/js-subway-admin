@@ -1,4 +1,4 @@
-import {Component} from "@/@core";
+import {Component} from "@/_core";
 import {LineResponse, SectionRequest, StationResponse} from "subway-domain";
 import {parseFormData} from "@/utils";
 

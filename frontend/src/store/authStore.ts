@@ -1,6 +1,6 @@
-import {Store} from "@/@core";
+import {Store} from "@/_core";
 import {AuthResponse, AuthRequest, UpdateUserRequest} from "subway-domain";
-import {userService} from "@/services";
+import {authService} from "@/services";
 
 export const SET_AUTHENTICATION = 'SET_AUTHENTICATION';
 export const SIGN_IN = 'SIGN_IN';
@@ -24,23 +24,24 @@ export const authStore = new Store<AuthState>({
   },
 
   actions: {
-    [SIGN_IN] ({ commit }, authRequest: AuthRequest) {
-      const authentication = userService.signIn(authRequest);
+    async [SIGN_IN] ({ commit }, authRequest: AuthRequest) {
+      const authentication = await authService.login(authRequest);
+      console.log({ authentication });
       commit(SET_AUTHENTICATION, authentication);
     },
 
     [SIGN_OUT] ({ commit }) {
-      userService.signOut();
+      authService.logout();
       commit(SET_AUTHENTICATION, null);
     },
 
     [LOAD_AUTHENTICATION] ({ commit }) {
-      commit(SET_AUTHENTICATION, userService.getAuth());
+      commit(SET_AUTHENTICATION, authService.getAuth());
     },
 
     [UPDATE_USER] ({ dispatch }, request: UpdateUserRequest) {
-      userService.updateUser(request);
-      dispatch(LOAD_AUTHENTICATION);
+      // authService.updateUser(request);
+      // dispatch(LOAD_AUTHENTICATION);
     }
   },
 });

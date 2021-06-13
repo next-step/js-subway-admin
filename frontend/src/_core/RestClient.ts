@@ -28,13 +28,13 @@ export class RestClient {
   }
 
   private request<T> (method: HttpMethod, uri: string): Promise<T> {
-    const url = new URL(uri, this.baseUrl);
+    const url = new URL(`.${uri}`, this.baseUrl);
     return fetch(url.href, this.getRequest({ method }))
             .then(this.getResponse);
   }
 
   private requestWithBody<T, B> (method: HttpMethod, uri: string, body: B): Promise<T> {
-    const url = new URL(uri, this.baseUrl);
+    const url = new URL(`.${uri}`, this.baseUrl);
     return fetch(url.href, this.getRequest({ method, body: JSON.stringify(body) }))
             .then(this.getResponse);
   }

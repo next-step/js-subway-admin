@@ -1,5 +1,5 @@
-import {Component} from "@/@core";
-import {userService} from "@/services";
+import {Component} from "@/_core";
+import {authService} from "@/services";
 import {UpdateUserRequest, UserRequest} from "subway-domain";
 import {parseFormData} from "@/utils";
 import {router} from "@/router";

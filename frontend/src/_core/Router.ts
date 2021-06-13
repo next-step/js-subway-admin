@@ -1,4 +1,4 @@
-import {observable} from "@/@core";
+import {observable} from "@/_core";
 
 export interface RouterProps {
   baseUrl?: string;

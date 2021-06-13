@@ -1,4 +1,4 @@
-import {Component} from "@/@core";
+import {Component} from "@/_core";
 import {AuthRequest} from "subway-domain";
 import {parseFormData} from "@/utils";
 import {authStore, SIGN_IN} from "@/store";
@@ -61,12 +61,13 @@ export class LoginPage extends Component {
   }
 
   protected setEvent() {
-    this.addEvent('submit', 'form', (event: Event) => {
+    this.addEvent('submit', 'form', async (event: Event) => {
       event.preventDefault();
 
       const request = parseFormData<AuthRequest>(event.target as HTMLFormElement);
       try {
-        authStore.dispatch(SIGN_IN, request);
+        const result = await authStore.dispatch(SIGN_IN, request);
+        console.log({ result });
         alert('로그인이 완료되었습니다.');
         router.push('/stations');
       } catch (e) {

@@ -1,4 +1,4 @@
-import {Store} from "@/@core";
+import {Store} from "@/_core";
 import {SectionResponse, SectionRequest} from "subway-domain";
 import {sectionService} from "@/services";
 
