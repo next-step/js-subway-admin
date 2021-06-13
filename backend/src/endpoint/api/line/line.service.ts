@@ -4,9 +4,9 @@ import {Inject, Injectable} from "@/core";
 import {LineEntity, LineRepository, SectionEntity, SectionRepository, StationEntity, StationRepository} from "@/data";
 import {
   EqualsStationException,
-  ExistedLineException,
+  ExistedLineException, ExistedSectionException, NotFoundDownStationException,
   NotFoundLineException,
-  NotFoundStationException
+  NotFoundStationException, NotFoundUpStationException
 } from "@/endpoint";
 
 @Injectable
@@ -33,7 +33,7 @@ export class LineService {
 
   public getLineWithStations(idx: number): LineResponse {
     const line = this.getLine(idx);
-    const sections = this.getSections(line);
+    const sections = this.getSections(line.idx);
 
     const sumOf = (key: 'duration' | 'distance') => {
       return sections.reduce((sum: number, section) => sum + section[key], 0);
@@ -49,8 +49,8 @@ export class LineService {
     }
   }
 
-  private getSections({ idx }: LineEntity) {
-    return this.sectionRepository.findAll().filter(v => v.line === idx);
+  private getSections(lineIdx: number) {
+    return this.sectionRepository.findAll().filter(v => v.line === lineIdx);
   }
 
   private getStations(sections: SectionEntity[]): StationEntity[] {
@@ -91,7 +91,7 @@ export class LineService {
   public removeLine(idx: number) {
     const line: LineEntity = this.getLine(idx);
     this.lineRepository.remove(line);
-    this.getSections(line).forEach(v => this.sectionRepository.remove(v));
+    this.getSections(line.idx).forEach(v => this.sectionRepository.remove(v));
   }
 
   public addSection(idx, {upStation, downStation, distance, duration}: SectionRequest) {
@@ -106,12 +106,23 @@ export class LineService {
       throw new EqualsStationException();
     }
 
+    const sections = this.getSections(idx);
+    if (sections.find(v => v.upStation === upStation && v.downStation === downStation)) {
+      throw new ExistedSectionException();
+    }
+    if (sections.find(v => v.upStation === downStation)) {
+      throw new NotFoundUpStationException();
+    }
+    if (sections.find(v => v.downStation === upStation)) {
+      throw new NotFoundDownStationException();
+    }
+
     this.sectionRepository.save({ line: idx, upStation, downStation, distance, duration });
   }
 
   public removeSection(idx: number, stationIdx: number) {
     const line = this.getLine(idx);
-    const sections = this.getSections(line);
+    const sections = this.getSections(line.idx);
     const willRemoveSections = sections.filter(v => v.upStation === stationIdx || v.downStation === stationIdx);
     for (const section of willRemoveSections) {
       this.sectionRepository.remove(section);

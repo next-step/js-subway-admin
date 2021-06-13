@@ -29,3 +29,31 @@ export class EqualsStationException extends HttpException {
     super(EqualsStationException.message, HttpStatus.BAD_REQUEST);
   }
 }
+
+export class ExistedSectionException extends HttpException {
+
+  public static readonly message: string = '이미 등록된 구간입니다.';
+
+  constructor() {
+    super(ExistedSectionException.message, HttpStatus.BAD_REQUEST);
+  }
+}
+
+
+export class NotFoundUpStationException extends HttpException {
+
+  public static readonly message: string = '연결된 상행역이 없습니다.';
+
+  constructor() {
+    super(NotFoundUpStationException.message, HttpStatus.BAD_REQUEST);
+  }
+}
+
+export class NotFoundDownStationException extends HttpException {
+
+  public static readonly message: string = '연결된 하행역이 없습니다.';
+
+  constructor() {
+    super(NotFoundDownStationException.message, HttpStatus.BAD_REQUEST);
+  }
+}
