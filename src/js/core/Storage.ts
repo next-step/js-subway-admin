@@ -3,15 +3,15 @@ interface IDataBase {
 }
 
 class LocalStorage<T extends IDataBase> {
-  constructor(readonly key: string) {}
+  constructor(readonly key: string, readonly storage: Storage = localStorage) {}
 
   public getAll(): T[] {
-    const items = localStorage.getItem(this.key) ?? "[]";
+    const items = this.storage.getItem(this.key) ?? "[]";
     return JSON.parse(items);
   }
 
   public set(items: T[]): void {
-    localStorage.setItem(this.key, JSON.stringify(items));
+    this.storage.setItem(this.key, JSON.stringify(items));
   }
 
   public get(id: string): T | null {
