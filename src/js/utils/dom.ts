@@ -11,3 +11,13 @@ export const newElement = (element: string): HTMLElement => {
   template.innerHTML = element;
   return template.content.children[0] as HTMLElement;
 };
+
+export const formData = <T>(form: HTMLElement, enumerator: unknown): T => {
+  const formData = new FormData(form as HTMLFormElement);
+  const result = {};
+  const keys = Object.values(enumerator) as string[];
+  keys.forEach((key) => {
+    result[key] = formData.get(key) as string;
+  });
+  return result as T;
+};

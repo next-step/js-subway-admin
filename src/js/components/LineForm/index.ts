@@ -1,8 +1,9 @@
 import Component from "@/core/component";
+import { ILineData, LineEnum } from "@/types";
 import { colorOptions } from "@/utils/mock";
 import { lineService } from "@/service";
 import { stationStore } from "@/store";
-import { $, newElement } from "@/utils/dom";
+import { newElement, formData } from "@/utils/dom";
 
 class LineForm extends Component {
   protected initDom(): void {
@@ -12,20 +13,8 @@ class LineForm extends Component {
   protected bindEvents(): void {
     this.$container.addEventListener("submit", (e: Event) => {
       e.preventDefault();
-      const name = $("#name", this.$container) as HTMLInputElement;
-      const upStation = $("#up", this.$container) as HTMLSelectElement;
-      const downStation = $("#down", this.$container) as HTMLSelectElement;
-      const color = $("#colors", this.$container) as HTMLInputElement;
-      const distance = $("#distance", this.$container) as HTMLInputElement;
-      const time = $("#time", this.$container) as HTMLInputElement;
-      lineService.add(
-        name.value,
-        upStation?.value ?? "",
-        downStation?.value ?? "",
-        color.value,
-        distance.value,
-        time.value
-      );
+      const lineDatas = formData<ILineData>(this.$container, LineEnum);
+      lineService.add(lineDatas);
     });
   }
 

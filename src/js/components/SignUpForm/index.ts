@@ -1,6 +1,7 @@
 import Component from "@/core/component";
+import { ISignUpUser, SignUpEnum } from "@/types";
 import { authService } from "@/service";
-import { $, newElement } from "@/utils/dom";
+import { newElement, formData } from "@/utils/dom";
 
 class SignUpForm extends Component {
   protected initDom(): void {
@@ -10,16 +11,8 @@ class SignUpForm extends Component {
   protected bindEvents(): void {
     this.$container.addEventListener("submit", (e: Event) => {
       e.preventDefault();
-      const email = $("#email", this.$container) as HTMLInputElement;
-      const name = $("#name", this.$container) as HTMLInputElement;
-      const password = $("#password", this.$container) as HTMLInputElement;
-      const confirmPassword = $("#password-confirm") as HTMLInputElement;
-      authService.signUp(
-        email.value,
-        name.value,
-        password.value,
-        confirmPassword.value
-      );
+      const userDatas = formData<ISignUpUser>(this.$container, SignUpEnum);
+      authService.signUp(userDatas);
     });
   }
 

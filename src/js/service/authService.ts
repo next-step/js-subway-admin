@@ -1,10 +1,11 @@
 import router from "@/router";
+import { ILoginUser, ISignUpUser } from "@/types";
 import { MESSAGE, PATH } from "@/constants";
 import { authDB } from "@/data";
 import { authStore } from "@/store";
 
 const authService = {
-  login: (email: string, password: string): void => {
+  login: ({ email, password }: ILoginUser): void => {
     try {
       const user = authDB.get(email);
       if (!user) throw MESSAGE.NO_USER;
@@ -16,12 +17,7 @@ const authService = {
     }
   },
 
-  signUp: (
-    email: string,
-    name: string,
-    password: string,
-    confirmPassword: string
-  ): void => {
+  signUp: ({ email, name, password, confirmPassword }: ISignUpUser): void => {
     try {
       const users = authDB.getAll();
       const isExisitedEmail =

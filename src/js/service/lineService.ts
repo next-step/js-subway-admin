@@ -1,7 +1,7 @@
 import { lineDB } from "@/data";
 import { lineStore } from "@/store";
 import { MESSAGE } from "@/constants";
-import { ILine } from "@/types";
+import { ILine, ILineData } from "@/types";
 import { uiService, stationService } from "@/service";
 
 const isExistedLine = (name: string): boolean => {
@@ -9,14 +9,7 @@ const isExistedLine = (name: string): boolean => {
 };
 
 const lineService = {
-  add: (
-    name: string,
-    upStation: string,
-    downStation: string,
-    color: string,
-    distance: string,
-    time: string
-  ) => {
+  add: ({ name, upStation, downStation, color, distance, time }: ILineData) => {
     try {
       if (isExistedLine(name)) throw MESSAGE.EXIST_LINE;
       if (!upStation || !downStation) throw MESSAGE.NOT_EXIST_LINE_STATION;
@@ -64,11 +57,11 @@ const lineService = {
     lineStore.updateState({ lines: newData });
   },
 
-  update: (nextData: ILine, prevData: ILine) => {
+  update: (nextData: ILineData, prevData: ILine) => {
     try {
-      const { id, name, upStation, downStation, color, distance, time } =
-        nextData;
+      const { name, upStation, downStation, color, distance, time } = nextData;
       const {
+        id,
         name: prevName,
         upStation: prevUpStation,
         downStation: prevDownStation,

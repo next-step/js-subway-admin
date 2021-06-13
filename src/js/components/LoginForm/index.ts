@@ -1,7 +1,8 @@
 import Component from "@/core/component";
 import handleLink from "@/router/handleLink";
+import { ILoginUser, LoginEnum } from "@/types";
 import { authService } from "@/service";
-import { $, newElement } from "@/utils/dom";
+import { newElement, formData } from "@/utils/dom";
 
 class LoginForm extends Component {
   protected initDom(): void {
@@ -11,9 +12,8 @@ class LoginForm extends Component {
   protected bindEvents(): void {
     this.$container.addEventListener("submit", (e: Event) => {
       e.preventDefault();
-      const email = $("#email", this.$container) as HTMLInputElement;
-      const password = $("#password", this.$container) as HTMLInputElement;
-      authService.login(email.value, password.value);
+      const userData = formData<ILoginUser>(this.$container, LoginEnum);
+      authService.login(userData);
     });
 
     this.$container.addEventListener("click", (e: Event) => {
@@ -23,7 +23,8 @@ class LoginForm extends Component {
   }
 
   protected componentMount(): void {
-    this.$container.innerHTML = `<div class="input-control">
+    this.$container.innerHTML = `
+    <div class="input-control">
       <label for="email" class="input-label" hidden>이메일</label>
       <input
         type="email"

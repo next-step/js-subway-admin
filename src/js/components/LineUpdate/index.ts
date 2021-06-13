@@ -1,8 +1,8 @@
 import Component from "@/core/component";
-import { ILine } from "@/types";
+import { ILine, ILineData, LineEnum } from "@/types";
 import { stationStore } from "@/store";
 import { lineService } from "@/service";
-import { $, newElement } from "@/utils/dom";
+import { $, newElement, formData } from "@/utils/dom";
 import { colorOptions } from "@/utils/mock";
 
 class LineUpdate extends Component<ILine> {
@@ -13,36 +13,8 @@ class LineUpdate extends Component<ILine> {
   protected bindEvents(): void {
     this.$container.addEventListener("submit", (e: Event) => {
       e.preventDefault();
-      const { value: name } = $("#name", this.$container) as HTMLInputElement;
-      const { value: upStation } = $(
-        "#up",
-        this.$container
-      ) as HTMLSelectElement;
-      const { value: downStation } = $(
-        "#down",
-        this.$container
-      ) as HTMLSelectElement;
-      const { value: color } = $(
-        "#colors",
-        this.$container
-      ) as HTMLInputElement;
-      const { value: distance } = $(
-        "#distance",
-        this.$container
-      ) as HTMLInputElement;
-      const { value: time } = $("#time", this.$container) as HTMLInputElement;
-      lineService.update(
-        {
-          id: this.props.id,
-          name,
-          upStation,
-          downStation,
-          color,
-          distance,
-          time,
-        },
-        this.props
-      );
+      const newDatas = formData<ILineData>(this.$container, LineEnum);
+      lineService.update(newDatas, this.props);
     });
   }
 
