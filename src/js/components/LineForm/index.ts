@@ -2,14 +2,11 @@ import Component from "@/core/component";
 import { colorOptions } from "@/utils/mock";
 import { lineService } from "@/service";
 import { stationStore } from "@/store";
-import { $, createElement } from "@/utils/dom";
+import { $, newElement } from "@/utils/dom";
 
 class LineForm extends Component {
   protected initDom(): void {
-    this.$container = createElement({
-      tag: "form",
-      id: "create-line",
-    });
+    this.$container = newElement(`<form id="create-line"/>`);
   }
 
   protected bindEvents(): void {

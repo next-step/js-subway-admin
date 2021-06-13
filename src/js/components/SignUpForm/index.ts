@@ -1,14 +1,10 @@
 import Component from "@/core/component";
 import { authService } from "@/service";
-import { $, createElement } from "@/utils/dom";
+import { $, newElement } from "@/utils/dom";
 
 class SignUpForm extends Component {
   protected initDom(): void {
-    this.$container = createElement({
-      tag: "form",
-      className: "form",
-      id: "signup-form",
-    });
+    this.$container = newElement(`<form class="form" id="signup-form"/>`);
   }
 
   protected bindEvents(): void {

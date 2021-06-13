@@ -1,13 +1,10 @@
 import Component from "@/core/component";
 import { IPageInfo } from "@/types";
-import { createElement } from "@/utils/dom";
+import { newElement } from "@/utils/dom";
 
 class NotFound extends Component {
   protected initDom(): void {
-    this.$container = createElement({
-      tag: "div",
-      className: "wrapper p-10 bg-white",
-    });
+    this.$container = newElement(`<div class="wrapper p-10 bg-white"/>`);
   }
 
   protected componentMount(): void {

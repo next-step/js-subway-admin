@@ -2,16 +2,14 @@ import Component from "@/core/component";
 import { StationUpdate } from "@/components";
 import { stationService, uiService } from "@/service";
 import { stationStore } from "@/store";
-import { createElement, closest } from "@/utils/dom";
+import { newElement, closest } from "@/utils/dom";
 
 class StationList extends Component {
   stationUpdate = new StationUpdate();
 
   protected initDom(): void {
-    this.$container = createElement({
-      tag: "ul",
-      id: "station-list",
-    });
+    `<ul id="station-list"/>`;
+    this.$container = newElement(`<ul id="station-list"/>`);
   }
 
   protected bindEvents(): void {

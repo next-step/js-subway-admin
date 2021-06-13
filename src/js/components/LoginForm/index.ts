@@ -1,15 +1,11 @@
 import Component from "@/core/component";
 import handleLink from "@/router/handleLink";
 import { authService } from "@/service";
-import { $, createElement } from "@/utils/dom";
+import { $, newElement } from "@/utils/dom";
 
 class LoginForm extends Component {
   protected initDom(): void {
-    this.$container = createElement({
-      tag: "form",
-      className: "form",
-      id: "login-form",
-    });
+    this.$container = newElement(`<form class="form" id="login-form"/>`);
   }
 
   protected bindEvents(): void {

@@ -2,7 +2,7 @@ import Component from "@/core/component";
 import router from "@/router";
 import { LineForm, LineList } from "@/components";
 import { IPageInfo } from "@/types";
-import { createElement } from "@/utils/dom";
+import { newElement } from "@/utils/dom";
 import { uiService } from "@/service";
 import { authStore, lineStore } from "@/store";
 import { PATH, MESSAGE, PAGE_TITLE } from "@/constants";
@@ -10,10 +10,7 @@ import { PATH, MESSAGE, PAGE_TITLE } from "@/constants";
 class Lines extends Component {
   private lineForm = new LineForm();
   protected initDom(): void {
-    this.$container = createElement({
-      tag: "div",
-      className: "wrapper p-10 bg-white",
-    });
+    this.$container = newElement(`<div class="wrapper p-10 bg-white"/>`);
   }
 
   protected initChildren(): void {

@@ -1,14 +1,10 @@
 import Component from "@/core/component";
 import { stationService } from "@/service";
-import { $, createElement } from "@/utils/dom";
+import { $, newElement } from "@/utils/dom";
 
 class StationForm extends Component {
   protected initDom(): void {
-    this.$container = createElement({
-      tag: "form",
-      className: "form",
-      id: "station-form",
-    });
+    this.$container = newElement(`<form class="form" id="station-form"/>`);
   }
 
   protected bindEvents(): void {

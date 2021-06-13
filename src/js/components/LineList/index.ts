@@ -3,16 +3,13 @@ import { lineDB } from "@/data";
 import { LineUpdate } from "@/components";
 import { lineService, uiService } from "@/service";
 import { lineStore } from "@/store";
-import { createElement, closest } from "@/utils/dom";
+import { newElement, closest } from "@/utils/dom";
 
 class LineList extends Component {
   lineUpdate = new LineUpdate();
 
   protected initDom(): void {
-    this.$container = createElement({
-      tag: "ul",
-      className: "mt-3 pl-0",
-    });
+    this.$container = newElement(`<ul class="mt-3 pl-0"/>`);
   }
 
   protected bindEvents(): void {

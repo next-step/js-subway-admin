@@ -2,15 +2,12 @@ import Component from "@/core/component";
 import { ILine } from "@/types";
 import { stationStore } from "@/store";
 import { lineService } from "@/service";
-import { $, createElement } from "@/utils/dom";
+import { $, newElement } from "@/utils/dom";
 import { colorOptions } from "@/utils/mock";
 
 class LineUpdate extends Component<ILine> {
   protected initDom(): void {
-    this.$container = createElement({
-      tag: "form",
-      id: "update-line",
-    });
+    this.$container = newElement(`<form id="update-line"/>`);
   }
 
   protected bindEvents(): void {

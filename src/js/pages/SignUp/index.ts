@@ -3,14 +3,11 @@ import { SignUpForm } from "@/components";
 import { PAGE_TITLE, PATH } from "@/constants";
 import { IPageInfo } from "@/types";
 import { authStore } from "@/store";
-import { createElement } from "@/utils/dom";
+import { newElement } from "@/utils/dom";
 
 class SignUp extends Component {
   protected initDom(): void {
-    this.$container = createElement({
-      tag: "div",
-      className: "wrapper p-10 bg-white",
-    });
+    this.$container = newElement(`<div class="wrapper p-10 bg-white"/>`);
   }
 
   protected initChildren(): void {

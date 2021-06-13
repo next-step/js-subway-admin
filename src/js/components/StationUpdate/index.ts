@@ -1,6 +1,6 @@
 import Component from "@/core/component";
 import { stationService } from "@/service";
-import { $, createElement } from "@/utils/dom";
+import { $, newElement } from "@/utils/dom";
 
 interface IProps {
   id: string;
@@ -9,10 +9,7 @@ interface IProps {
 
 class StationUpdate extends Component<IProps> {
   protected initDom(): void {
-    this.$container = createElement({
-      tag: "form",
-      id: "update-station",
-    });
+    this.$container = newElement(`<form id="update-station"/>`);
   }
 
   protected bindEvents(): void {
