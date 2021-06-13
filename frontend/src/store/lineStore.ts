@@ -1,6 +1,6 @@
-import {Store} from "~@core";
+import {Store} from "@/@core";
 import {LineResponse, LineRequest} from "subway-domain";
-import {lineService} from "~services";
+import {lineService} from "@/services";
 
 export const SET_LINES = 'SET_LINES';
 export const GET_LINES = 'GET_LINES';

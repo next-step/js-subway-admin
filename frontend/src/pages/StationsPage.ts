@@ -1,7 +1,7 @@
-import {Component} from "~@core";
+import {Component} from "@/@core";
 import {StationResponse} from "subway-domain";
 import {StationAppender, StationItem, StationUpdateModal} from "./stations";
-import {ADD_STATION, lineStore, REMOVE_STATION, stationStore, UPDATE_STATION} from "~store";
+import {ADD_STATION, lineStore, REMOVE_STATION, stationStore, UPDATE_STATION} from "@/store";
 
 const STATION_NAME_MIN_LENGTH = 2;
 const STATION_NAME_MAX_LENGTH = 20;

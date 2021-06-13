@@ -1,4 +1,4 @@
-import {Component} from "~@core";
+import {Component} from "@/@core";
 
 interface SectionItemProps {
   name: string;

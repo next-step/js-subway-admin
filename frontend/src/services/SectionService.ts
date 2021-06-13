@@ -1,8 +1,8 @@
-import {SectionRepository} from "~repositories";
+import {SectionRepository} from "@/repositories";
 import {SectionResponse, SectionRequest} from "subway-domain";
-import {ExistedSectionError, NotFoundSectionError} from "~exceptions";
-import {getNextIdx} from "~utils";
-import {Inject, Injectable} from "~@core";
+import {ExistedSectionError, NotFoundSectionError} from "@/exceptions";
+import {getNextIdx} from "@/utils";
+import {Inject, Injectable} from "@/@core";
 
 @Injectable
 export class SectionService {

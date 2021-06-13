@@ -1,5 +1,5 @@
-import {Component} from "~@core";
-import {router} from "~router";
+import {Component} from "@/@core";
+import {router} from "@/router";
 
 export class RouterLink extends Component {
 

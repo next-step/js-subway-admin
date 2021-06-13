@@ -1,6 +1,6 @@
-import {Component} from "~@core";
-import {authStore, SIGN_OUT} from "~store";
-import {router, RouterLink} from "~router";
+import {Component} from "@/@core";
+import {authStore, SIGN_OUT} from "@/store";
+import {router, RouterLink} from "@/router";
 
 export class Header extends Component {
   protected template(): string {

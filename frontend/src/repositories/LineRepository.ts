@@ -1,4 +1,4 @@
-import {Injectable, Repository} from "~@core";
+import {Injectable, Repository} from "@/@core";
 import {LineResponse} from "subway-domain";
 
 @Injectable

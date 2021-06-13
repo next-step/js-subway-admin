@@ -1,6 +1,6 @@
-import {Component} from "~@core";
+import {Component} from "@/@core";
 import {LineResponse, SectionRequest, StationResponse} from "subway-domain";
-import {parseFormData} from "~utils";
+import {parseFormData} from "@/utils";
 
 interface SectionEditorModalState {
   visible: boolean;

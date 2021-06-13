@@ -1,4 +1,4 @@
-import {Component} from "~@core";
+import {Component} from "@/@core";
 import {StationResponse} from "subway-domain";
 
 interface StationUpdateModalState {

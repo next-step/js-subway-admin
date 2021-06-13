@@ -1,8 +1,8 @@
-import {AuthRepository, UserRepository} from "~repositories";
+import {AuthRepository, UserRepository} from "@/repositories";
 import {AuthResponse, AuthRequest, UpdateUserRequest, UserResponse, UserRequest} from "subway-domain";
-import {ExistedUserError, InvalidCredentialError} from "~exceptions";
-import {getNextIdx} from "~utils";
-import {Inject, Injectable} from "~@core";
+import {ExistedUserError, InvalidCredentialError} from "@/exceptions";
+import {getNextIdx} from "@/utils";
+import {Inject, Injectable} from "@/@core";
 
 @Injectable
 export class UserService {

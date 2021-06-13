@@ -1,8 +1,8 @@
-import {Component} from "~@core";
-import {userService} from "~services";
+import {Component} from "@/@core";
+import {userService} from "@/services";
 import { UserRequest} from "subway-domain";
-import {parseFormData} from "~utils";
-import {router} from "~router";
+import {parseFormData} from "@/utils";
+import {router} from "@/router";
 
 export class SignUpPage extends Component {
   protected template(): string {

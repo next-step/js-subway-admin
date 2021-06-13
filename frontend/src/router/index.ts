@@ -1,4 +1,4 @@
-import {Router} from "~@core";
+import {Router} from "@/@core";
 
 export const router = new Router({
   routes: {

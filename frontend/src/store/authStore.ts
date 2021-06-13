@@ -1,6 +1,6 @@
-import {Store} from "~@core";
+import {Store} from "@/@core";
 import {AuthResponse, AuthRequest, UpdateUserRequest} from "subway-domain";
-import {userService} from "~services";
+import {userService} from "@/services";
 
 export const SET_AUTHENTICATION = 'SET_AUTHENTICATION';
 export const SIGN_IN = 'SIGN_IN';

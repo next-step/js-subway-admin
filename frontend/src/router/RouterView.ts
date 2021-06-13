@@ -1,7 +1,7 @@
-import {Component} from "~@core";
-import {router} from "~router";
-import {authStore} from "~store";
-import * as pages from "~pages";
+import {Component} from "@/@core";
+import {router} from "@/router";
+import {authStore} from "@/store";
+import * as pages from "@/pages";
 
 
 export class RouterView extends Component {

@@ -1,6 +1,6 @@
-import {Store} from "~@core";
+import {Store} from "@/@core";
 import {StationResponse} from "subway-domain";
-import {stationService} from "~services";
+import {stationService} from "@/services";
 
 export const SET_STATIONS = 'SET_STATIONS';
 export const GET_STATIONS = 'GET_STATIONS';

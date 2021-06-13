@@ -1,8 +1,8 @@
-import {Component} from "~@core";
-import {Header} from "~components/layouts/Header";
+import {Component} from "@/@core";
+import {Header} from "@/components/layouts/Header";
 import subwayEmoji from './assets/images/subway_emoji.png';
-import {authStore, LOAD_AUTHENTICATION} from "~store";
-import {RouterView} from "~router";
+import {authStore, LOAD_AUTHENTICATION} from "@/store";
+import {RouterView} from "@/router";
 
 interface AppState {
   auth: boolean;

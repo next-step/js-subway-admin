@@ -1,8 +1,8 @@
-import {Component} from "~@core";
+import {Component} from "@/@core";
 import {AuthRequest} from "subway-domain";
-import {parseFormData} from "~utils";
-import {authStore, SIGN_IN} from "~store";
-import {router, RouterLink} from "~router";
+import {parseFormData} from "@/utils";
+import {authStore, SIGN_IN} from "@/store";
+import {router, RouterLink} from "@/router";
 
 import '../assets/css/pages/auth.css';
 

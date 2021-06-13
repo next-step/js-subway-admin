@@ -1,7 +1,7 @@
-import {Component} from "~@core";
-import {colorOptions} from "~constants";
+import {Component} from "@/@core";
+import {colorOptions} from "@/constants";
 import {LineResponse, LineRequest, StationResponse} from "subway-domain";
-import {parseFormData, selectOne} from "~utils";
+import {parseFormData, selectOne} from "@/utils";
 
 interface LineEditModalState {
   visible: boolean;

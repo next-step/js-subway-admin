@@ -7,8 +7,9 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowJs": true,
-    "rootDir": "src",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "outDir": "./dist",
+    "noEmit": false
   },
 
   "exclude": [

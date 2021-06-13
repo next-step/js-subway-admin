@@ -1,8 +1,8 @@
-import {StationRepository} from "~repositories";
+import {StationRepository} from "@/repositories";
 import {StationResponse, StationRequest} from "subway-domain";
-import {ExistedStationError, NotFoundStationError} from "~exceptions";
-import {getNextIdx} from "~utils";
-import {Inject, Injectable} from "~@core";
+import {ExistedStationError, NotFoundStationError} from "@/exceptions";
+import {getNextIdx} from "@/utils";
+import {Inject, Injectable} from "@/@core";
 
 @Injectable
 export class StationService {

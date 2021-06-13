@@ -1,8 +1,8 @@
 import '../assets/css/pages/sections.css';
-import {Component} from "~@core";
+import {Component} from "@/@core";
 import {SectionEditorModal} from "./sections";
-import {SectionItem} from "~pages/sections/SectionItem";
-import {ADD_SECTION, lineStore, REMOVE_SECTION, sectionStore, stationStore} from "~store";
+import {SectionItem} from "@/pages/sections/SectionItem";
+import {ADD_SECTION, lineStore, REMOVE_SECTION, sectionStore, stationStore} from "@/store";
 import {LineResponse, SectionResponse, SectionRequest, StationResponse} from "subway-domain";
 
 interface SectionsPageState {
@@ -132,7 +132,7 @@ export class SectionsPage extends Component<SectionsPageState> {
       this.$modal.open();
     });
 
-    this.addEvent('change', '.lineSelector', (event: InputEvent) => {
+    this.addEvent('change', '.lineSelector', (event: Event) => {
       const target = event.target as HTMLSelectElement;
       this.$state.selectedLineIdx = Number(target.value);
     });

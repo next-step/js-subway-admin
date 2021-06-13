@@ -1,6 +1,6 @@
-import {Store} from "~@core";
+import {Store} from "@/@core";
 import {SectionResponse, SectionRequest} from "subway-domain";
-import {sectionService} from "~services";
+import {sectionService} from "@/services";
 
 export const SET_SECTIONS = 'SET_SECTIONS';
 export const GET_SECTIONS = 'GET_SECTIONS';

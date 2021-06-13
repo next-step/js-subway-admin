@@ -1,8 +1,8 @@
-import {LineRepository, SectionRepository} from "~repositories";
+import {LineRepository, SectionRepository} from "@/repositories";
 import {LineResponse, LineRequest} from "subway-domain";
-import {ExistedLineError, NotFoundLineError} from "~exceptions";
-import {getNextIdx} from "~utils";
-import {Inject, Injectable} from "~@core";
+import {ExistedLineError, NotFoundLineError} from "@/exceptions";
+import {getNextIdx} from "@/utils";
+import {Inject, Injectable} from "@/@core";
 
 @Injectable
 export class LineService {

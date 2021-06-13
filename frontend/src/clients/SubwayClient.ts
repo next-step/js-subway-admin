@@ -1,4 +1,4 @@
-import {Injectable, RestClient} from "~@core";
+import {Injectable, RestClient} from "@/@core";
 
 @Injectable
 export class SubwayClient extends RestClient {

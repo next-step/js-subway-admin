@@ -1,5 +1,5 @@
 import {applyDomDiff, observable, observe} from "./";
-import {selectAll} from "~utils";
+import {selectAll} from "@/utils";
 
 export abstract class Component<State = {}, Props = {}> {
 
