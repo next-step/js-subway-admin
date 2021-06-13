@@ -1,4 +1,4 @@
-import { Injectable } from "./AppContainer";
+import {Injectable, instanceOf} from "./AppContainer";
 import {HttpMethod} from "subway-constant";
 import { join } from "path";
 import {Request, Response} from "express";
@@ -7,20 +7,30 @@ import {Request, Response} from "express";
 interface Router {
   httpMethod: HttpMethod;
   path: string;
-  callback: (request: Request, response: Response) => any;
+  methodName: string;
 }
 
-const allRouters: Router[] = [];
+interface RouterWithCallback {
+  httpMethod: HttpMethod;
+  path: string;
+  callback: (req: Request, res: Response) => any;
+}
+
+type RouterCaller = RouterWithCallback;
+
+const allRouters: RouterCaller[] = [];
 const currentRouters: Router[] = [];
 
 export function Controller (basePath: string = '/') {
   return function (controller: any) {
     Injectable(controller);
     allRouters.push(
-      ...currentRouters.map(({path, ...router}) => {
+      ...currentRouters.map(({path, httpMethod, methodName}) => {
+        const controllerInstance = instanceOf(controller);
         return {
-          ...router,
+          httpMethod,
           path: join(basePath, path).replace(/\\/g, "/"),
+          callback: controllerInstance[methodName].bind(controllerInstance),
         }
       })
     );
@@ -33,7 +43,7 @@ export function RequestMapping(method: HttpMethod = HttpMethod.GET, uri?: string
     currentRouters.push({
       httpMethod: method,
       path: uri || '',
-      callback: descriptor.value,
+      methodName: property
     });
   }
 }
