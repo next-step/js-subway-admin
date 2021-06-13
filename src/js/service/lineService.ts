@@ -3,6 +3,11 @@ import { lineStore } from "@/store";
 import { MESSAGE } from "@/constants";
 import { ILine, ILineData } from "@/types";
 import { uiService, stationService } from "@/service";
+import {
+  DUPLICATED_LINE_ERROR,
+  NO_STATION_ERROR,
+  NOT_CORRECT_LINE_ERROR,
+} from "@/errors";
 
 const isExistedLine = (name: string): boolean => {
   return lineDB.getAll().findIndex((line) => line.name === name) !== -1;
@@ -11,9 +16,9 @@ const isExistedLine = (name: string): boolean => {
 const lineService = {
   add: ({ name, upStation, downStation, color, distance, time }: ILineData) => {
     try {
-      if (isExistedLine(name)) throw MESSAGE.EXIST_LINE;
-      if (!upStation || !downStation) throw MESSAGE.NOT_EXIST_LINE_STATION;
-      if (upStation === downStation) throw MESSAGE.NOT_CORRECT_LINE_STATION;
+      if (isExistedLine(name)) throw DUPLICATED_LINE_ERROR;
+      if (!upStation || !downStation) throw NO_STATION_ERROR;
+      if (upStation === downStation) throw NOT_CORRECT_LINE_ERROR;
 
       stationService.updateLine([
         {
@@ -39,8 +44,8 @@ const lineService = {
         lines: newLine,
       });
       uiService.closeModal();
-    } catch (error) {
-      alert(error);
+    } catch ({ message }) {
+      alert(message);
     }
   },
 
@@ -80,7 +85,7 @@ const lineService = {
       )
         return;
 
-      if (prevName !== name && isExistedLine(name)) throw MESSAGE.EXIST_LINE;
+      if (prevName !== name && isExistedLine(name)) throw DUPLICATED_LINE_ERROR;
       stationService.updateLine([
         {
           name: prevUpStation,
@@ -103,8 +108,8 @@ const lineService = {
       const newData = lineDB.update(id, nextData);
       lineStore.updateState({ lines: newData });
       uiService.closeModal();
-    } catch (error) {
-      alert(error);
+    } catch ({ message }) {
+      alert(message);
     }
   },
 };

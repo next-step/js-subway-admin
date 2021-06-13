@@ -3,17 +3,23 @@ import { ILoginUser, ISignUpUser } from "@/types";
 import { MESSAGE, PATH } from "@/constants";
 import { authDB } from "@/data";
 import { authStore } from "@/store";
+import {
+  NO_USER_ERROR,
+  WRONG_PASSWORD_ERROR,
+  DUPLICATED_EMAIL_ERROR,
+  NOT_CORRECT_PASSWORD_ERROR,
+} from "@/errors";
 
 const authService = {
   login: ({ email, password }: ILoginUser): void => {
     try {
       const user = authDB.get(email);
-      if (!user) throw MESSAGE.NO_USER;
-      if (user.password !== password) throw MESSAGE.WRONG_PASSWORD;
+      if (!user) throw NO_USER_ERROR;
+      if (user.password !== password) throw WRONG_PASSWORD_ERROR;
       authStore.updateState({ isLoggedIn: true });
       router.push(PATH.STATIONS);
-    } catch (error) {
-      alert(error);
+    } catch ({ message }) {
+      alert(message);
     }
   },
 
@@ -22,14 +28,14 @@ const authService = {
       const users = authDB.getAll();
       const isExisitedEmail =
         users.findIndex((user) => user.id === email) !== -1;
-      if (isExisitedEmail) throw MESSAGE.EXIST_EMAIL;
-      if (password !== confirmPassword) throw MESSAGE.NOT_CORRECT_PASSWORD;
+      if (isExisitedEmail) throw DUPLICATED_EMAIL_ERROR;
+      if (password !== confirmPassword) throw NOT_CORRECT_PASSWORD_ERROR;
 
       authDB.add({ id: email, email, name, password });
       alert(MESSAGE.SIGNUP_SUCCESS);
       router.push(PATH.LOGIN);
-    } catch (error) {
-      alert(error);
+    } catch ({ message }) {
+      alert(message);
     }
   },
 
