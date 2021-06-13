@@ -11,7 +11,6 @@ export class ExistedLineException extends HttpException {
 
 }
 
-
 export class NotFoundLineException extends HttpException {
 
   public static readonly message: string = '해당 노선을 찾을 수 없습니다.';
@@ -20,4 +19,13 @@ export class NotFoundLineException extends HttpException {
     super(NotFoundLineException.message, HttpStatus.BAD_REQUEST);
   }
 
+}
+
+export class EqualsStationException extends HttpException {
+
+  public static readonly message: string = '상행역과 하행역이 동일합니다.';
+
+  constructor() {
+    super(EqualsStationException.message, HttpStatus.BAD_REQUEST);
+  }
 }

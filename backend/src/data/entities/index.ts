@@ -6,7 +6,6 @@ export interface BaseEntity {
 
 export interface LineEntity extends BaseEntity {
   name: string;
-  sections: number[];
   color: string;
 }
 

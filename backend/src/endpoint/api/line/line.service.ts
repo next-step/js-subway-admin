@@ -1,7 +1,7 @@
-import {LineRequest, LineResponse, LineUpdateRequest} from "subway-domain";
+import {LineRequest, LineResponse, LineUpdateRequest, SectionRequest} from "subway-domain";
 
 import {Inject, Injectable} from "@/core";
-import {LineEntity, LineRepository, SectionRepository, StationRepository} from "@/data";
+import {LineEntity, LineRepository, SectionEntity, SectionRepository, StationRepository} from "@/data";
 import {
   EqualsStationException,
   ExistedLineException,
@@ -33,51 +33,43 @@ export class LineService {
 
   public getLineWithStations(idx: number): LineResponse {
     const line = this.getLine(idx);
-    const { sections } = line;
+    const sections = this.getSections(line);
+
+    const sumOf = (key: 'duration' | 'distance') => {
+      return sections.reduce((sum: number, section) => sum + section[key], 0);
+    }
 
     return {
       idx: line.idx,
       name: line.name,
       color: line.color,
-      stations: [
-        ...new Set<number>(
-          sections.map(this.sectionRepository.findByIdx.bind(this))
-                  .flatMap(({ upStation, downStation }) => [ upStation, downStation ])
-        )]
-        .map(this.stationRepository.findByIdx.bind(this))
-        .map(({ idx, name }) => ({ idx, name })),
+      stations: this.getStations(sections).map(({ idx, name }) => ({ idx, name })),
+      duration: sumOf('duration'),
+      distance: sumOf('distance'),
     }
   }
 
+  private getSections({ idx }: LineEntity) {
+    return this.sectionRepository.findAll().filter(v => v.line === idx);
+  }
+
+  private getStations(sections: SectionEntity[]) {
+    const stationIdxSet = new Set(
+      sections.flatMap(({ upStation, downStation }) => [ upStation, downStation ])
+    );
+
+    return [ ...stationIdxSet ].map(v => this.stationRepository.findByIdx(v));
+  }
+
   public addLine(lineRequest: LineRequest) {
-    const {name, color} = lineRequest;
+    const {name, color, upStation, downStation, distance, duration} = lineRequest;
 
     if (this.lineRepository.findByName(name)) {
       throw new ExistedLineException();
     }
 
-    const upStation = this.stationRepository.findByIdx(lineRequest.upStation);
-    const downStation = this.stationRepository.findByIdx(lineRequest.downStation);
-
-    if (upStation === undefined || downStation === undefined) {
-      throw new NotFoundStationException();
-    }
-
-    if (upStation === downStation) {
-      throw new EqualsStationException();
-    }
-
-    const line  = this.lineRepository.save({ name, color, sections: [] });
-    const section = this.sectionRepository.save({
-      line: line.idx,
-      upStation: upStation.idx,
-      downStation: downStation.idx,
-      distance: lineRequest.distance,
-      duration: lineRequest.duration
-    });
-    line.sections.push(section.idx);
-
-    this.lineRepository.save(line);
+    const { idx } = this.lineRepository.save({ name, color });
+    this.addSection(idx, { upStation, downStation, distance, duration });
   }
 
   public updateLine({ idx, name, color }: LineUpdateRequest) {
@@ -98,5 +90,37 @@ export class LineService {
         .findAll()
         .filter(v => v.line === line.idx)
         .forEach(v => this.sectionRepository.remove(v));
+  }
+
+  public addSection(idx, {upStation, downStation, distance, duration}: SectionRequest): SectionEntity {
+    if (
+      !this.stationRepository.findByIdx(upStation) ||
+      !this.stationRepository.findByIdx(downStation)
+    ) {
+      throw new NotFoundStationException();
+    }
+
+    if (upStation === downStation) {
+      throw new EqualsStationException();
+    }
+
+    return this.sectionRepository.save({ line: idx, upStation, downStation, distance, duration });
+  }
+
+  public removeSection(idx: number, stationIdx: number) {
+    const line = this.getLine(idx);
+    const sections = this.getSections(line);
+    const willRemoveSections = sections.filter(v => v.upStation === stationIdx || v.downStation === stationIdx);
+    for (const section of willRemoveSections) {
+      this.sectionRepository.remove(section);
+    }
+
+    if (willRemoveSections.length < 2) return;
+    this.addSection(idx, {
+      upStation: willRemoveSections.find(v => v.downStation === stationIdx).upStation,
+      downStation: willRemoveSections.find(v => v.upStation === stationIdx).downStation,
+      distance: willRemoveSections[0].distance + willRemoveSections[1].distance,
+      duration: willRemoveSections[0].duration + willRemoveSections[1].duration,
+    });
   }
 }

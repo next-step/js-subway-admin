@@ -27,12 +27,3 @@ export class ContainsAtLineException extends HttpException {
     super(NotFoundStationException.message, HttpStatus.BAD_REQUEST);
   }
 }
-
-export class EqualsStationException extends HttpException {
-
-  public static readonly message: string = '상행역과 하행역이 동일합니다.';
-
-  constructor() {
-    super(EqualsStationException.message, HttpStatus.BAD_REQUEST);
-  }
-}
