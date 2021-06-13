@@ -4,6 +4,5 @@ export interface StationResponse {
 }
 
 export interface StationRequest {
-  idx?: number;
   name: string;
 }

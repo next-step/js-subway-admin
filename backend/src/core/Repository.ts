@@ -5,10 +5,10 @@ import {AllEntities, BaseEntity} from "@/data";
 
 
 export class Repository<Entity extends BaseEntity> {
-  private static readonly PATH: string = path.resolve(__dirname, '../data/data.json');
+  private static readonly PATH: string = path.resolve(process.cwd(), "data.json");
   private static data: AllEntities = Repository.getData();
 
-  private readonly entities: Entity[];
+  private entities: Entity[];
 
   constructor(
     private readonly entityName: string
@@ -49,7 +49,7 @@ export class Repository<Entity extends BaseEntity> {
 
     const index = this.entities.indexOf(this.findByIdx(entity.idx));
 
-    const entities = [ ...this.entities ];
+    const entities: Entity[] = [ ...this.entities ];
 
     if (index === -1) {
       entity.createdAt = Date.now();
@@ -61,11 +61,13 @@ export class Repository<Entity extends BaseEntity> {
     }
     Repository.setData<Entity>(this.entityName, entities);
 
+    this.entities = entities;
+
     return entity;
   }
 
   public remove({ idx }: Entity) {
-    const index = this.entities.indexOf(this.findByIdx(idx));
+    const index = this.entities.findIndex(v => v.idx === idx);
     if (index !== -1) {
       this.entities.splice(index, 1);
       Repository.setData<Entity>(this.entityName, this.entities);

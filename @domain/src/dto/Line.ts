@@ -20,7 +20,6 @@ export interface LineRequest {
 
 
 export interface LineUpdateRequest {
-  idx: number;
   name: string;
   color: string;
 }

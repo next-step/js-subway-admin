@@ -24,7 +24,7 @@ export class StationService {
     this.stationRepository.save({ name });
   }
 
-  public updateStation({ idx, name }: StationRequest) {
+  public updateStation(idx, name) {
     const stations = this.stationRepository.findAll();
     const station = stations.find(v => v.idx !== idx && v.name === name);
     if (station) {

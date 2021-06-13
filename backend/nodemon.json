@@ -1,5 +1,0 @@
-{
-  "watch": ["src/**", "../@domain/**"],
-  "ext": "ts,js,html,yaml,yml,json",
-  "exec": "npm start"
-}

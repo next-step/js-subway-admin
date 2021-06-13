@@ -25,11 +25,14 @@ export class StationController {
     this.stationService.addStation(body as StationRequest);
   }
 
-  @PutMapping()
+  @PutMapping('/:idx')
   @AuthGuard
   @Status(HttpStatus.NO_CONTENT)
-  public updateStation({ body }: Request) {
-    this.stationService.updateStation(body as StationRequest);
+  public updateStation({ body, params }: Request) {
+    this.stationService.updateStation(
+      Number(params.idx),
+      body.name
+    );
   }
 
   @DeleteMapping('/:idx')

@@ -1,7 +1,7 @@
 import {LineRequest, LineResponse, LineUpdateRequest, SectionRequest} from "subway-domain";
 
 import {Inject, Injectable} from "@/core";
-import {LineEntity, LineRepository, SectionEntity, SectionRepository, StationRepository} from "@/data";
+import {LineEntity, LineRepository, SectionEntity, SectionRepository, StationEntity, StationRepository} from "@/data";
 import {
   EqualsStationException,
   ExistedLineException,
@@ -53,7 +53,7 @@ export class LineService {
     return this.sectionRepository.findAll().filter(v => v.line === idx);
   }
 
-  private getStations(sections: SectionEntity[]) {
+  private getStations(sections: SectionEntity[]): StationEntity[] {
     const stationIdxSet = new Set(
       sections.flatMap(({ upStation, downStation }) => [ upStation, downStation ])
     );
@@ -68,11 +68,17 @@ export class LineService {
       throw new ExistedLineException();
     }
 
-    const { idx } = this.lineRepository.save({ name, color });
-    this.addSection(idx, { upStation, downStation, distance, duration });
+    const line = this.lineRepository.save({name, color});
+
+    try {
+      this.addSection(line.idx, {upStation, downStation, distance, duration});
+    } catch (e) {
+      this.lineRepository.remove(line);
+      throw e;
+    }
   }
 
-  public updateLine({ idx, name, color }: LineUpdateRequest) {
+  public updateLine(idx, { name, color }: LineUpdateRequest) {
     const line = this.getLine(idx);
 
     if (this.lineRepository.findByNotIdxAndName(idx, name)) {
@@ -85,14 +91,10 @@ export class LineService {
   public removeLine(idx: number) {
     const line: LineEntity = this.getLine(idx);
     this.lineRepository.remove(line);
-
-    this.sectionRepository
-        .findAll()
-        .filter(v => v.line === line.idx)
-        .forEach(v => this.sectionRepository.remove(v));
+    this.getSections(line).forEach(v => this.sectionRepository.remove(v));
   }
 
-  public addSection(idx, {upStation, downStation, distance, duration}: SectionRequest): SectionEntity {
+  public addSection(idx, {upStation, downStation, distance, duration}: SectionRequest) {
     if (
       !this.stationRepository.findByIdx(upStation) ||
       !this.stationRepository.findByIdx(downStation)
@@ -104,7 +106,7 @@ export class LineService {
       throw new EqualsStationException();
     }
 
-    return this.sectionRepository.save({ line: idx, upStation, downStation, distance, duration });
+    this.sectionRepository.save({ line: idx, upStation, downStation, distance, duration });
   }
 
   public removeSection(idx: number, stationIdx: number) {
