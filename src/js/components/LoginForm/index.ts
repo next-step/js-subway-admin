@@ -14,8 +14,7 @@ class LoginForm extends Component {
     this.rootEvent("click", this.handleClickLink.bind(this));
   }
 
-  protected handleSubmit(e: Event): void {
-    e.preventDefault();
+  protected handleSubmit(): void {
     const userData = formData<ILoginUser>(this.$container, LoginEnum);
     authService.login(userData);
   }
