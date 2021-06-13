@@ -1,10 +1,4 @@
-enum HttpMethod {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  PATCH = 'PATCH',
-  DELETE = 'DELETE',
-}
+import { HttpMethod } from "@domain";
 
 export type RequestInterceptor = (request: RequestInit) => RequestInit;
 

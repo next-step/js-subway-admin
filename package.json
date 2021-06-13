@@ -1,0 +1,9 @@
+{
+  "name": "js-subway-admin",
+  "version": "1.0.0",
+  "repository": "https://github.com/JunilHwang/js-subway-admin",
+  "author": "JunilHwang <junil.h@kakao.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": ["@domain", "@constant", "frontend", "backend"]
+}
