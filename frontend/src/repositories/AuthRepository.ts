@@ -1,5 +1,5 @@
 import {Injectable, Repository} from "~@core";
-import {AuthResponse} from "@domain";
+import {AuthResponse} from "subway-domain";
 
 @Injectable
 export class AuthRepository extends Repository<AuthResponse> {

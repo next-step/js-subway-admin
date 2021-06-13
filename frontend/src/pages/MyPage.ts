@@ -1,6 +1,6 @@
 import {Component} from "~@core";
 import {userService} from "~services";
-import {UpdateUserRequest, UserRequest} from "@domain";
+import {UpdateUserRequest, UserRequest} from "subway-domain";
 import {parseFormData} from "~utils";
 import {router} from "~router";
 import {authStore, UPDATE_USER} from "~store";

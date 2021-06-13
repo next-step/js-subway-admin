@@ -4,7 +4,7 @@ export const container = new WeakMap<Clazz, any>();
 
 type Clazz = { new(...args: any[]): Object }
 
-export function instanceOf<T extends Clazz>(constructor: T): T {
+export function instanceOf<T>(constructor: any): T {
   const resolved = container.get(constructor);
   if (resolved) return resolved;
 

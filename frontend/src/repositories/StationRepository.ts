@@ -1,5 +1,5 @@
 import {Injectable, Repository} from "~@core";
-import {StationResponse} from "@domain";
+import {StationResponse} from "subway-domain";
 
 @Injectable
 export class StationRepository extends Repository<StationResponse[]> {

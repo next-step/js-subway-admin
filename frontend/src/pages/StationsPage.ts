@@ -1,5 +1,5 @@
 import {Component} from "~@core";
-import {StationResponse} from "@domain";
+import {StationResponse} from "subway-domain";
 import {StationAppender, StationItem, StationUpdateModal} from "./stations";
 import {ADD_STATION, lineStore, REMOVE_STATION, stationStore, UPDATE_STATION} from "~store";
 

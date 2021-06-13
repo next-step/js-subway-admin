@@ -1,6 +1,6 @@
 import {Component} from "~@core";
 import {colorOptions} from "~constants";
-import {LineResponse, LineRequest, StationResponse} from "@domain";
+import {LineResponse, LineRequest, StationResponse} from "subway-domain";
 import {parseFormData, selectOne} from "~utils";
 
 interface LineEditModalState {

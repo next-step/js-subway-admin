@@ -1,5 +1,5 @@
 import {Component} from "~@core";
-import {LineResponse, SectionRequest, StationResponse} from "@domain";
+import {LineResponse, SectionRequest, StationResponse} from "subway-domain";
 import {parseFormData} from "~utils";
 
 interface SectionEditorModalState {

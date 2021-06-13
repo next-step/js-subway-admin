@@ -1,5 +1,5 @@
 import {Component} from "~@core";
-import {StationResponse} from "@domain";
+import {StationResponse} from "subway-domain";
 
 interface StationUpdateModalState {
   visible: boolean;

@@ -1,5 +1,5 @@
 import {Store} from "~@core";
-import {StationResponse} from "@domain";
+import {StationResponse} from "subway-domain";
 import {stationService} from "~services";
 
 export const SET_STATIONS = 'SET_STATIONS';

@@ -1,4 +1,4 @@
-import { HttpMethod } from "@domain";
+import { HttpMethod } from "subway-constant";
 
 export type RequestInterceptor = (request: RequestInit) => RequestInit;
 

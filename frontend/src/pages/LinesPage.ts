@@ -1,6 +1,6 @@
 import '../assets/css/pages/lines.css';
 import {Component} from "~@core";
-import {LineResponse, LineRequest} from "@domain";
+import {LineResponse, LineRequest} from "subway-domain";
 import {ADD_LINE, lineStore, REMOVE_LINE, stationStore, UPDATE_LINE} from "~store";
 import {LineItem, LineEditModal} from "./lines";
 

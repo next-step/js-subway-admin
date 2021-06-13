@@ -1,5 +1,5 @@
 import { Injectable } from "./AppContainer";
-import {HttpMethod} from "@domain";
+import {HttpMethod} from "subway-domain";
 
 export function Controller (basePath: string) {
   return function (controller: any) {

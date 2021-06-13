@@ -4,6 +4,15 @@
   "repository": "https://github.com/JunilHwang/js-subway-admin",
   "author": "JunilHwang <junil.h@kakao.com>",
   "license": "MIT",
+  "scripts": {
+    "fe:dev": "cd frontend && yarn frontend:dev"
+  },
+
   "private": true,
-  "workspaces": ["@domain", "@constant", "frontend", "backend"]
+  "workspaces": [
+    "@domain",
+    "@constant",
+    "frontend",
+    "backend"
+  ]
 }

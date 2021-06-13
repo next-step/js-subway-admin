@@ -1,5 +1,5 @@
 import {StationRepository} from "~repositories";
-import {StationResponse, StationRequest} from "@domain";
+import {StationResponse, StationRequest} from "subway-domain";
 import {ExistedStationError, NotFoundStationError} from "~exceptions";
 import {getNextIdx} from "~utils";
 import {Inject, Injectable} from "~@core";

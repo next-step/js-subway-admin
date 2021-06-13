@@ -3,21 +3,13 @@
     "sourceMap": true,
     "target": "es6",
     "module": "commonjs",
-    "types": ["reflect-metadata", "node"],
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowJs": true,
-    "lib": ["esnext"],
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["./*"],
-    }
+    "rootDir": "src",
+    "baseUrl": "./src"
   },
-
-  "include": [
-    "src",
-  ],
 
   "exclude": [
     "node_modules/**"
