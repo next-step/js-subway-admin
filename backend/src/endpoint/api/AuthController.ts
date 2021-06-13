@@ -1,7 +1,7 @@
-import {Controller, GetMapping} from "@/core";
+import {RestController, GetMapping} from "@/core";
 import {Request, Response} from "express";
 
-@Controller('/api/auth')
+@RestController('/api/auth')
 export class AuthController {
 
   @GetMapping('/signup')

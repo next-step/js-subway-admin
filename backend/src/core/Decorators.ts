@@ -1,31 +1,28 @@
-import {Injectable, instanceOf} from "./AppContainer";
 import {HttpMethod} from "subway-constant";
-import { join } from "path";
+import {join} from "path";
 import {Request, Response} from "express";
+import {Injectable, instanceOf} from "./AppContainer";
 
-
-interface Router {
+interface ChildRouter {
   httpMethod: HttpMethod;
   path: string;
   methodName: string;
 }
 
-interface RouterWithCallback {
+interface Router {
   httpMethod: HttpMethod;
   path: string;
   callback: (req: Request, res: Response) => any;
 }
 
-type RouterCaller = RouterWithCallback;
+const routers: Router[] = [];
+const childRouters: ChildRouter[] = [];
 
-const allRouters: RouterCaller[] = [];
-const currentRouters: Router[] = [];
-
-export function Controller (basePath: string = '/') {
+export function RestController(basePath: string = '/') {
   return function (controller: any) {
     Injectable(controller);
-    allRouters.push(
-      ...currentRouters.map(({path, httpMethod, methodName}) => {
+    routers.push(
+      ...childRouters.map(({path, httpMethod, methodName}) => {
         const controllerInstance = instanceOf(controller);
         return {
           httpMethod,
@@ -34,13 +31,13 @@ export function Controller (basePath: string = '/') {
         }
       })
     );
-    currentRouters.length = 0;
+    childRouters.length = 0;
   }
 }
 
 export function RequestMapping(method: HttpMethod = HttpMethod.GET, uri?: string) {
   return function (target: any, property: string, descriptor: PropertyDescriptor) {
-    currentRouters.push({
+    childRouters.push({
       httpMethod: method,
       path: uri || '',
       methodName: property
@@ -64,6 +61,6 @@ export function DeleteMapping(uri?: string) {
   return RequestMapping(HttpMethod.DELETE, uri);
 }
 
-export function getAllRouter() {
-  return allRouters;
+export function getRouters() {
+  return routers;
 }

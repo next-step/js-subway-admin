@@ -1,7 +1,7 @@
-import {Controller, GetMapping} from "@/core";
+import {RestController, GetMapping} from "@/core";
 import {Request, Response} from "express";
 
-@Controller('/')
+@RestController('/')
 export class HomeController {
 
   @GetMapping()
