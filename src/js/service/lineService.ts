@@ -63,54 +63,50 @@ const lineService = {
   },
 
   update: (nextData: ILineData, prevData: ILine) => {
-    try {
-      const { name, upStation, downStation, color, distance, time } = nextData;
-      const {
-        id,
-        name: prevName,
-        upStation: prevUpStation,
-        downStation: prevDownStation,
-        color: prevColor,
-        distance: prevDisance,
-        time: prevTime,
-      } = prevData;
+    const { name, upStation, downStation, color, distance, time } = nextData;
+    const {
+      id,
+      name: prevName,
+      upStation: prevUpStation,
+      downStation: prevDownStation,
+      color: prevColor,
+      distance: prevDisance,
+      time: prevTime,
+    } = prevData;
 
-      if (
-        name === prevName &&
-        upStation === prevUpStation &&
-        downStation === prevDownStation &&
-        color === prevColor &&
-        distance === prevDisance &&
-        time === prevTime
-      )
-        return;
+    if (
+      name === prevName &&
+      upStation === prevUpStation &&
+      downStation === prevDownStation &&
+      color === prevColor &&
+      distance === prevDisance &&
+      time === prevTime
+    )
+      return;
 
-      if (prevName !== name && isExistedLine(name)) throw DUPLICATED_LINE_ERROR;
-      stationService.updateLine([
-        {
-          name: prevUpStation,
-          lines: null,
-        },
-        {
-          name: prevDownStation,
-          lines: null,
-        },
-        {
-          name: upStation,
-          lines: name,
-        },
-        {
-          name: downStation,
-          lines: name,
-        },
-      ]);
+    if (prevName !== name && isExistedLine(name)) throw DUPLICATED_LINE_ERROR;
+    stationService.updateLine([
+      {
+        name: prevUpStation,
+        lines: null,
+      },
+      {
+        name: prevDownStation,
+        lines: null,
+      },
+      {
+        name: upStation,
+        lines: name,
+      },
+      {
+        name: downStation,
+        lines: name,
+      },
+    ]);
 
-      const newData = lineDB.update(id, nextData);
-      lineStore.updateState({ lines: newData });
-      uiService.closeModal();
-    } catch ({ message }) {
-      alert(message);
-    }
+    const newData = lineDB.update(id, nextData);
+    lineStore.updateState({ lines: newData });
+    uiService.closeModal();
   },
 };
 

@@ -14,12 +14,16 @@ class Header extends Component {
   }
 
   private handleClick(e: Event): void {
-    const target = e.target as HTMLElement;
-    if (target.id !== "logout") {
-      handleLink(e);
-      return;
+    try {
+      const target = e.target as HTMLElement;
+      if (target.id !== "logout") {
+        handleLink(e);
+        return;
+      }
+      authService.logout();
+    } catch (error) {
+      alert(error?.message);
     }
-    authService.logout();
   }
 
   protected componentMount(): void {

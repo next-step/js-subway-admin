@@ -17,22 +17,26 @@ class StationList extends Component {
   }
 
   private hanldeClick(e: Event): void {
-    const target = e.target as HTMLElement;
-    const type = target.id;
-    if (type !== "update" && type !== "remove") return;
-    const { id, name } = closest(target, "li").dataset;
-    const actions = {
-      update: () => {
-        this.stationUpdate.updateProps({ id, value: name });
-        uiService.openModal(this.stationUpdate, "역 이름 수정하기");
-        return;
-      },
-      remove: () => {
-        stationService.remove(id);
-        return;
-      },
-    };
-    actions[type]();
+    try {
+      const target = e.target as HTMLElement;
+      const type = target.id;
+      if (type !== "update" && type !== "remove") return;
+      const { id, name } = closest(target, "li").dataset;
+      const actions = {
+        update: () => {
+          this.stationUpdate.updateProps({ id, value: name });
+          uiService.openModal(this.stationUpdate, "역 이름 수정하기");
+          return;
+        },
+        remove: () => {
+          stationService.remove(id);
+          return;
+        },
+      };
+      actions[type]();
+    } catch (error) {
+      alert(error?.message);
+    }
   }
 
   protected componentMount(): void {

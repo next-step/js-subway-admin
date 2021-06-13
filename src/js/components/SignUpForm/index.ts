@@ -13,8 +13,12 @@ class SignUpForm extends Component {
   }
 
   private handleSubmit(): void {
-    const userDatas = formData<ISignUpUser>(this.$container, SignUpEnum);
-    authService.signUp(userDatas);
+    try {
+      const userDatas = formData<ISignUpUser>(this.$container, SignUpEnum);
+      authService.signUp(userDatas);
+    } catch (error) {
+      alert(error?.message);
+    }
   }
 
   protected componentMount(): void {

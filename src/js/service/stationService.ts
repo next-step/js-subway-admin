@@ -22,39 +22,27 @@ const isExistedStation = (name: string): boolean => {
 
 const stationService = {
   add: (name: string): void => {
-    try {
-      if (!stationNameValidator(name)) throw NOT_CORRECT_STATION_ERROR;
-      if (isExistedStation(name)) throw DUPLICATED_STATION_ERROR;
+    if (!stationNameValidator(name)) throw NOT_CORRECT_STATION_ERROR;
+    if (isExistedStation(name)) throw DUPLICATED_STATION_ERROR;
 
-      const newData = stationDB.add({ id: name, name, lines: null });
-      stationStore.updateState({ stations: newData });
-    } catch ({ message }) {
-      alert(message);
-    }
+    const newData = stationDB.add({ id: name, name, lines: null });
+    stationStore.updateState({ stations: newData });
   },
 
   remove: (id: string): void => {
-    try {
-      if (!confirm(MESSAGE.CONFIRM_REMOVE_STATION)) return;
-      const isLineExisted = !!stationDB.get(id).lines;
-      if (isLineExisted) throw STATION_REMOVE_NOT_POSSIBLE_ERROR;
-      const newData = stationDB.remove(id);
-      stationStore.updateState({ stations: newData });
-    } catch ({ message }) {
-      alert(message);
-    }
+    if (!confirm(MESSAGE.CONFIRM_REMOVE_STATION)) return;
+    const isLineExisted = !!stationDB.get(id).lines;
+    if (isLineExisted) throw STATION_REMOVE_NOT_POSSIBLE_ERROR;
+    const newData = stationDB.remove(id);
+    stationStore.updateState({ stations: newData });
   },
 
   update: (id: string, newName: string): void => {
-    try {
-      if (!stationNameValidator(newName)) throw NOT_CORRECT_STATION_ERROR;
-      if (isExistedStation(newName)) throw DUPLICATED_STATION_ERROR;
-      const newData = stationDB.update(id, { name: newName });
-      stationStore.updateState({ stations: newData });
-      uiService.closeModal();
-    } catch ({ message }) {
-      alert(message);
-    }
+    if (!stationNameValidator(newName)) throw NOT_CORRECT_STATION_ERROR;
+    if (isExistedStation(newName)) throw DUPLICATED_STATION_ERROR;
+    const newData = stationDB.update(id, { name: newName });
+    stationStore.updateState({ stations: newData });
+    uiService.closeModal();
   },
 
   updateLine: (datas: IUpdateStation[]) => {

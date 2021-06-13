@@ -1,5 +1,6 @@
 import Component from "@/core/component";
 import handleLink from "@/router/handleLink";
+import { CLIENT_ERROR } from "@/errors";
 import { ILoginUser, LoginEnum } from "@/types";
 import { authService } from "@/service";
 import { newElement, formData } from "@/utils/dom";
@@ -15,13 +16,22 @@ class LoginForm extends Component {
   }
 
   protected handleSubmit(): void {
-    const userData = formData<ILoginUser>(this.$container, LoginEnum);
-    authService.login(userData);
+    try {
+      const userData = formData<ILoginUser>(this.$container, LoginEnum);
+      authService.login(userData);
+    } catch (error) {
+      alert(error?.message);
+    }
   }
 
   private handleClickLink(e: Event): void {
-    const target = e.target as HTMLElement;
-    if (target.id === "link") handleLink(e);
+    try {
+      const target = e.target as HTMLElement;
+      if (target.id === "link") handleLink(e);
+    } catch (error) {
+      if (!error) error = CLIENT_ERROR;
+      alert(error.message);
+    }
   }
 
   protected componentMount(): void {

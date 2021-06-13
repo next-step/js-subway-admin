@@ -15,8 +15,12 @@ class LineForm extends Component {
   }
 
   private handleSubmit(): void {
-    const lineDatas = formData<ILineData>(this.$container, LineEnum);
-    lineService.add(lineDatas);
+    try {
+      const lineDatas = formData<ILineData>(this.$container, LineEnum);
+      lineService.add(lineDatas);
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   protected componentMount(): void {

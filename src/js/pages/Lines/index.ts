@@ -24,9 +24,13 @@ class Lines extends Component {
   }
 
   private handleClick({ target }): void {
-    const id = target.id;
-    if (id !== "add-line") return;
-    uiService.openModal(this.lineForm, "노선 등록하기");
+    try {
+      const id = target.id;
+      if (id !== "add-line") return;
+      uiService.openModal(this.lineForm, "노선 등록하기");
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   protected beforeChangeURL(): boolean {

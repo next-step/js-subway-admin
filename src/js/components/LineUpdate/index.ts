@@ -2,7 +2,7 @@ import Component from "@/core/component";
 import { ILine, ILineData, LineEnum } from "@/types";
 import { stationStore } from "@/store";
 import { lineService } from "@/service";
-import { $, newElement, formData } from "@/utils/dom";
+import { newElement, formData } from "@/utils/dom";
 import { colorOptions } from "@/utils/mock";
 
 class LineUpdate extends Component<ILine> {
@@ -15,8 +15,12 @@ class LineUpdate extends Component<ILine> {
   }
 
   private handleSubmit(): void {
-    const newDatas = formData<ILineData>(this.$container, LineEnum);
-    lineService.update(newDatas, this.props);
+    try {
+      const newDatas = formData<ILineData>(this.$container, LineEnum);
+      lineService.update(newDatas, this.props);
+    } catch (error) {
+      alert(error?.message);
+    }
   }
 
   protected componentMount(): void {

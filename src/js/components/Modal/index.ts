@@ -1,4 +1,5 @@
 import Component from "@/core/component";
+import { CLIENT_ERROR } from "@/errors";
 import { uiStore } from "@/store";
 import { uiService } from "@/service";
 import { $ } from "@/utils/dom";
@@ -16,10 +17,15 @@ class Modal extends Component {
   }
 
   private hanldeCloseModal({ target }): void {
-    if (!this.$container.classList.contains("open")) return;
-    const id = target.id;
-    if (id !== "modal" && id !== "modal-close") return;
-    uiService.closeModal();
+    try {
+      if (!this.$container.classList.contains("open")) return;
+      const id = target.id;
+      if (id !== "modal" && id !== "modal-close") return;
+      uiService.closeModal();
+    } catch (error) {
+      error = CLIENT_ERROR;
+      alert(error.message);
+    }
   }
 
   protected componentMount(): void {

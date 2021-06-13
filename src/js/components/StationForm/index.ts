@@ -12,9 +12,13 @@ class StationForm extends Component {
   }
 
   private handleSubmit(): void {
-    const name = $("#station-name", this.$container) as HTMLInputElement;
-    stationService.add(name.value);
-    name.value = "";
+    try {
+      const name = $("#station-name", this.$container) as HTMLInputElement;
+      stationService.add(name.value);
+      name.value = "";
+    } catch (error) {
+      alert(error?.message);
+    }
   }
 
   protected componentMount(): void {
