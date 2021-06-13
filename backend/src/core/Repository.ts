@@ -1,7 +1,13 @@
 import * as fs from "fs";
 import * as path from "path";
 
-export class Repository<Entity extends { idx: number }> {
+export interface BaseEntity {
+  idx: number;
+  updatedAt: number;
+  createdAt: number;
+}
+
+export class Repository<Entity extends BaseEntity> {
   private static readonly PATH: string = path.resolve(__dirname, '../data/data.json');
   private static data: any = Repository.getData();
 
@@ -21,7 +27,7 @@ export class Repository<Entity extends { idx: number }> {
     this.data = this.data || this.loadData();
   }
 
-  private static setData<T>(entityName, entities: T): void {
+  private static setData<T>(entityName: string, entities: T[]): void {
     const data = {
       ...this.data,
       [entityName]: entities
@@ -30,7 +36,7 @@ export class Repository<Entity extends { idx: number }> {
     this.data = data;
   }
 
-  public findAll() {
+  public findAll(): Entity[] {
     return this.entities;
   }
 
@@ -38,7 +44,7 @@ export class Repository<Entity extends { idx: number }> {
     return this.entities.find(({ idx }) => idx === entityIdx);
   }
 
-  public save(entity) {
+  public save(entity: Entity) {
     if (!!entity.idx) {
       entity.idx = Date.now() + Math.round(Math.random() * 1000);
     }
@@ -48,12 +54,15 @@ export class Repository<Entity extends { idx: number }> {
     const entities = [ ...this.entities ];
 
     if (index === -1) {
+      entity.createdAt = Date.now();
+      entity.updatedAt = Date.now();
       entities.push(entity);
     } else {
       entities[index] = entity;
+      entity.updatedAt = Date.now();
     }
 
-    Repository.setData(this.entityName, entities);
+    Repository.setData<Entity>(this.entityName, entities);
 
     return entity;
   }
@@ -62,7 +71,7 @@ export class Repository<Entity extends { idx: number }> {
     const index = this.entities.indexOf(this.findByIdx(idx));
     if (index !== -1) {
       this.entities.splice(index, 1);
-      Repository.setData(this.entityName, this.entities);
+      Repository.setData<Entity>(this.entityName, this.entities);
     }
   }
 
