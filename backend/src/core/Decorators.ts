@@ -1,4 +1,4 @@
-import {HttpMethod} from "subway-constant";
+import {HttpMethod, HttpStatus} from "subway-constant";
 import {join} from "path";
 import {Request, Response} from "express";
 import * as jwt from "jsonwebtoken";
@@ -77,12 +77,25 @@ export function AuthGuard(target: any, propertyKey: string, descriptor: Property
 
     const token = authorization.replace('Bearer ', '');
 
+    let auth: any;
+
     try {
-      const { email } = jwt.verify(token, 'secret') as { name: string, email: string };
-      return originMethod.apply(this, [request, response, email]);
+      auth = jwt.verify(token, 'secret') as { name: string, email: string };
     } catch (e) {
       throw new ForbiddenException();
     }
 
+    return originMethod.apply(this, [request, response, auth.email]);
   }
+}
+
+export function Status(statusCode: HttpStatus = HttpStatus.OK) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const originMethod = descriptor.value;
+    descriptor.value = function (request: Request, response: Response, ...args) {
+      response.status(statusCode);
+      return originMethod.apply(this, [request, response, ...args]);
+    }
+  }
+
 }

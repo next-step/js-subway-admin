@@ -1,1 +1,1 @@
-{"users":[{"name":"junil","email":"a@a.a","password":"1234","createdAt":1623579294440,"updatedAt":1623579294440}]}
+{"users":[{"name":"junil","email":"a@a.a","password":"1234","createdAt":1623579294440,"updatedAt":1623579294440}],"stations":[{"name":"반포역","idx":1623591310564,"createdAt":1623591310541,"updatedAt":1623591310541},{"name":"준일역","idx":1623591318698,"createdAt":1623591318128,"updatedAt":1623591318128}]}

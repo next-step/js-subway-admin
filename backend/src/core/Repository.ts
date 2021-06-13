@@ -43,7 +43,7 @@ export class Repository<Entity extends BaseEntity> {
   }
 
   public save(entity: Entity) {
-    if (!!entity.idx) {
+    if (!entity.idx) {
       entity.idx = Date.now() + Math.round(Math.random() * 1000);
     }
 
@@ -59,6 +59,8 @@ export class Repository<Entity extends BaseEntity> {
       entities[index] = entity;
       entity.updatedAt = Date.now();
     }
+
+    console.log({ entities });
 
     Repository.setData<Entity>(this.entityName, entities);
 

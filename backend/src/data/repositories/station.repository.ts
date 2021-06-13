@@ -8,4 +8,8 @@ export class StationRepository extends Repository<StationEntity> {
     super(EntityName.STATIONS);
   }
 
+  public findByName(name: string) {
+    return this.findAll().find(v => v.name === name);
+  }
+
 }

@@ -3,4 +3,6 @@ export interface StationResponse {
   name: string;
 }
 
-export type StationRequest = string;
+export interface StationRequest {
+  name: string;
+}
