@@ -59,15 +59,12 @@ export class Repository<Entity extends BaseEntity> {
       entities[index] = entity;
       entity.updatedAt = Date.now();
     }
-
-    console.log({ entities });
-
     Repository.setData<Entity>(this.entityName, entities);
 
     return entity;
   }
 
-  public remove({ idx }) {
+  public remove({ idx }: Entity) {
     const index = this.entities.indexOf(this.findByIdx(idx));
     if (index !== -1) {
       this.entities.splice(index, 1);

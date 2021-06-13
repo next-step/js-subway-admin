@@ -1,7 +1,7 @@
-import {Request, Response} from "express";
+import {Request} from "express";
 import {StationRequest} from "subway-domain";
 
-import {AuthGuard, GetMapping, Inject, PostMapping, RestController, Status} from "@/core";
+import {AuthGuard, DeleteMapping, GetMapping, Inject, PostMapping, PutMapping, RestController, Status} from "@/core";
 import {StationService} from "./station.service";
 import {HttpStatus} from "subway-constant";
 
@@ -14,15 +14,29 @@ export class StationController {
 
   @GetMapping()
   @AuthGuard
-  public getStations(request: Request, response: Response, userEmail: string) {
+  public getStations() {
     return this.stationService.getStations();
   }
 
   @PostMapping()
   @AuthGuard
   @Status(HttpStatus.CREATED)
-  public addStation({ body }: Request, response: Response, userEmail: string) {
+  public addStation({ body }: Request) {
     this.stationService.addStation(body as StationRequest);
+  }
+
+  @PutMapping()
+  @AuthGuard
+  @Status(HttpStatus.NO_CONTENT)
+  public updateStation({ body }: Request) {
+    this.stationService.updateStation(body as StationRequest);
+  }
+
+  @DeleteMapping('/:idx')
+  @AuthGuard
+  @Status(HttpStatus.NO_CONTENT)
+  public removeStation({ params }: Request) {
+    this.stationService.removeStation(Number(params.idx));
   }
 
 }

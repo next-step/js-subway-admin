@@ -9,3 +9,13 @@ export class ExistedStationException extends HttpException {
     super(ExistedStationException.message, HttpStatus.BAD_REQUEST);
   }
 }
+
+
+export class NotFoundStationException extends HttpException {
+
+  public static readonly message: string = '해당 역이 존재하지 않습니다.';
+
+  constructor() {
+    super(NotFoundStationException.message, HttpStatus.BAD_REQUEST);
+  }
+}

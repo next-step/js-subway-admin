@@ -2,7 +2,7 @@ import {StationRequest, StationResponse} from "subway-domain";
 
 import {Inject, Injectable} from "@/core";
 import {StationRepository} from "@/data";
-import {ExistedStationException} from "./station.exception";
+import {ExistedStationException, NotFoundStationException} from "./station.exception";
 
 @Injectable
 export class StationService {
@@ -21,6 +21,23 @@ export class StationService {
       throw new ExistedStationException();
     }
     this.stationRepository.save({ name });
+  }
+
+  public updateStation({ idx, name }: StationRequest) {
+    const stations = this.stationRepository.findAll();
+    const station = stations.find(v => v.idx !== idx && v.name === name);
+    if (station) {
+      throw new ExistedStationException();
+    }
+    this.stationRepository.save({ idx, name });
+  }
+
+  public removeStation(idx) {
+    const station = this.stationRepository.findByIdx(idx);
+    if (!station) {
+      throw new NotFoundStationException();
+    }
+    this.stationRepository.remove(station);
   }
 
 }
