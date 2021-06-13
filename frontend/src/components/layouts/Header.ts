@@ -9,25 +9,22 @@ export class Header extends Component {
         <h1 class="text-center font-bold">🚇 지하철 노선도</h1>
       </a>
       <nav class="d-flex justify-center flex-wrap">
-        <a href="/stations" class="my-1" data-component="RouterLink">
-          <button class="btn bg-white shadow mx-1">🚉 역 관리</button>
-        </a>
-        <a href="/lines" class="my-1" data-component="RouterLink">
-          <span class="btn bg-white shadow mx-1">🛤️ 노선 관리</span>
-        </a>
-        <a href="/sections" class="my-1" data-component="RouterLink">
-          <span class="btn bg-white shadow mx-1">🔁 구간 관리</span>
-        </a>
-        ${authStore.$state.authentication === null ? `
-          <a href="/login" class="my-1" data-component="RouterLink">
-            <span class="btn bg-white shadow mx-1">👤 로그인</span>
+        ${authStore.$state.authentication ? `
+          <a href="/stations" class="my-1" data-component="RouterLink">
+            <button class="btn bg-white shadow mx-1">🚉 역 관리</button>
           </a>
-        ` : `
+          <a href="/lines" class="my-1" data-component="RouterLink">
+            <span class="btn bg-white shadow mx-1">🛤️ 노선 관리</span>
+          </a>
+          <a href="/sections" class="my-1" data-component="RouterLink">
+            <span class="btn bg-white shadow mx-1">🔁 구간 관리</span>
+          </a>
           <a href="#" class="my-1 logout">
             <span class="btn bg-white shadow mx-1">🔗 로그아웃</span>
           </a>
-          <a href="/mypage" class="my-1" data-component="RouterLink">
-            <span class="btn bg-white shadow mx-1">🙋‍♂️마이페이지</span>
+        ` : `
+          <a href="/login" class="my-1" data-component="RouterLink">
+            <span class="btn bg-white shadow mx-1">👤 로그인</span>
           </a>
         `}
       </nav>
