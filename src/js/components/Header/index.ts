@@ -10,14 +10,16 @@ class Header extends Component {
   }
 
   protected bindEvents(): void {
-    this.$container.addEventListener("click", (e: Event) => {
-      const target = e.target as HTMLElement;
-      if (target.id !== "logout") {
-        handleLink(e);
-        return;
-      }
-      authService.logout();
-    });
+    this.rootEvent("click", this.handleClick.bind(this));
+  }
+
+  private handleClick(e: Event): void {
+    const target = e.target as HTMLElement;
+    if (target.id !== "logout") {
+      handleLink(e);
+      return;
+    }
+    authService.logout();
   }
 
   protected componentMount(): void {

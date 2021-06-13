@@ -11,11 +11,12 @@ class LineUpdate extends Component<ILine> {
   }
 
   protected bindEvents(): void {
-    this.$container.addEventListener("submit", (e: Event) => {
-      e.preventDefault();
-      const newDatas = formData<ILineData>(this.$container, LineEnum);
-      lineService.update(newDatas, this.props);
-    });
+    this.rootEvent("submit", this.handleSubmit.bind(this));
+  }
+
+  private handleSubmit(): void {
+    const newDatas = formData<ILineData>(this.$container, LineEnum);
+    lineService.update(newDatas, this.props);
   }
 
   protected componentMount(): void {

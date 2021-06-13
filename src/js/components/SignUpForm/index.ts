@@ -9,11 +9,12 @@ class SignUpForm extends Component {
   }
 
   protected bindEvents(): void {
-    this.$container.addEventListener("submit", (e: Event) => {
-      e.preventDefault();
-      const userDatas = formData<ISignUpUser>(this.$container, SignUpEnum);
-      authService.signUp(userDatas);
-    });
+    this.rootEvent("submit", this.handleSubmit.bind(this));
+  }
+
+  private handleSubmit(): void {
+    const userDatas = formData<ISignUpUser>(this.$container, SignUpEnum);
+    authService.signUp(userDatas);
   }
 
   protected componentMount(): void {

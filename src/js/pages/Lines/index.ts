@@ -20,12 +20,13 @@ class Lines extends Component {
   }
 
   protected bindEvents(): void {
-    this.$container.addEventListener("click", (e: Event) => {
-      const target = e.target as HTMLElement;
-      const id = target.id;
-      if (id !== "add-line") return;
-      uiService.openModal(this.lineForm, "노선 등록하기");
-    });
+    this.rootEvent("click", this.handleClick.bind(this));
+  }
+
+  private handleClick({ target }): void {
+    const id = target.id;
+    if (id !== "add-line") return;
+    uiService.openModal(this.lineForm, "노선 등록하기");
   }
 
   protected beforeChangeURL(): boolean {

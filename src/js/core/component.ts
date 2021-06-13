@@ -16,6 +16,16 @@ class Component<IProps = unknown> {
   protected initChildren(): void {}
   protected componentMount(): void {}
 
+  protected rootEvent(
+    type: keyof HTMLElementEventMap,
+    handler: EventListener
+  ): void {
+    this.$container.addEventListener(type, (e: Event) => {
+      if (type === "submit") e.preventDefault();
+      handler(e);
+    });
+  }
+
   public update(): void {
     this.componentMount();
   }

@@ -8,12 +8,13 @@ class StationForm extends Component {
   }
 
   protected bindEvents(): void {
-    this.$container.addEventListener("submit", (e: Event) => {
-      e.preventDefault();
-      const name = $("#station-name", this.$container) as HTMLInputElement;
-      stationService.add(name.value);
-      name.value = "";
-    });
+    this.rootEvent("submit", this.handleSubmit.bind(this));
+  }
+
+  private handleSubmit(): void {
+    const name = $("#station-name", this.$container) as HTMLInputElement;
+    stationService.add(name.value);
+    name.value = "";
   }
 
   protected componentMount(): void {

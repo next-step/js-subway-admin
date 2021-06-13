@@ -11,11 +11,12 @@ class LineForm extends Component {
   }
 
   protected bindEvents(): void {
-    this.$container.addEventListener("submit", (e: Event) => {
-      e.preventDefault();
-      const lineDatas = formData<ILineData>(this.$container, LineEnum);
-      lineService.add(lineDatas);
-    });
+    this.rootEvent("submit", this.handleSubmit.bind(this));
+  }
+
+  private handleSubmit(): void {
+    const lineDatas = formData<ILineData>(this.$container, LineEnum);
+    lineService.add(lineDatas);
   }
 
   protected componentMount(): void {

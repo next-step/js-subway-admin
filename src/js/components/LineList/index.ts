@@ -13,21 +13,22 @@ class LineList extends Component {
   }
 
   protected bindEvents(): void {
-    this.$container.addEventListener("click", (e: Event) => {
-      const target = e.target as HTMLElement;
-      const id = target.id;
-      if (id !== "update" && id !== "remove") return;
-      const lineId = closest(target, "li").dataset.id;
-      const actions = {
-        update: () => {
-          const lineInfo = lineDB.get(lineId);
-          this.lineUpdate.updateProps(lineInfo);
-          uiService.openModal(this.lineUpdate, "노선 정보 수정하기");
-        },
-        remove: () => lineService.remove(lineId),
-      };
-      actions[id]();
-    });
+    this.rootEvent("click", this.hanldeClick.bind(this));
+  }
+
+  private hanldeClick({ target }): void {
+    const id = target.id;
+    if (id !== "update" && id !== "remove") return;
+    const lineId = closest(target, "li").dataset.id;
+    const actions = {
+      update: () => {
+        const lineInfo = lineDB.get(lineId);
+        this.lineUpdate.updateProps(lineInfo);
+        uiService.openModal(this.lineUpdate, "노선 정보 수정하기");
+      },
+      remove: () => lineService.remove(lineId),
+    };
+    actions[id]();
   }
 
   protected componentMount(): void {

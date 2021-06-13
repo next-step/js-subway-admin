@@ -12,13 +12,14 @@ class Modal extends Component {
   }
 
   protected bindEvents(): void {
-    this.$container.addEventListener("click", (e: Event) => {
-      if (!this.$container.classList.contains("open")) return;
-      const target = e.target as HTMLElement;
-      const id = target.id;
-      if (id !== "modal" && id !== "modal-close") return;
-      uiService.closeModal();
-    });
+    this.rootEvent("click", this.hanldeCloseModal.bind(this));
+  }
+
+  private hanldeCloseModal({ target }): void {
+    if (!this.$container.classList.contains("open")) return;
+    const id = target.id;
+    if (id !== "modal" && id !== "modal-close") return;
+    uiService.closeModal();
   }
 
   protected componentMount(): void {

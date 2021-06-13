@@ -13,13 +13,14 @@ class StationUpdate extends Component<IProps> {
   }
 
   protected bindEvents(): void {
-    this.$container.addEventListener("submit", (e: Event) => {
-      e.preventDefault();
-      const input = $("#station-name", this.$container) as HTMLInputElement;
-      const newName = input.value;
-      if (newName === this.props?.value) return;
-      stationService.update(this.props?.id, newName);
-    });
+    this.rootEvent("submit", this.handleSubmit.bind(this));
+  }
+
+  private handleSubmit(): void {
+    const input = $("#station-name", this.$container) as HTMLInputElement;
+    const newName = input.value;
+    if (newName === this.props?.value) return;
+    stationService.update(this.props?.id, newName);
   }
 
   protected componentMount(): void {

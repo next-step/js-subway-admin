@@ -10,16 +10,19 @@ class LoginForm extends Component {
   }
 
   protected bindEvents(): void {
-    this.$container.addEventListener("submit", (e: Event) => {
-      e.preventDefault();
-      const userData = formData<ILoginUser>(this.$container, LoginEnum);
-      authService.login(userData);
-    });
+    this.rootEvent("submit", this.handleSubmit.bind(this));
+    this.rootEvent("click", this.handleClickLink.bind(this));
+  }
 
-    this.$container.addEventListener("click", (e: Event) => {
-      const target = e.target as HTMLElement;
-      if (target.id === "link") handleLink(e);
-    });
+  protected handleSubmit(e: Event): void {
+    e.preventDefault();
+    const userData = formData<ILoginUser>(this.$container, LoginEnum);
+    authService.login(userData);
+  }
+
+  private handleClickLink(e: Event): void {
+    const target = e.target as HTMLElement;
+    if (target.id === "link") handleLink(e);
   }
 
   protected componentMount(): void {
