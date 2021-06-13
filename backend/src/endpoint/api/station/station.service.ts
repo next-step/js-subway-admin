@@ -1,14 +1,15 @@
 import {StationRequest, StationResponse} from "subway-domain";
 
 import {Inject, Injectable} from "@/core";
-import {StationRepository} from "@/data";
-import {ExistedStationException, NotFoundStationException} from "./station.exception";
+import {LineRepository, SectionRepository, StationRepository} from "@/data";
+import {ContainsAtLineException, ExistedStationException, NotFoundStationException} from "./station.exception";
 
 @Injectable
 export class StationService {
 
   constructor(
-    @Inject(StationRepository) private readonly stationRepository: StationRepository
+    @Inject(StationRepository) private readonly stationRepository: StationRepository,
+    @Inject(SectionRepository) private readonly sectionRepository: SectionRepository,
   ) {}
 
   public getStations(): StationResponse[] {
@@ -37,6 +38,13 @@ export class StationService {
     if (!station) {
       throw new NotFoundStationException();
     }
+
+    for (const { upStation, downStation } of this.sectionRepository.findAll()) {
+      if ([upStation, downStation].includes(station.idx)) {
+        throw new ContainsAtLineException();
+      }
+    }
+
     this.stationRepository.remove(station);
   }
 

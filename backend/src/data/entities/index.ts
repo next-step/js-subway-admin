@@ -22,10 +22,6 @@ export interface StationEntity extends BaseEntity {
   name: string;
 }
 
-export interface StationEntity extends BaseEntity {
-  name: string;
-}
-
 export interface UserEntity extends BaseEntity {
   name: string;
   email: string;
