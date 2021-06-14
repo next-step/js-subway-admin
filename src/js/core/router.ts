@@ -41,10 +41,6 @@ class Router<Ipage> {
     }
     $main.appendChild(this.notFound.mount());
   }
-
-  private unmount(href: string): void {
-    // 페이지 바뀔 때
-  }
 }
 
 export default Router;

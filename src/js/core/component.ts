@@ -49,14 +49,6 @@ class Component<IProps = unknown> {
     this.componentDidUpdate();
   }
 
-  // 언마운트 - 페이지 바뀔 때 해지
-  public componentWillUnmount(): void {
-    this.events.forEach(({ type, handler }) => {
-      this.$container.removeEventListener(type, handler);
-    });
-    this.children.forEach((child) => child.componentWillUnmount());
-  }
-
   // 루트 엘리먼트에 이벤트 위임 시켜주는 작업
   protected rootEvent(
     type: keyof HTMLElementEventMap,
@@ -79,16 +71,6 @@ class Component<IProps = unknown> {
 
   protected beforeChangeURL() {}
   public pageInfo(): IPageInfo | void {}
-
-  // 문제점
-  // children이 re-render가 되어야지, re-mount가 되어서는 안된다..
-  // 근데 이 플로우라면.. 다시 target에 append되어버리는거다...ㅠ.ㅠ.ㅠㅠㅠ.ㅠ오노~~!
-  // 이게 문제인게 child 를 이렇게...렌더링해버리면 안된다.
-  // page의 innerHTML 내부에 children이 있어야지..innerHTML 따로 -> child 마운팅 따로 해버리니까 이렇ㄱ ㅔ된다.
-  // 리액트처럼 child를 innerHtml 내부에 마운팅 할 방법은 없을까
-  // 방법은..있다.ㅡ.ㅡ..................................
-  // children의 target을 루트 컨테이너에 mount 시켜버리는것이답...
-  // 아예 setUp 에서 return this.container를 해주면 됨ㅋㅋㅋㅋ
 }
 
 export default Component;
