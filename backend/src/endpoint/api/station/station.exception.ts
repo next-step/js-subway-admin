@@ -24,6 +24,6 @@ export class ContainsAtLineException extends HttpException {
   public static readonly message: string = '구간에 포함된 역은 삭제할 수 없습니다.';
 
   constructor() {
-    super(NotFoundStationException.message, HttpStatus.BAD_REQUEST);
+    super(ContainsAtLineException.message, HttpStatus.BAD_REQUEST);
   }
 }
