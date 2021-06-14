@@ -47,9 +47,11 @@ export class Router {
   }
 
   public get path() {
-    const path = (this.hash
-                  ? location.hash.replace('#!', '')
-                  : location.pathname) || '/';
+    const path = (
+      this.hash
+        ? location.hash.replace('#!', '')
+        : location.pathname
+    ) || '/';
 
     const reg = new RegExp(`^${this.baseUrl}\/?`);
 
@@ -73,11 +75,12 @@ export class Router {
 
   public push(path: string) {
     const { hash, baseUrl } = this;
-    const fullUrl = `${baseUrl.replace(/^\/?/, '/')}${path.replace(location.origin, '').replace(/^\/?/, '')}`;
+    const fullUrl = `${baseUrl.replace(/^\/?/, '/').replace(/\/$/, '')}/${path.replace(location.origin, '').replace(/^\/?/, '')}`;
     if (hash) {
       location.hash = `#!${fullUrl}`;
     } else {
       history.pushState(null, document.title, fullUrl);
+      this.updateRoute();
     }
   }
 

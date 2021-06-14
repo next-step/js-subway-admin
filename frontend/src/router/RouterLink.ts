@@ -7,12 +7,16 @@ export class RouterLink extends Component {
     this.checkSelect();
   }
 
-  protected template(): string {
-    return this.$target.innerHTML;
-  }
-
   protected updated() {
     this.checkSelect();
+  }
+
+  protected template(): string {
+
+    // observer를 위함
+    router.route;
+
+    return this.$target.innerHTML;
   }
 
   protected setEvent() {
@@ -21,8 +25,6 @@ export class RouterLink extends Component {
       event.preventDefault();
       router.push($target.href);
     });
-
-    window.addEventListener('popstate', () => this.checkSelect());
   }
 
   private checkSelect() {
