@@ -5,6 +5,10 @@ import { authStore } from "@/store";
 import { $ } from "@/utils/dom";
 
 class Header extends Component {
+  constructor() {
+    super();
+    this.bindEvents();
+  }
   protected useState(): any {
     return authStore.getState();
   }

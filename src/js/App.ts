@@ -13,6 +13,7 @@ class App extends Component {
   protected initChildren(): void {
     const header = new Header();
     const modal = new Modal();
+    this.children = [header, modal];
   }
 }
 

@@ -20,22 +20,20 @@ class Component<IProps = unknown> {
   protected initChildren(): void {}
   protected componentWillUpdate(): void {} // 컴포넌트 리렌더링 되기 전
   protected render(): void {} // 실제 Dom의 HTMl을 그려주는 작업
-  // 자식들 리-렌더링 해준다.
+
   protected componentDidUpdate(): void {
     this.children.forEach((child) => child.updateComponent());
   }
 
-  // 맨 처음 부른다.
   protected setUp(): void {
     this.initDom();
     this.initChildren();
     observe(() => this.updateComponent());
-    this.bindEvents();
   }
 
-  // DOM에 마운팅 페이지 바뀌었을 시 호출
   public mount(): HTMLElement {
     this.render();
+    this.bindEvents();
     this.children.forEach((child) => {
       this.$container.appendChild(child.mount());
     });
@@ -49,7 +47,13 @@ class Component<IProps = unknown> {
     this.componentDidUpdate();
   }
 
-  // 루트 엘리먼트에 이벤트 위임 시켜주는 작업
+  public componentWillUnmount(): void {
+    this.events.forEach(({ type, handler }) => {
+      this.$container.removeEventListener(type, handler);
+    });
+    this.children.forEach((child) => child.componentWillUnmount());
+  }
+
   protected rootEvent(
     type: keyof HTMLElementEventMap,
     handler: EventListener
@@ -58,12 +62,10 @@ class Component<IProps = unknown> {
     this.$container.addEventListener(type, handler);
   }
 
-  // state 변경
   public setState(nextState): void {
     this.updateComponent();
   }
 
-  // props 변경
   public updateProps(nextProps: IProps): void {
     this.props = nextProps;
     this.updateComponent();
