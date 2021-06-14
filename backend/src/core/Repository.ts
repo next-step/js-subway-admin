@@ -53,12 +53,11 @@ export class Repository<Entity extends BaseEntity> {
 
     if (index === -1) {
       entity.createdAt = Date.now();
-      entity.updatedAt = Date.now();
       entities.push(entity);
     } else {
       entities[index] = entity;
-      entity.updatedAt = Date.now();
     }
+    entity.updatedAt = Date.now();
     Repository.setData<Entity>(this.entityName, entities);
 
     this.entities = entities;

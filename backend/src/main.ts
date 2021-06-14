@@ -1,9 +1,7 @@
 import * as express from "express";
 import {NextFunction, Request, Response} from "express";
-import {HttpStatus} from "subway-constant";
 
 import {getRouters, HttpException} from "@/core";
-import {NotFoundUserException} from "@/endpoint";
 
 import './endpoint';
 
