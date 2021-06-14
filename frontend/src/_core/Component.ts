@@ -1,11 +1,19 @@
 import {applyDomDiff, observable, observe} from "./";
 import {selectAll} from "@/utils";
 
+interface RegisteredEvent {
+  target: HTMLElement;
+  eventType: string;
+  selector: string;
+  callback: string;
+}
+
 export abstract class Component<State = {}, Props = {}> {
+
+  private static readonly registeredEvents: RegisteredEvent[] = [];
 
   protected $state: State = {} as State;
   protected $components: Record<string, Component | Component[]> = {};
-  private isRoot = false;
 
   constructor(
     protected readonly $target: HTMLElement,
@@ -28,11 +36,32 @@ export abstract class Component<State = {}, Props = {}> {
   protected setEvent() {}
 
   protected addEvent(eventType: string, selector: string, callback: (e: Event) => void) {
-    selectAll(selector, this.$target)
-      .forEach(el => {
-        el.removeEventListener(eventType, callback);
-        el.addEventListener(eventType, callback);
+    if (Component.registeredEvents.find(v => (
+      v.target === this.$target &&
+      v.eventType === eventType &&
+      v.selector === selector &&
+      v.callback === callback.toString()
+    ))) return;
+
+    this.$target.addEventListener(eventType, (e) => {
+      const target = e.target as HTMLElement;
+      const currentTarget = e.currentTarget as HTMLElement;
+      const checked = target.closest(selector) || [ ...currentTarget.querySelectorAll(selector) ].includes(target);
+      if (!checked) return;
+      Component.registeredEvents.push({
+        target: this.$target,
+        eventType: eventType,
+        selector: selector,
+        callback: callback.toString(),
       });
+      callback(e);
+    })
+
+    // selectAll(selector, this.$target)
+    //   .forEach(el => {
+    //     el.removeEventListener(eventType, callback);
+    //     el.addEventListener(eventType, callback);
+    //   });
   }
 
   private render() {
