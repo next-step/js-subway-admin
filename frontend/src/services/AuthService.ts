@@ -11,9 +11,10 @@ export class AuthService {
     @Inject(AuthRepository) private readonly authRepository: AuthRepository,
   ) {}
 
-  public async login(request: AuthRequest): Promise<void> {
+  public async login(request: AuthRequest): Promise<AuthResponse> {
     const { token } = await this.restClient.post('/auth/login', request);
     this.authRepository.set({ token });
+    return { token };
   }
 
   public logout() {

@@ -66,8 +66,7 @@ export class LoginPage extends Component {
 
       const request = parseFormData<AuthRequest>(event.target as HTMLFormElement);
       try {
-        const result = await authStore.dispatch(SIGN_IN, request);
-        console.log({ result });
+        await authStore.dispatch(SIGN_IN, request);
         alert('로그인이 완료되었습니다.');
         router.push('/stations');
       } catch (e) {
