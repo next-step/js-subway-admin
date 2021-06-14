@@ -2,11 +2,13 @@ import '../assets/css/pages/sections.css';
 import {Component} from "@/_core";
 import {SectionEditorModal} from "./sections";
 import {SectionItem} from "@/pages/sections/SectionItem";
-import {ADD_SECTION, lineStore, REMOVE_SECTION, sectionStore, stationStore} from "@/store";
-import {LineResponse, SectionResponse, SectionRequest, StationResponse} from "subway-domain";
+import {GET_LINES, GET_STATIONS, lineStore, stationStore} from "@/store";
+import {LineResponse, SectionRequest, StationResponse} from "subway-domain";
+import {lineService} from "@/services";
 
 interface SectionsPageState {
   selectedLineIdx: number;
+  line: LineResponse | null;
 }
 
 export class SectionsPage extends Component<SectionsPageState> {
@@ -14,7 +16,11 @@ export class SectionsPage extends Component<SectionsPageState> {
   protected setup() {
     this.$state = {
       selectedLineIdx: -1,
+      line: null,
     }
+
+    lineStore.dispatch(GET_LINES);
+    stationStore.dispatch(GET_STATIONS);
   }
 
   private get selectedLine(): LineResponse | null {
@@ -28,22 +34,17 @@ export class SectionsPage extends Component<SectionsPageState> {
     return selectedLine?.color || 'bg-400';
   }
 
-  private get lineSections(): SectionResponse[] {
-    const { selectedLine } = this;
-    const { sections } = sectionStore.$state;
-    return sections.filter(v => v.line === selectedLine?.idx);
+  private get stations(): StationResponse[] {
+    return this.$state.line?.stations || [];
   }
 
-  private get sectionStations(): StationResponse[] {
-    const { lineSections } = this;
-    const { stations } = stationStore.$state;
-    const stationIdxSet = new Set(lineSections.flatMap(v => [ v.upStation, v.downStation ]));
-    return [ ...stationIdxSet ].map(idx => stations.find(v => v.idx === idx)) as StationResponse[];
+  private get lineIdx(): number {
+    return this.$state.line?.idx!;
   }
 
   protected template(): string {
 
-    const { selectedColor, selectedLine, sectionStations } = this;
+    const { selectedColor, selectedLine, stations } = this;
     const { selectedLineIdx } = this.$state;
     const { lines } = lineStore.$state;
 
@@ -55,31 +56,29 @@ export class SectionsPage extends Component<SectionsPageState> {
             구간 추가
           </button>
         </div>
-        ${ lines.length === 0 ? `
-          <div style="text-align: center; padding: 20px 0; background: #f5f5f5; border-radius: 5px">
-            노선을 추가해주세요
-          </div>
-        ` : `
-          <form class="d-flex items-center pl-1">
-            <label for="subway-line" class="input-label" hidden>노선</label>
-            <select id="subway-line" class="bg-${selectedColor} lineSelector">
+        <form class="d-flex items-center pl-1">
+          <label for="subway-line" class="input-label" hidden>노선</label>
+          <select id="subway-line" class="bg-${selectedColor} lineSelector">
+            ${lines.length === 0 ? `
+              <option hidden disabled selected>노선을 추가해주세요</option>
+            ` : `
               <option value="-1" ${selectedLine === null ? 'selected' : ''} hidden disabled>노선 선택</option>
               ${lines.map(({ idx, name }) => `
                 <option value="${idx}" ${selectedLineIdx === idx ? 'selected' : ''}>${name}</option>
               `).join('')}
-            </select>
-          </form>
-          ${ sectionStations.length === 0 ? `
-            <div style="text-align: center; padding: 20px 0; background: #f5f5f5; border-radius: 5px; margin-top: 10px;">
-              구간을 추가해주세요
-            </div>
-          ` : `
-            <ul class="mt-3 pl-0">
-              ${sectionStations.map((station, key) => `
-                <li style="list-style: none;" data-component="SectionItem" data-key="${key}" data-idx="${station.idx}"></li>            
-              `).join('')}
-            </ul>
-          ` }
+            `}
+          </select>
+        </form>
+        ${ stations.length === 0 ? `
+          <div style="text-align: center; padding: 20px 0; background: #f5f5f5; border-radius: 5px; margin-top: 10px;">
+            구간을 추가해주세요
+          </div>
+        ` : `
+          <ul class="mt-3 pl-0">
+            ${stations.map((station, key) => `
+              <li style="list-style: none;" data-component="SectionItem" data-key="${key}" data-idx="${station.idx}"></li>            
+            `).join('')}
+          </ul>
         ` }
       </div>
       <div data-component="SectionEditorModal"></div>
@@ -100,7 +99,7 @@ export class SectionsPage extends Component<SectionsPageState> {
     }
 
     if (componentName === 'SectionItem') {
-      const station = this.sectionStations[Number(el.dataset.key)];
+      const station = this.stations[Number(el.dataset.key)];
       return new SectionItem(el, {
         name: station.name,
         removeSection: () => this.removeSection(station.idx),
@@ -108,23 +107,29 @@ export class SectionsPage extends Component<SectionsPageState> {
     }
   }
 
-  private addSection(sectionRequest: SectionRequest) {
+  private async getLine(idx = this.lineIdx) {
+    this.$state.line = await lineService.getLine(idx);
+  }
+
+  private async addSection(sectionRequest: SectionRequest) {
     try {
-      sectionStore.dispatch(ADD_SECTION, sectionRequest);
+      await lineService.addLineSection(this.lineIdx, sectionRequest);
       alert('구간이 추가되었습니다.');
       this.$modal.close();
     } catch (e) {
       alert(e.message);
     }
+    await this.getLine();
   }
 
-  private removeSection(stationIdx: number) {
+  private async removeSection(stationIdx: number) {
     try {
-      sectionStore.dispatch(REMOVE_SECTION, stationIdx);
+      await lineService.removeSection(this.lineIdx, stationIdx);
       alert('구간이 삭제되었습니다.');
     } catch (e) {
       alert(e.message);
     }
+    await this.getLine();
   }
 
   protected setEvent() {
@@ -134,7 +139,9 @@ export class SectionsPage extends Component<SectionsPageState> {
 
     this.addEvent('change', '.lineSelector', (event: Event) => {
       const target = event.target as HTMLSelectElement;
-      this.$state.selectedLineIdx = Number(target.value);
+      const idx = Number(target.value);
+      this.$state.selectedLineIdx = idx;
+      this.getLine(idx);
     });
   }
 }

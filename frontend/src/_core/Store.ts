@@ -11,20 +11,29 @@ interface Context<State> {
 
 interface StoreProps<State> {
   state: State;
-  mutations: Record<string, Commit<State>>;
-  actions: Record<string, Dispatch<State>>
+  getters?: Record<string, (state: State) => any>;
+  mutations?: Record<string, Commit<State>>;
+  actions?: Record<string, Dispatch<State>>;
 }
 
 export class Store<State> {
 
   public $state: State;
+  public readonly getters: Record<string, (state: State) => any>;
   private readonly mutations: Record<string, Commit<State>>;
   private readonly actions: Record<string, Dispatch<State>>;
 
-  constructor({ state, mutations, actions }: StoreProps<State>) {
+  constructor({ state, getters = {}, mutations = {}, actions = {} }: StoreProps<State>) {
     this.$state = observable(state);
     this.mutations = mutations;
     this.actions = actions;
+    this.getters = Object.keys(getters)
+                         .reduce((obj, key) => {
+                           Object.defineProperty(obj, key, {
+                             get: () => getters[key](this.$state)
+                           })
+                           return obj;
+                         }, {});
   }
 
   public commit(type: string, payload: any): void {

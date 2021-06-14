@@ -20,7 +20,7 @@ export const lineStore = new Store<LineStoreState>({
   mutations: {
     [SET_LINES](state: LineStoreState, lines: LineResponse[]) {
       state.lines = lines
-    }
+    },
   },
 
   actions: {
