@@ -10,12 +10,13 @@ export interface LineResponse {
 }
 
 export interface LineRequest {
+  idx?: number;
   name: string;
   color: string;
-  upStation: number;
-  downStation: number;
-  distance: number;
-  duration: number;
+  upStation?: number;
+  downStation?: number;
+  distance?: number;
+  duration?: number;
 }
 
 

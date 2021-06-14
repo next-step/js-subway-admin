@@ -1,5 +1,5 @@
-import {Store} from "@/_core";
 import {LineResponse, LineRequest} from "subway-domain";
+import {Store} from "@/_core";
 import {lineService} from "@/services";
 
 export const SET_LINES = 'SET_LINES';
@@ -34,8 +34,8 @@ export const lineStore = new Store<LineStoreState>({
       await dispatch(GET_LINES);
     },
 
-    async [UPDATE_LINE]({ dispatch }, { idx, name, color }: LineResponse) {
-      await lineService.updateLine(idx, { name, color });
+    async [UPDATE_LINE]({ dispatch }, { idx, name, color }: LineRequest) {
+      await lineService.updateLine(idx!, { name, color });
       await dispatch(GET_LINES);
     },
 

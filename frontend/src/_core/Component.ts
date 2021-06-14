@@ -40,7 +40,7 @@ export abstract class Component<State = {}, Props = {}> {
     this.$components = {};
 
     const $target = this.$target.cloneNode(true) as HTMLElement;
-    $target.innerHTML = this.template();
+    $target.innerHTML = this.template().trim();
 
     applyDomDiff(this.$target, $target);
 

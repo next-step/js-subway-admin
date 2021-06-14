@@ -5,21 +5,30 @@ import {parseFormData, selectOne} from "@/utils";
 
 interface LineEditModalState {
   visible: boolean;
-  formData: LineResponse | null;
+  formData: LineRequest;
 }
 
 interface LineEditModalProps {
   stations: StationResponse[];
   addLine: (lineRequest: LineRequest) => void;
-  updateLine: (line: LineResponse) => void;
+  updateLine: (lineRequest: LineRequest) => void;
 }
+
+const formDataInit: LineRequest = {
+  name: '',
+  color: '',
+  upStation: 0,
+  downStation: 0,
+  distance: 0,
+  duration: 0,
+};
 
 export class LineEditModal extends Component<LineEditModalState, LineEditModalProps> {
 
   protected setup() {
     this.$state = {
       visible: false,
-      formData: null,
+      formData: { ...formDataInit },
     }
   }
 
@@ -36,8 +45,12 @@ export class LineEditModal extends Component<LineEditModalState, LineEditModalPr
     const { visible, formData } = this.$state;
     const { stations } = this.$props;
 
+    if (!visible) {
+      return `<div class="modal"></div>`;
+    }
+
     return `
-      <div class="modal ${visible ? 'open' : ''}">
+      <div class="modal open">
         <div class="modal-inner p-8">
         
           <button class="modal-close">
@@ -60,50 +73,52 @@ export class LineEditModal extends Component<LineEditModalState, LineEditModalPr
                 name="name"
                 class="input-field"
                 placeholder="노선 이름"
-                value="${formData?.name || ''}"
+                value="${formData.name || ''}"
                 required
               />
             </div>
             
-            <div class="d-flex items-center input-control">
-              <label for="up-station" class="input-label" hidden>상행역</label>
-              <select id="up-station" name="upStation" class="mr-2" required>
-                <option value="" disabled hidden ${formData === null ? 'selected' : ''}>상행역</option>
-                ${stations.map(({ name, idx }) => `
-                  <option value="${idx}" ${formData?.upStation === idx ? ' selected' : ''}>${name}</option>
-                `)}
-              </select>
-              <label for="down-station" class="input-label" hidden>하행역</label>
-              <select id="down-station" name="downStation" required>
-                <option value="" disabled hidden ${formData === null ? 'selected' : ''}>하행역</option>
-                ${stations.map(({ name, idx }) => `
-                  <option value="${idx}" ${formData?.downStation === idx ? ' selected' : ''}>${name}</option>
-                `)}
-              </select>
-            </div>
-            
-            <div class="input-control">
-              <label for="distance" class="input-label" hidden>상행 하행역 거리</label>
-              <input
-                type="number"
-                id="distance"
-                name="distance"
-                class="input-field mr-2"
-                placeholder="상행 하행역 거리"
-                value="${formData?.distance || 0}"
-                required
-              />
-              <label for="duration" class="input-label" hidden>상행 하행역 시간</label>
-              <input
-                type="number"
-                id="duration"
-                name="duration"
-                class="input-field"
-                placeholder="상행 하행역 시간"
-                value="${formData?.duration || 0}"
-                required
-              />
-            </div>
+            ${ formData.idx === undefined ? `
+              <div class="d-flex items-center input-control">
+                <label for="up-station" class="input-label" hidden>상행역</label>
+                <select id="up-station" name="upStation" class="mr-2" required>
+                  <option value="" disabled hidden selected>상행역</option>
+                  ${stations.map(({ name, idx }) => `
+                    <option value="${idx}" ${formData?.upStation === idx ? ' selected' : ''}>${name}</option>
+                  `)}
+                </select>
+                <label for="down-station" class="input-label" hidden>하행역</label>
+                <select id="down-station" name="downStation" required>
+                  <option value="" disabled hidden selected>하행역</option>
+                  ${stations.map(({ name, idx }) => `
+                    <option value="${idx}" ${formData?.downStation === idx ? ' selected' : ''}>${name}</option>
+                  `)}
+                </select>
+              </div>
+              
+              <div class="input-control">
+                <label for="distance" class="input-label" hidden>상행 하행역 거리</label>
+                <input
+                  type="number"
+                  id="distance"
+                  name="distance"
+                  class="input-field mr-2"
+                  placeholder="상행 하행역 거리"
+                  value="${formData.distance}"
+                  required
+                />
+                <label for="duration" class="input-label" hidden>상행 하행역 시간</label>
+                <input
+                  type="number"
+                  id="duration"
+                  name="duration"
+                  class="input-field"
+                  placeholder="상행 하행역 시간"
+                  value="${formData.duration}"
+                  required
+                />
+              </div>
+            ` : '' }
             
             <div class="input-control">
               <div>
@@ -114,7 +129,7 @@ export class LineEditModal extends Component<LineEditModalState, LineEditModalPr
                   name="color"
                   class="input-field"
                   placeholder="색상을 아래에서 선택해주세요."
-                  value="${formData?.color || ''}"
+                  value="${formData.color}"
                   disabled
                   required
                 />
@@ -140,7 +155,11 @@ export class LineEditModal extends Component<LineEditModalState, LineEditModalPr
 
   public open(line?: LineResponse) {
     this.$state.visible = true;
-    this.$state.formData = line || null;
+    this.$state.formData = line ? {
+      idx: line.idx,
+      name: line.name,
+      color: line.color,
+    } : { ...formDataInit };
   }
 
   public close() {
@@ -170,10 +189,12 @@ export class LineEditModal extends Component<LineEditModalState, LineEditModalPr
                                   return obj;
                                 }, {}) as LineRequest;
 
-      if (this.$state.formData === null) {
+      lineRequest.idx = this.$state.formData.idx;
+
+      if (lineRequest.idx === undefined) {
         this.$props.addLine(lineRequest);
       } else {
-        this.$props.updateLine({ ...lineRequest, idx: this.$state.formData.idx });
+        this.$props.updateLine(lineRequest);
       }
       frm.color.disabled = true;
     });

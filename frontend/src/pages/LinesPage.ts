@@ -1,7 +1,7 @@
 import '../assets/css/pages/lines.css';
 import {Component} from "@/_core";
 import {LineResponse, LineRequest} from "subway-domain";
-import {ADD_LINE, GET_LINES, lineStore, REMOVE_LINE, stationStore, UPDATE_LINE} from "@/store";
+import {ADD_LINE, GET_LINES, GET_STATIONS, lineStore, REMOVE_LINE, stationStore, UPDATE_LINE} from "@/store";
 import {LineItem, LineEditModal} from "./lines";
 
 const LINE_NAME_MIN_LENGTH = 2;
@@ -11,6 +11,7 @@ export class LinesPage extends Component {
 
   protected setup() {
     lineStore.dispatch(GET_LINES);
+    stationStore.dispatch(GET_STATIONS);
   }
 
   protected template(): string {
@@ -63,7 +64,7 @@ export class LinesPage extends Component {
     return this.$components.LineEditModal as LineEditModal;
   }
 
-  private addLine(lineRequest: LineRequest) {
+  private async addLine(lineRequest: LineRequest) {
     try {
       this.validateLineName(lineRequest.name);
     } catch (message) {
@@ -71,31 +72,31 @@ export class LinesPage extends Component {
     }
 
     try {
-      lineStore.dispatch(ADD_LINE, lineRequest);
+      await lineStore.dispatch(ADD_LINE, lineRequest);
       alert('노선이 추가되었습니다.');
     } catch (e) {
       alert(e.message);
     }
   }
 
-  private updateLine(line: LineResponse) {
+  private async updateLine(lineRequest: LineRequest) {
     try {
-      this.validateLineName(line.name);
+      this.validateLineName(lineRequest.name);
     } catch (message) {
       return alert(message);
     }
 
     try {
-      lineStore.dispatch(UPDATE_LINE, line);
+      await lineStore.dispatch(UPDATE_LINE, lineRequest);
       alert('노선이 수정되었습니다.');
     } catch (e) {
       alert(e.message);
     }
   }
 
-  private removeLine(line: LineResponse) {
+  private async removeLine(line: LineResponse) {
     try {
-      lineStore.dispatch(REMOVE_LINE, line);
+      await lineStore.dispatch(REMOVE_LINE, line);
       alert('노선이 삭제되었습니다.');
     } catch (e) {
       alert(e.message);

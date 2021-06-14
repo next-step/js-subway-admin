@@ -14,7 +14,7 @@ export class LineItem extends Component<{}, LineItemProps> {
     return `
       <div class="d-flex items-center py-2 relative">
         <span class="subway-line-color-dot bg-${color}"></span>
-        <span class="w-100 pl-6 subway-line-list-item-name">${this.$props.name}</span>
+        <span class="w-100 pl-6 subway-line-list-item-name">${name}</span>
         <button type="button" class="bg-gray-50 text-gray-500 text-sm mr-1 edit">
           수정
         </button>
