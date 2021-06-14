@@ -1,4 +1,5 @@
 import { IPageInfo } from "@/types";
+import { observe } from "@/core/store";
 
 class Component<IProps = unknown> {
   protected $container: HTMLElement = document.createElement("div");
@@ -31,6 +32,7 @@ class Component<IProps = unknown> {
   }
 
   protected mount(): void {
+    observe(() => this.componentMount());
     this.initDom();
     this.initChildren();
     this.beforeComponentMount();

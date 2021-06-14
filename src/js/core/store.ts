@@ -1,27 +1,38 @@
-import Component from "@/core/component";
+import { IAction } from "@/types";
+
+let currentObserver = null;
+
+export const observe = (fn: Function) => {
+  console.log(currentObserver);
+  currentObserver = fn;
+};
+
 class Store<IState> {
-  private observers: Component[] = [];
   protected state: IState;
-  constructor() {
-    this.observers = [];
-    this.initState();
+  protected mutations: Record<string, Function>;
+  protected observers: Set<Function>;
+
+  constructor(initState: IState) {
+    this.state = initState;
+    this.observers = new Set();
+  }
+
+  public dispatch({ type, datas }: IAction): void {
+    this.mutations[type](datas);
   }
 
   public getState(): IState {
+    if (currentObserver) {
+      this.observers.add(currentObserver);
+      currentObserver = null;
+    }
+    console.log(currentObserver, this.observers, this.state);
     return this.state;
   }
-  protected initState(): void {}
 
-  public updateState(nextState: IState): void {
+  protected setState(nextState: IState): void {
     this.state = nextState;
-    this.notify();
-  }
-
-  public addObserver(observer: Component): void {
-    this.observers = [...this.observers, observer];
-  }
-  protected notify(): void {
-    this.observers.forEach((observer) => observer.update());
+    this.observers.forEach((observer) => observer());
   }
 }
 
