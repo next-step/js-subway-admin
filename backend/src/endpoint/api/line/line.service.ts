@@ -1,12 +1,21 @@
 import {LineRequest, LineResponse, LineUpdateRequest, SectionRequest} from "subway-domain";
 
 import {Inject, Injectable} from "@/core";
-import {LineEntity, LineRepository, SectionEntity, SectionRepository, StationEntity, StationRepository} from "@/data";
 import {
+  LineEntity,
+  LineRepository,
+  SectionEntity,
+  SectionRepository,
+  StationEntity,
+  StationRepository
+} from "@/data";
+import {
+  DisconnectedStationException,
   EqualsStationException,
-  ExistedLineException, ExistedSectionException, NotFoundDownStationException,
+  ExistedLineException,
+  ExistedSectionException,
   NotFoundLineException,
-  NotFoundStationException, NotFoundUpStationException
+  NotFoundStationException,
 } from "@/endpoint";
 
 @Injectable
@@ -107,14 +116,13 @@ export class LineService {
     }
 
     const sections = this.getSections(idx);
-    if (sections.find(v => v.upStation === upStation && v.downStation === downStation)) {
+    const connectedUpStation = !!sections.find(v => [v.upStation, v.downStation].includes(upStation));
+    const connectedDownStation = !!sections.find(v => [v.upStation, v.downStation].includes(downStation));
+    if (!connectedDownStation && !connectedUpStation) {
+      throw new DisconnectedStationException();
+    }
+    if (connectedUpStation && connectedDownStation) {
       throw new ExistedSectionException();
-    }
-    if (sections.find(v => v.upStation === downStation)) {
-      throw new NotFoundUpStationException();
-    }
-    if (sections.find(v => v.downStation === upStation)) {
-      throw new NotFoundDownStationException();
     }
 
     this.sectionRepository.save({ line: idx, upStation, downStation, distance, duration });

@@ -116,20 +116,20 @@ export class SectionsPage extends Component<SectionsPageState> {
       await lineService.addLineSection(this.lineIdx, sectionRequest);
       alert('구간이 추가되었습니다.');
       this.$modal.close();
+      await this.getLine();
     } catch (e) {
       alert(e.message);
     }
-    await this.getLine();
   }
 
   private async removeSection(stationIdx: number) {
     try {
       await lineService.removeSection(this.lineIdx, stationIdx);
       alert('구간이 삭제되었습니다.');
+      await this.getLine();
     } catch (e) {
       alert(e.message);
     }
-    await this.getLine();
   }
 
   protected setEvent() {

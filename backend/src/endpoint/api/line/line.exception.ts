@@ -40,6 +40,16 @@ export class ExistedSectionException extends HttpException {
 }
 
 
+export class DisconnectedStationException extends HttpException {
+
+  public static readonly message: string = '상행역 또는 하행역에 연결된 구간이 없습니다.';
+
+  constructor() {
+    super(DisconnectedStationException.message, HttpStatus.BAD_REQUEST);
+  }
+}
+
+
 export class NotFoundUpStationException extends HttpException {
 
   public static readonly message: string = '연결된 상행역이 없습니다.';

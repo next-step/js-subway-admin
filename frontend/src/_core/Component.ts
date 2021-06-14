@@ -1,8 +1,16 @@
 import {applyDomDiff, observable, observe} from "./";
 import {selectAll} from "@/utils";
 
+interface RegisteredEvent {
+  el: HTMLElement;
+  eventType: string;
+  callback: (e: Event) => void;
+  constructor: { new(...args): Component };
+}
 
 export abstract class Component<State = {}, Props = {}> {
+
+  private static readonly eventMap: RegisteredEvent[] = [];
 
   protected $state: State = {} as State;
   protected $components: Record<string, Component | Component[]> = {};
@@ -29,10 +37,26 @@ export abstract class Component<State = {}, Props = {}> {
 
   protected addEvent(eventType: string, selector: string, callback: (e: Event) => void) {
 
+    const { constructor } = Object.getPrototypeOf(this);
+
     selectAll(selector, this.$target)
       .forEach(el => {
-        el.removeEventListener(eventType, callback);
+
+        const registered = Component.eventMap.find(v => (
+          v.el === el &&
+          v.eventType === eventType &&
+          v.callback.toString() === callback.toString() &&
+          v.constructor === constructor
+        ));
+
+        if (registered) {
+          el.removeEventListener(eventType, registered.callback);
+          Component.eventMap.splice(Component.eventMap.indexOf(registered), 1);
+        }
+
         el.addEventListener(eventType, callback);
+        Component.eventMap.push({ el, eventType, constructor, callback });
+
       });
   }
 
