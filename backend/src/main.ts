@@ -5,10 +5,18 @@ import { resolve } from "path";
 import {getRouters, HttpException} from "@/core";
 
 import './endpoint';
+import * as fs from "fs";
 
 const app = express();
 app.use(express.json());
 app.use(express.static(resolve(process.cwd(), 'static')));
+
+const index = fs.readFileSync(resolve(process.cwd(), 'static/index.html'), { encoding: 'utf-8' });
+
+app.get('/*', (req, res) => {
+  res.setHeader('content-type', 'text/html');
+  res.send(index);
+})
 
 for (const {httpMethod, path, callback} of getRouters()) {
   const method = httpMethod.toLowerCase();
