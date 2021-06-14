@@ -1,5 +1,6 @@
 import * as express from "express";
 import {NextFunction, Request, Response} from "express";
+import { resolve } from "path";
 
 import {getRouters, HttpException} from "@/core";
 
@@ -7,6 +8,7 @@ import './endpoint';
 
 const app = express();
 app.use(express.json());
+app.use(express.static(resolve(process.cwd(), 'static')));
 
 for (const {httpMethod, path, callback} of getRouters()) {
   const method = httpMethod.toLowerCase();
