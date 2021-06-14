@@ -5,7 +5,6 @@
   "author": "JunilHwang <junil.h@kakao.com>",
   "license": "MIT",
   "scripts": {
-    "prestart": "cd frontend && yarn frontend:build",
     "start": "cd backend && yarn backend:dev"
   },
 
