@@ -1,16 +1,8 @@
 import {applyDomDiff, observable, observe} from "./";
 import {selectAll} from "@/utils";
 
-interface RegisteredEvent {
-  target: HTMLElement;
-  eventType: string;
-  selector: string;
-  callback: string;
-}
 
 export abstract class Component<State = {}, Props = {}> {
-
-  private static readonly registeredEvents: RegisteredEvent[] = [];
 
   protected $state: State = {} as State;
   protected $components: Record<string, Component | Component[]> = {};
@@ -21,11 +13,11 @@ export abstract class Component<State = {}, Props = {}> {
   ) {
     this.lifeCycle();
   }
+
   private async lifeCycle() {
     await this.setup();
     this.$state = observable<State>(this.$state!);
     observe(() => this.render());
-    this.setEvent();
     this.mounted();
   }
   protected setup() {}
@@ -36,36 +28,15 @@ export abstract class Component<State = {}, Props = {}> {
   protected setEvent() {}
 
   protected addEvent(eventType: string, selector: string, callback: (e: Event) => void) {
-    if (Component.registeredEvents.find(v => (
-      v.target === this.$target &&
-      v.eventType === eventType &&
-      v.selector === selector &&
-      v.callback === callback.toString()
-    ))) return;
 
-    this.$target.addEventListener(eventType, (e) => {
-      const target = e.target as HTMLElement;
-      const currentTarget = e.currentTarget as HTMLElement;
-      const checked = target.closest(selector) || [ ...currentTarget.querySelectorAll(selector) ].includes(target);
-      if (!checked) return;
-      callback(e);
-    });
-    
-    Component.registeredEvents.push({
-      target: this.$target,
-      eventType: eventType,
-      selector: selector,
-      callback: callback.toString(),
-    });
-
-    // selectAll(selector, this.$target)
-    //   .forEach(el => {
-    //     el.removeEventListener(eventType, callback);
-    //     el.addEventListener(eventType, callback);
-    //   });
+    selectAll(selector, this.$target)
+      .forEach(el => {
+        el.removeEventListener(eventType, callback);
+        el.addEventListener(eventType, callback);
+      });
   }
 
-  private render() {
+  public render() {
     this.$components = {};
 
     const $target = this.$target.cloneNode(true) as HTMLElement;
@@ -76,6 +47,7 @@ export abstract class Component<State = {}, Props = {}> {
     this.$target.querySelectorAll('[data-component]')
                 .forEach(el => this.setupChildComponent(el));
 
+    this.setEvent();
     this.updated();
   }
 

@@ -1,58 +1,29 @@
 import {LineRepository, SectionRepository} from "@/repositories";
-import {LineResponse, LineRequest} from "subway-domain";
+import {LineResponse, LineRequest, LineUpdateRequest} from "subway-domain";
 import {ExistedLineError, NotFoundLineError} from "@/exceptions";
 import {getNextIdx} from "@/utils";
 import {Inject, Injectable} from "@/_core";
+import {SubwayClient} from "@/clients";
 
 @Injectable
 export class LineService {
   constructor(
-    @Inject(LineRepository) private readonly lineRepository: LineRepository,
-    @Inject(SectionRepository) private readonly sectionRepository: SectionRepository,
+    @Inject(SubwayClient) private readonly subwayClient: SubwayClient,
   ) {}
 
-  public getLines(): LineResponse[] {
-    return this.lineRepository.get() || [];
+  public getLines(): Promise<LineResponse[]> {
+    return this.subwayClient.get('/lines');
   }
 
-  private getLineIndex(idx: number, lines: LineResponse[] = this.getLines()): number {
-    const index = lines.findIndex(v => v.idx === idx);
-    if (index === -1) {
-      throw new NotFoundLineError();
-    }
-    return index;
+  public addLine(request: LineRequest): Promise<void> {
+    return this.subwayClient.post('/lines', request);
   }
 
-  public addLine(request: LineRequest): void {
-    const lines = this.getLines();
-    const has = !!lines.find(v => v.name === request.name);
-
-    if (has) {
-      throw new ExistedLineError();
-    }
-
-    this.lineRepository.set([ ...lines, { ...request, idx: getNextIdx() } ]);
-
+  public updateLine(idx: number, request: LineUpdateRequest): Promise<void> {
+    return this.subwayClient.put(`/lines/${idx}`, request);
   }
 
-  public updateLine(line: LineResponse) {
-    const lines = this.getLines();
-    const has = !!lines.find(v => v.idx !== line.idx && v.name === line.name);
-
-    if (has) {
-      throw new ExistedLineError();
-    }
-
-    const index = this.getLineIndex(line.idx, lines);
-    lines[index] = line;
-
-    this.lineRepository.set(lines);
-  }
-
-  public removeLine(line: LineResponse) {
-    const lines = this.getLines();
-    const index = this.getLineIndex(line.idx, lines);
-    lines.splice(index, 1);
-    this.lineRepository.set(lines);
+  public removeLine(idx: number): Promise<void> {
+    return this.subwayClient.delete(`/lines/${idx}`);
   }
 }

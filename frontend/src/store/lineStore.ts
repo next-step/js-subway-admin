@@ -14,7 +14,7 @@ interface LineStoreState {
 
 export const lineStore = new Store<LineStoreState>({
   state: {
-    lines: lineService.getLines(),
+    lines: [],
   },
 
   mutations: {
@@ -25,23 +25,23 @@ export const lineStore = new Store<LineStoreState>({
 
   actions: {
 
-    [GET_LINES]({ commit }) {
-      commit(SET_LINES, lineService.getLines());
+    async [GET_LINES]({ commit }) {
+      commit(SET_LINES, await lineService.getLines());
     },
 
-    [ADD_LINE]({ dispatch }, lineRequest: LineRequest) {
-      lineService.addLine(lineRequest);
-      dispatch(GET_LINES);
+    async [ADD_LINE]({ dispatch }, lineRequest: LineRequest) {
+      await lineService.addLine(lineRequest);
+      await dispatch(GET_LINES);
     },
 
-    [UPDATE_LINE]({ dispatch }, line: LineResponse) {
-      lineService.updateLine(line);
-      dispatch(GET_LINES);
+    async [UPDATE_LINE]({ dispatch }, { idx, name, color }: LineResponse) {
+      await lineService.updateLine(idx, { name, color });
+      await dispatch(GET_LINES);
     },
 
-    [REMOVE_LINE]({ dispatch }, line: LineResponse) {
-      lineService.removeLine(line);
-      dispatch(GET_LINES);
+    async [REMOVE_LINE]({ dispatch }, { idx }: LineResponse) {
+      await lineService.removeLine(idx);
+      await dispatch(GET_LINES);
     },
 
   },

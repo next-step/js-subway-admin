@@ -12,9 +12,9 @@ export class AuthService {
   ) {}
 
   public async login(request: AuthRequest): Promise<AuthResponse> {
-    const { token } = await this.restClient.post('/auth/login', request);
-    this.authRepository.set({ token });
-    return { token };
+    const authentication: AuthResponse = await this.restClient.post('/auth/login', request);
+    this.authRepository.set(authentication);
+    return authentication;
   }
 
   public logout() {

@@ -1,13 +1,17 @@
 import '../assets/css/pages/lines.css';
 import {Component} from "@/_core";
 import {LineResponse, LineRequest} from "subway-domain";
-import {ADD_LINE, lineStore, REMOVE_LINE, stationStore, UPDATE_LINE} from "@/store";
+import {ADD_LINE, GET_LINES, lineStore, REMOVE_LINE, stationStore, UPDATE_LINE} from "@/store";
 import {LineItem, LineEditModal} from "./lines";
 
 const LINE_NAME_MIN_LENGTH = 2;
 const LINE_NAME_MAX_LENGTH = 10;
 
 export class LinesPage extends Component {
+
+  protected setup() {
+    lineStore.dispatch(GET_LINES);
+  }
 
   protected template(): string {
 
