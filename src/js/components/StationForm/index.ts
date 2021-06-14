@@ -11,8 +11,9 @@ class StationForm extends Component {
     this.rootEvent("submit", this.handleSubmit.bind(this));
   }
 
-  private handleSubmit(): void {
+  private handleSubmit(e: Event): void {
     try {
+      e.preventDefault();
       const name = $("#station-name", this.$container) as HTMLInputElement;
       stationService.add(name.value);
       name.value = "";
@@ -21,7 +22,7 @@ class StationForm extends Component {
     }
   }
 
-  protected componentMount(): void {
+  protected render(): void {
     this.$container.innerHTML = `
     <div class="d-flex w-100">
       <label for="station-name" class="input-label" hidden>

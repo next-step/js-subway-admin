@@ -7,6 +7,10 @@ import { IPageInfo } from "@/types";
 import { newElement } from "@/utils/dom";
 
 class Stations extends Component {
+  protected useState() {
+    return { ...authStore.getState(), ...stationStore.getState() };
+  }
+
   protected initDom(): void {
     this.$container = newElement(`<div class="wrapper p-10 bg-white"/>`);
   }
@@ -14,7 +18,6 @@ class Stations extends Component {
   protected initChildren(): void {
     const stationForm = new StationForm();
     const stationList = new StationList();
-    stationStore.addObserver(stationList);
     this.children = [stationForm, stationList];
   }
 
@@ -27,6 +30,7 @@ class Stations extends Component {
   }
 
   public pageInfo(): IPageInfo {
+    console.log("미쳤나벼......");
     if (!this.beforeChangeURL()) return;
     return {
       title: PAGE_TITLE.STATIONS,
@@ -34,7 +38,7 @@ class Stations extends Component {
     };
   }
 
-  protected componentMount(): void {
+  protected render(): void {
     this.$container.innerHTML = `
     <div class="heading">
       <h2 class="mt-1">🚉 역 관리</h2>

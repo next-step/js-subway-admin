@@ -5,6 +5,10 @@ import { authStore } from "@/store";
 import { $ } from "@/utils/dom";
 
 class Header extends Component {
+  protected useState(): any {
+    return authStore.getState();
+  }
+
   protected initDom() {
     this.$container = $("#header");
   }
@@ -26,8 +30,8 @@ class Header extends Component {
     }
   }
 
-  protected componentMount(): void {
-    const { isLoggedIn } = authStore.getState();
+  protected render(): void {
+    const { isLoggedIn } = this.useState();
     this.$container.innerHTML = `
     <a href="/" class="text-black">
       <h1 class="text-center font-bold">🚇 지하철 노선도</h1>

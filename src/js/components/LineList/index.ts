@@ -35,7 +35,7 @@ class LineList extends Component {
     }
   }
 
-  protected componentMount(): void {
+  protected render(): void {
     const { lines } = lineStore.getState();
     this.$container.innerHTML =
       lines.length > 0

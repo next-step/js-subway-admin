@@ -2,9 +2,10 @@ import { IAction } from "@/types";
 
 let currentObserver = null;
 
-export const observe = (fn: Function) => {
-  console.log(currentObserver);
+export const observe = (fn: Function): void => {
   currentObserver = fn;
+  fn();
+  currentObserver = null;
 };
 
 class Store<IState> {
@@ -17,16 +18,14 @@ class Store<IState> {
     this.observers = new Set();
   }
 
-  public dispatch({ type, datas }: IAction): void {
-    this.mutations[type](datas);
+  public dispatch({ type, datas = null, error = null }: IAction): void {
+    this.mutations[type]({ datas, error });
   }
 
   public getState(): IState {
     if (currentObserver) {
       this.observers.add(currentObserver);
-      currentObserver = null;
     }
-    console.log(currentObserver, this.observers, this.state);
     return this.state;
   }
 

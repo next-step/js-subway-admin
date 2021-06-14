@@ -16,8 +16,9 @@ class StationUpdate extends Component<IProps> {
     this.rootEvent("submit", this.handleSubmit.bind(this));
   }
 
-  private handleSubmit(): void {
+  private handleSubmit(e: Event): void {
     try {
+      e.preventDefault();
       const input = $("#station-name", this.$container) as HTMLInputElement;
       const newName = input.value;
       if (newName === this.props?.value) return;
@@ -27,7 +28,7 @@ class StationUpdate extends Component<IProps> {
     }
   }
 
-  protected componentMount(): void {
+  protected render(): void {
     if (this.props)
       this.$container.innerHTML = `
     <div class="d-flex w-100">

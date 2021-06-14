@@ -7,11 +7,11 @@ interface IState {
   modalTitle: string;
 }
 
-class UIStore extends Store<IState> {
-  protected initState(): void {
-    this.state = { isModalOpen: false, modalContents: null, modalTitle: "" };
-  }
-}
+class UIStore extends Store<IState> {}
 
-const uiStore = new UIStore();
+const uiStore = new UIStore({
+  isModalOpen: false,
+  modalContents: null,
+  modalTitle: "",
+});
 export default uiStore;

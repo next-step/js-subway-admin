@@ -15,7 +15,7 @@ class Lines extends Component {
 
   protected initChildren(): void {
     const lineList = new LineList();
-    lineStore.addObserver(lineList);
+    // lineStore.addObserver(lineList);
     this.children = [lineList];
   }
 
@@ -49,7 +49,7 @@ class Lines extends Component {
     };
   }
 
-  protected componentMount(): void {
+  protected render(): void {
     this.$container.innerHTML = `
     <div class="heading d-flex">
       <h2 class="mt-1 w-100">🛤️ 노선 관리</h2>

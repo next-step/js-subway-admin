@@ -61,3 +61,9 @@ export interface IStation {
 export interface ILine extends ILineData {
   id: string;
 }
+
+export interface IAction {
+  type: string;
+  datas?: unknown;
+  error?: string;
+}

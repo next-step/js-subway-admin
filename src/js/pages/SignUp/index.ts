@@ -16,8 +16,8 @@ class SignUp extends Component {
   }
 
   protected beforeChangeURL(): boolean {
-    const { isLoggedIn } = authStore.getState();
-    if (isLoggedIn) return false;
+    // const { isLoggedIn } = authStore.getState();
+    // if (isLoggedIn) return false;
     return true;
   }
 
@@ -29,7 +29,7 @@ class SignUp extends Component {
     };
   }
 
-  protected componentMount(): void {
+  protected render(): void {
     this.$container.innerHTML = `
     <div class="heading">
       <h2 class="text">📝 회원가입</h2>

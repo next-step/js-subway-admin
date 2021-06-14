@@ -36,10 +36,14 @@ class Router<Ipage> {
     const $main = $("#main");
     $main.innerHTML = "";
     if (this.pages[href]) {
-      this.pages[href].render($main);
+      $main.appendChild(this.pages[href].mount());
       return;
     }
-    this.notFound.render($main);
+    $main.appendChild(this.notFound.mount());
+  }
+
+  private unmount(href: string): void {
+    // 페이지 바뀔 때
   }
 }
 

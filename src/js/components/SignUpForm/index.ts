@@ -12,8 +12,9 @@ class SignUpForm extends Component {
     this.rootEvent("submit", this.handleSubmit.bind(this));
   }
 
-  private handleSubmit(): void {
+  private handleSubmit(e: Event): void {
     try {
+      e.preventDefault();
       const userDatas = formData<ISignUpUser>(this.$container, SignUpEnum);
       authService.signUp(userDatas);
     } catch (error) {
@@ -21,7 +22,7 @@ class SignUpForm extends Component {
     }
   }
 
-  protected componentMount(): void {
+  protected render(): void {
     this.$container.innerHTML = `
     <div class="input-control">
       <label for="email" class="input-label" hidden>이메일</label>

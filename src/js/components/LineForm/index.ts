@@ -14,16 +14,17 @@ class LineForm extends Component {
     this.rootEvent("submit", this.handleSubmit.bind(this));
   }
 
-  private handleSubmit(): void {
+  private handleSubmit(e: Event): void {
     try {
+      e.preventDefault();
       const lineDatas = formData<ILineData>(this.$container, LineEnum);
       lineService.add(lineDatas);
     } catch (error) {
-      alert(error.message);
+      alert(error?.message);
     }
   }
 
-  protected componentMount(): void {
+  protected render(): void {
     const stations = stationStore.getAvailableStations();
     this.$container.innerHTML = this.$container.innerHTML = `
     <div class="input-control">

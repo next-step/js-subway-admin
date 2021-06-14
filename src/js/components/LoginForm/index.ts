@@ -1,8 +1,9 @@
 import Component from "@/core/component";
 import handleLink from "@/router/handleLink";
+import { LOGIN_REQUEST } from "@/actions/auth";
 import { CLIENT_ERROR } from "@/errors";
 import { ILoginUser, LoginEnum } from "@/types";
-import { authService } from "@/service";
+import { authStore } from "@/store";
 import { newElement, formData } from "@/utils/dom";
 
 class LoginForm extends Component {
@@ -15,13 +16,10 @@ class LoginForm extends Component {
     this.rootEvent("click", this.handleClickLink.bind(this));
   }
 
-  protected handleSubmit(): void {
-    try {
-      const userData = formData<ILoginUser>(this.$container, LoginEnum);
-      authService.login(userData);
-    } catch (error) {
-      alert(error?.message);
-    }
+  protected handleSubmit(e: Event): void {
+    e.preventDefault();
+    const userData = formData<ILoginUser>(this.$container, LoginEnum);
+    authStore.dispatch(LOGIN_REQUEST(userData));
   }
 
   private handleClickLink(e: Event): void {
@@ -34,7 +32,7 @@ class LoginForm extends Component {
     }
   }
 
-  protected componentMount(): void {
+  protected render(): void {
     this.$container.innerHTML = `
     <div class="input-control">
       <label for="email" class="input-label" hidden>이메일</label>

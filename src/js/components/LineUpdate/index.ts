@@ -14,8 +14,9 @@ class LineUpdate extends Component<ILine> {
     this.rootEvent("submit", this.handleSubmit.bind(this));
   }
 
-  private handleSubmit(): void {
+  private handleSubmit(e: Event): void {
     try {
+      e.preventDefault();
       const newDatas = formData<ILineData>(this.$container, LineEnum);
       lineService.update(newDatas, this.props);
     } catch (error) {
@@ -23,7 +24,7 @@ class LineUpdate extends Component<ILine> {
     }
   }
 
-  protected componentMount(): void {
+  protected render(): void {
     if (this.props) {
       const { name, color, upStation, downStation, distance, time } =
         this.props;

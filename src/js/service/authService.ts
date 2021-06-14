@@ -1,4 +1,5 @@
 import router from "@/router";
+import { LOGIN_SUCCESS, LOGIN_ERROR } from "@/actions/auth";
 import { ILoginUser, ISignUpUser } from "@/types";
 import { MESSAGE, PATH } from "@/constants";
 import { authDB } from "@/data";
@@ -12,11 +13,14 @@ import {
 
 const authService = {
   login: ({ email, password }: ILoginUser): void => {
-    const user = authDB.get(email);
-    if (!user) throw NO_USER_ERROR;
-    if (user.password !== password) throw WRONG_PASSWORD_ERROR;
-    authStore.updateState({ isLoggedIn: true });
-    router.push(PATH.STATIONS);
+    try {
+      const user = authDB.get(email);
+      if (!user) throw NO_USER_ERROR;
+      if (user.password !== password) throw WRONG_PASSWORD_ERROR;
+      authStore.dispatch(LOGIN_SUCCESS(user));
+    } catch (error) {
+      authStore.dispatch(LOGIN_ERROR(error.message));
+    }
   },
 
   signUp: ({ email, name, password, confirmPassword }: ISignUpUser): void => {
@@ -31,8 +35,8 @@ const authService = {
   },
 
   logout: (): void => {
-    authStore.updateState({ isLoggedIn: false });
-    router.push(PATH.STATIONS);
+    // authStore.updateState({ isLoggedIn: false });
+    // router.push(PATH.STATIONS);
   },
 };
 
