@@ -7,7 +7,7 @@ import { IPageInfo } from "@/types";
 import { newElement } from "@/utils/dom";
 
 class Stations extends Component {
-  protected useState() {
+  protected useSelector() {
     return { ...authStore.getState(), ...stationStore.getState() };
   }
 
@@ -22,7 +22,7 @@ class Stations extends Component {
   }
 
   protected beforeChangeURL(): boolean {
-    const { isLoggedIn } = authStore.getState();
+    const { isLoggedIn } = this.useSelector();
     if (isLoggedIn) return true;
     alert(MESSAGE.LOGIN_REQUIRED);
     router.push(PATH.LOGIN);
@@ -30,7 +30,6 @@ class Stations extends Component {
   }
 
   public pageInfo(): IPageInfo {
-    console.log("미쳤나벼......");
     if (!this.beforeChangeURL()) return;
     return {
       title: PAGE_TITLE.STATIONS,

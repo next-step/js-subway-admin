@@ -15,11 +15,12 @@ class Component<IProps = unknown> {
     this.setUp();
   }
 
+  protected useSelector(): void {}
   protected bindEvents(): void {}
   protected initDom(): void {}
   protected initChildren(): void {}
-  protected componentWillUpdate(): void {} // 컴포넌트 리렌더링 되기 전
-  protected render(): void {} // 실제 Dom의 HTMl을 그려주는 작업
+  protected componentWillUpdate(): void {}
+  protected render(): void {}
 
   protected componentDidUpdate(): void {
     this.children.forEach((child) => child.updateComponent());
@@ -28,7 +29,11 @@ class Component<IProps = unknown> {
   protected setUp(): void {
     this.initDom();
     this.initChildren();
-    observe(() => this.updateComponent());
+    this.render();
+    observe(
+      () => this.useSelector(),
+      () => this.updateComponent()
+    );
   }
 
   public mount(): HTMLElement {
@@ -40,10 +45,20 @@ class Component<IProps = unknown> {
     return this.$container;
   }
 
-  // 컴포넌트 업데이트&초기렌더링 해주는 작업
+  public returnRoot(): HTMLElement {
+    return this.$container;
+  }
+
+  private renderChildren(): void {
+    this.children.forEach((child) => {
+      this.$container.appendChild(child.returnRoot());
+    });
+  }
+
   protected updateComponent(): void {
     this.componentWillUpdate();
     this.render();
+    this.renderChildren();
     this.componentDidUpdate();
   }
 

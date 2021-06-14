@@ -35,7 +35,6 @@ class Router<Ipage> {
 
   private render(): void {
     const { href, prevhref } = history.state;
-    console.log(href, prevhref);
     if (href !== prevhref) this.unmount(prevhref);
 
     const $main = $("#main");

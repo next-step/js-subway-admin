@@ -2,9 +2,9 @@ import { IAction } from "@/types";
 
 let currentObserver = null;
 
-export const observe = (fn: Function): void => {
-  currentObserver = fn;
-  fn();
+export const observe = (selector: Function, cb: Function): void => {
+  currentObserver = cb;
+  selector();
   currentObserver = null;
 };
 

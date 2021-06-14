@@ -1,6 +1,5 @@
 import Component from "@/core/component";
 import handleLink from "@/router/handleLink";
-import { authService } from "@/service";
 import { authStore } from "@/store";
 import { $ } from "@/utils/dom";
 
@@ -8,9 +7,6 @@ class Header extends Component {
   constructor() {
     super();
     this.bindEvents();
-  }
-  protected useState(): any {
-    return authStore.getState();
   }
 
   protected initDom() {
@@ -22,20 +18,16 @@ class Header extends Component {
   }
 
   private handleClick(e: Event): void {
-    try {
-      const target = e.target as HTMLElement;
-      if (target.id !== "logout") {
-        handleLink(e);
-        return;
-      }
-      authService.logout();
-    } catch (error) {
-      alert(error?.message);
+    const target = e.target as HTMLElement;
+    if (target.id !== "logout") {
+      handleLink(e);
+      return;
     }
+    // authService.logout();
   }
 
   protected render(): void {
-    const { isLoggedIn } = this.useState();
+    const { isLoggedIn } = authStore.getState();
     this.$container.innerHTML = `
     <a href="/" class="text-black">
       <h1 class="text-center font-bold">🚇 지하철 노선도</h1>

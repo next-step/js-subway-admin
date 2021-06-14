@@ -28,7 +28,7 @@ class Modal extends Component {
     }
   }
 
-  protected componentMount(): void {
+  protected render(): void {
     const { isModalOpen, modalContents, modalTitle } = uiStore.getState();
     this.$innerContainer = $("#modal-contents", this.$container);
     this.$titleContainer = $("#modal-title", this.$container);
@@ -36,11 +36,11 @@ class Modal extends Component {
     if (isModalOpen) {
       this.$container.classList.add("open");
       this.$titleContainer.innerText = modalTitle;
-      modalContents.render(this.$innerContainer);
-    } else {
-      this.$container.classList.remove("open");
-      this.$innerContainer.innerHTML = "";
+      this.$innerContainer.appendChild(modalContents.mount());
+      return;
     }
+    this.$container.classList.remove("open");
+    this.$innerContainer.innerHTML = "";
   }
 }
 
