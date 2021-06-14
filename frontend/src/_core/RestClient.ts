@@ -1,4 +1,4 @@
-import { HttpMethod } from "subway-constant";
+import {HttpMethod, HttpStatus} from "subway-constant";
 
 export type RequestInterceptor = (request: RequestInit) => RequestInit;
 
@@ -12,6 +12,9 @@ export class RestClient {
   ) {}
 
   private getResponse = (responseInit: Response) => {
+    if ([HttpStatus.CREATED, HttpStatus.NO_CONTENT].includes(responseInit.status)) {
+      return;
+    }
     return responseInit.json().then(json => {
       if (responseInit.status >= 400) {
         throw new Error(json.message);

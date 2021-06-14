@@ -14,7 +14,7 @@ interface StationStoreState {
 
 export const stationStore = new Store<StationStoreState>({
   state: {
-    stations: stationService.getStations(),
+    stations: [],
   },
 
   mutations: {
@@ -25,23 +25,23 @@ export const stationStore = new Store<StationStoreState>({
 
   actions: {
 
-    [GET_STATIONS]({ commit }) {
-      commit(SET_STATIONS, stationService.getStations());
+    async [GET_STATIONS]({ commit }) {
+      commit(SET_STATIONS, await stationService.getStations());
     },
 
-    [ADD_STATION]({ dispatch }, stationName: string) {
-      stationService.addStation(stationName);
-      dispatch(GET_STATIONS);
+    async [ADD_STATION]({ dispatch }, name: string) {
+      await stationService.addStation({ name });
+      await dispatch(GET_STATIONS);
     },
 
-    [UPDATE_STATION]({ dispatch }, station: StationResponse) {
-      stationService.updateStation(station);
-      dispatch(GET_STATIONS);
+    async [UPDATE_STATION]({ dispatch }, { idx, name }: StationResponse) {
+      await stationService.updateStation(idx, { name });
+      await dispatch(GET_STATIONS);
     },
 
-    [REMOVE_STATION]({ dispatch }, station: StationResponse) {
-      stationService.removeStation(station);
-      dispatch(GET_STATIONS);
+    async [REMOVE_STATION]({ dispatch }, { idx }: StationResponse) {
+      await stationService.removeStation(idx);
+      await dispatch(GET_STATIONS);
     },
 
   },

@@ -9,14 +9,14 @@ export class SubwayClient extends RestClient {
     super(`${location.origin}/api/`);
 
     this.addRequestInterceptor((request: RequestInit) => {
-      const token = authRepository.get();
-      if (!token) return request;
+      const authentication = authRepository.get();
+      if (!authentication) return request;
 
       return {
         ...request,
         headers: {
           ...request.headers || {},
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authentication.token}`,
         }
       }
     });

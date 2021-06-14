@@ -48,14 +48,15 @@ export abstract class Component<State = {}, Props = {}> {
       const currentTarget = e.currentTarget as HTMLElement;
       const checked = target.closest(selector) || [ ...currentTarget.querySelectorAll(selector) ].includes(target);
       if (!checked) return;
-      Component.registeredEvents.push({
-        target: this.$target,
-        eventType: eventType,
-        selector: selector,
-        callback: callback.toString(),
-      });
       callback(e);
-    })
+    });
+    
+    Component.registeredEvents.push({
+      target: this.$target,
+      eventType: eventType,
+      selector: selector,
+      callback: callback.toString(),
+    });
 
     // selectAll(selector, this.$target)
     //   .forEach(el => {
