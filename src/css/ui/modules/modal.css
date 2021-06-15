@@ -19,17 +19,29 @@
 
 .modal-inner {
   transition: top 0.25s ease;
+  min-width: 300px;
   max-width: 960px;
   margin: auto;
   overflow: auto;
+  padding: 2.5rem;
   background: #fff;
   border-radius: 5px;
   position: relative;
+  z-index: 3;
+}
+
+.modal-heading {
+  position: absolute;
+  top: 15px;
+}
+
+.modal-contents {
+  margin: 2.5rem;
 }
 
 .modal-close {
   margin: 20px;
-  width: 20px;
+  width: 15%;
   position: absolute;
   right: 10px;
   top: 10px;
@@ -37,6 +49,7 @@
   background: no-repeat;
   border: none;
   padding: 0;
+  z-index: 4;
 }
 
 svg {

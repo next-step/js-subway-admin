@@ -1,0 +1,55 @@
+{
+  "name": "js-subway-admin",
+  "version": "1.0.0",
+  "description": "지하철 노선도 관리",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode=production",
+    "dev": "webpack serve --open --mode=development",
+    "test": "cypress open",
+    "pre-commit": "lint-staged"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moonheekim0118/js-subway-admin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moonheekim0118/js-subway-admin/issues"
+  },
+  "homepage": "https://github.com/moonheekim0118/js-subway-admin#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "babel": "^6.23.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.2.6",
+    "cypress": "^7.4.0",
+    "eslint": "^7.28.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "html-webpack-plugin": "^5.3.1",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.0",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.2",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,json,css}": [
+      "prettier --write"
+    ],
+    "cypress/**/*.{js,ts}": [
+      "prettier --write"
+    ]
+  },
+  "browserslist": "> 0.25%, not dead",
+  "dependencies": {
+    "@babel/runtime": "^7.14.0"
+  }
+}

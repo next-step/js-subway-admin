@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "./public/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "es6",
+    "target": "es5",
+    "baseUrl": "./",
+    "paths": {
+        "@/*":["src/js/*"]
+    },
+    "allowJs": true,
+    "moduleResolution": "node",
+  }
+}
