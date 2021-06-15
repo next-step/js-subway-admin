@@ -1,0 +1,16 @@
+{
+  "stations": [
+    {
+      "id": 1,
+      "stationName": "사당"
+    },
+    {
+      "id": 2,
+      "stationName": "방배"
+    },
+    {
+      "id": 3,
+      "stationName": "역삼"
+    }
+  ]
+}

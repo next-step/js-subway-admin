@@ -1,0 +1,8 @@
+.colorOption {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+}
