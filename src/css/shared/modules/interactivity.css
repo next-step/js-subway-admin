@@ -30,3 +30,7 @@
 .cursor-not-allowed {
   cursor: not-allowed;
 }
+
+.poiner-events-none {
+  pointer-events: none;
+}

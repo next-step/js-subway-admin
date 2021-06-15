@@ -7,3 +7,7 @@
   border-style: none;
   cursor: pointer;
 }
+
+.selected-color-btn {
+  outline: 3px solid #39ff14;
+}
