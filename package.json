@@ -1,0 +1,37 @@
+{
+  "name": "js-subway-admin",
+  "version": "1.0.0",
+  "description": "블랙커피 스터디 Level 3 - 지하철 노선도 미션",
+  "scripts": {
+    "build": "parcel build ./src/index.html --public-url /js-subway-admin",
+    "dev": "parcel ./src/index.html",
+    "cypress:open": "cypress open"
+  },
+  "browserslist": [
+    "last 1 Chrome version"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JunilHwang/js-subway-admin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JunilHwang/js-subway-admin/issues"
+  },
+  "homepage": "https://github.com/JunilHwang/js-subway-admin#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "cypress": "^7.5.0",
+    "parcel-bundler": "^1.12.5",
+    "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "modules": "^0.4.0",
+    "shared": "^0.2.0",
+    "ui": "^0.2.4"
+  }
+}
