@@ -39,6 +39,7 @@ app.use((err, req, res, next) => {
   res.status(httpException.statusCode).send(httpException)
 });
 
-app.listen(3000, () => {
-  console.log('http://localhost:3000 listen')
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`http://localhost:${port} listen`);
 });

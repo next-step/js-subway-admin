@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "prestart": "cd frontend && yarn frontend:build",
-    "start": "cd backend && yarn backend:dev"
+    "start": "cd backend && yarn backend:start"
   },
 
   "private": true,
