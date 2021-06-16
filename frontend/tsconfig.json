@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": [ "esnext", "es6", "dom", "dom.iterable" ],
+    "allowJs": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "importHelpers": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "types": ["node"],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  },
+
+  "references": [
+    { "path": "../../@constant" },
+    { "path": "../../@domain" }
+  ]
+}
